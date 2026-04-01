@@ -1,0 +1,25 @@
+# Core
+pydantic>=2.0
+anthropic>=0.40.0
+
+# Data Collection
+pytrends>=4.9.0
+requests>=2.31.0
+google-api-python-client>=2.100.0
+
+# Analysis & Statistics
+scipy>=1.11.0
+numpy>=1.24.0
+
+# Report Generation - PDF
+weasyprint>=60.0
+jinja2>=3.1.0
+
+# Report Generation - PPTX
+python-pptx>=0.6.21
+
+# Charts
+matplotlib>=3.7.0
+
+# Utilities
+python-dateutil>=2.8.0
