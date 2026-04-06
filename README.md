@@ -1,4 +1,4 @@
-# Consumer Research Report Generator
+# Brand Sentiment Report Generator
 
 Consumer Research Report Generator is a production-style decision-support system that turns a brand brief into a scored, client-ready consumer research report.
 
