@@ -52,9 +52,15 @@ Themes emerge from the data. If consumers are discussing something the brief nev
 
 | Requirement | What it's for |
 |-------------|---------------|
-| `ANTHROPIC_API_KEY` | LLM analysis (filter, themes, synthesis). ~$1-2 per run. Key must be from the Default workspace at console.anthropic.com, not the Claude Code workspace. |
+| Claude Code (or Claude Max) | Primary analysis engine. All sentiment, themes, and synthesis run in-context inside your Claude Code session - no API calls, no cost beyond your subscription. |
 | Python 3.11+ | Runtime |
 | Data | Either your own pre-collected JSON, or API keys for the built-in collectors |
+
+**Optional - only needed for unattended automated runs without Claude Code:**
+
+| Key | What it's for |
+|-----|---------------|
+| `ANTHROPIC_API_KEY` | Automated pipeline runs outside Claude Code. ~$1-2 per run. Key must be from the Default workspace at console.anthropic.com, not the Claude Code workspace. |
 
 **Optional collectors (all fail gracefully if absent):**
 
