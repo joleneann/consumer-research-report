@@ -126,14 +126,12 @@ Brief scope → Keyword framing → Platform algorithms → Relevance filter →
 - No API key required for analysis (only for automated pipeline runs without Claude Code)
 - The session model reads the data, classifies it, and writes the results directly
 
-## Adaptive Methodology (corpus size determines approach)
-The pipeline automatically selects its analysis methodology based on corpus size (`config.analysis.methodology = "auto"`):
+## Analysis Methodology
+The automated pipeline always uses LLM-backed analysis via `analyze_corpus()` — there is no automatic switching between code paths based on corpus size. The two approaches below are workflow-level distinctions, not code branches:
 
-**Small corpus (<=1,000 items)** -> `in_context_full`: Session LLM reads every item directly. Classifies sentiment, emotion, aspects, and themes by actually understanding the text. Highest quality - the model sees every consumer voice. Two-pass theme discovery + mapping still applies.
+**Automated pipeline** (this codebase): `analyze_corpus()` calls the LLM API for sentiment classification, theme extraction, and synthesis regardless of corpus size. Theme extraction uses a two-pass approach (stratified discovery sample + full-corpus batch mapping). ~$1-2 per run via Anthropic API.
 
-**Large corpus (>1,000 items)** -> `keyword_narrative`: Keyword-based classification for initial sentiment and themes (fast, covers vocabulary-level patterns). Then **mandatory narrative review pass** (Procedure 15) where the session LLM reads ALL unthemed items + 10% sample of themed items to catch patterns keywords miss (cultural references, sarcasm, memes, emotional narratives). The narrative pass is enforced by a validation gate - the pipeline refuses to proceed to Stage 5 (synthesis) if >10% of items remain unthemed.
-
-Both approaches: zero API calls, same scoring/reporting pipeline, same insight quality. The methodology selection is logged. Override with `methodology: "in_context_full"` or `"keyword_narrative"` in `AnalysisConfig`.
+**Manual in-context workflow** (Claude Code session): A human runs analysis directly inside a Claude Code session. The session model reads items, classifies them, and writes results to disk — no API calls, $0 cost. The mandatory narrative review pass (Procedure 15) is part of this workflow.
 
 **Validation gate** (`pipeline/validate.py`): `validate_theme_coverage()` checks that >=90% of items are assigned to at least one theme. Called automatically in the orchestrator between Stage 4 and Stage 5. Also callable from any script via `from consumer_research.pipeline.validate import validate_theme_coverage`.
 

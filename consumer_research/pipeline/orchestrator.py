@@ -123,16 +123,11 @@ def run_pipeline(config: PipelineConfig, brief: ResearchBrief | None = None) -> 
         batch_size=config.analysis.batch_size,
     )
 
-    # ── Methodology selection ──
-    from consumer_research.pipeline.validate import select_methodology
-    methodology = select_methodology(
-        corpus_size=len(filtered),
-        methodology=config.analysis.methodology,
-        threshold=config.analysis.full_read_threshold,
-    )
-    logger.info(f"Methodology selected: {methodology} (corpus={len(filtered)}, threshold={config.analysis.full_read_threshold})")
-
     # ── Stage 4: Analysis ──
+    # Note: the automated pipeline always uses LLM-backed analysis regardless of corpus size.
+    # "In-context" vs "keyword_narrative" is a workflow-level distinction, not a code branch:
+    # - Automated pipeline (this path): always calls analyze_corpus() via the LLM API
+    # - Manual in-context workflow: a human reads items directly inside a Claude Code session
     logger.info("\n── STAGE 4: ANALYSIS ──")
     analysis = analyze_corpus(
         filtered,

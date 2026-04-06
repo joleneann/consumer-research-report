@@ -205,10 +205,22 @@ def synthesize_insights(
     )
     (insights_dir / "synthesis_prompt.txt").write_text(prompt, encoding="utf-8")
 
+    if failed_insights:
+        logger.warning(
+            f"{len(failed_insights)} insight(s) failed quality gates and will be excluded from scoring/report:"
+        )
+        for fi in failed_insights:
+            gates_failed = [g for g, v in [
+                ("grounded", fi.is_grounded), ("non_obvious", fi.is_non_obvious),
+                ("actionable", fi.is_actionable), ("specific", fi.is_specific),
+                ("falsifiable", fi.is_falsifiable),
+            ] if not v]
+            logger.warning(f"  - {fi.insight_id} ({fi.supporting_theme_ids}): failed {gates_failed}")
+
     logger.info(
         f"Insight synthesis: {len(all_insights)} generated, "
         f"{len(passed_insights)} passed quality gates, "
-        f"{len(failed_insights)} demoted to observations"
+        f"{len(failed_insights)} excluded from report"
     )
 
-    return all_insights
+    return passed_insights

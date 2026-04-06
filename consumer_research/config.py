@@ -47,13 +47,6 @@ class AnalysisConfig:
     max_corpus_size: int = 999_999  # No cap — always analyze everything collected
     min_items_for_theme: int = 3  # minimum supporting items for a theme
     min_items_for_insight: int = 3  # minimum items for insight quality gate
-    # Methodology selection: "auto" picks based on corpus size
-    # "in_context_full" = session LLM reads every item (small corpus)
-    # "keyword_narrative" = keyword classification + mandatory narrative review (large corpus)
-    # No external API calls in either mode — all analysis done by the Claude Code session
-    methodology: str = "auto"
-    # Threshold for auto methodology selection
-    full_read_threshold: int = 1000  # Below this: session LLM reads every item. Above: keyword + narrative pass
     # Narrative review enforcement
     max_unthemed_pct: float = 0.10  # Pipeline refuses to proceed to Stage 5 if unthemed > this
     narrative_pass_required: bool = True  # ALWAYS True — never skip narrative review

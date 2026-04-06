@@ -375,15 +375,26 @@ def _classify_sentiment(
                     secondary_emotion=secondary_emotion,
                 ))
 
-            # Check for incomplete LLM response
+            # Check for incomplete LLM response — assign neutral defaults so corpus totals stay consistent
             returned_ids = {d["item_id"] for d in parsed if "item_id" in d}
             sent_ids = {item.item_id for item in batch}
             missing_ids = sent_ids - returned_ids
             if missing_ids:
                 logger.warning(
                     f"  Sentiment batch {i // batch_size + 1}: LLM returned {len(parsed)}/{len(batch)} items. "
-                    f"Missing {len(missing_ids)} item(s): {list(missing_ids)[:5]}"
+                    f"Assigning neutral defaults to {len(missing_ids)} missing item(s): {list(missing_ids)[:5]}"
                 )
+                for mid in missing_ids:
+                    results.append(SentimentResult(
+                        item_id=mid,
+                        sentiment=Sentiment.NEUTRAL,
+                        sentiment_score=0.5,
+                        reasoning="LLM did not return classification for this item",
+                        key_phrases=[],
+                        aspects=[],
+                        primary_emotion=Emotion.NONE,
+                        emotion_intensity=0.0,
+                    ))
 
             logger.info(f"  Sentiment batch {i // batch_size + 1}: {len(parsed)} classified")
 

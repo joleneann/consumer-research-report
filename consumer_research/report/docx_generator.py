@@ -432,10 +432,9 @@ def _section_sentiment(doc: Document, analysis: AnalysisResults, run_dir: Path):
         f"Neutral: {sent.get('neutral', 0)} ({sent.get('neutral', 0) / max(total_sent, 1):.1%})"
     ))
     _body(doc, (
-        "NSS is computed as (positive - negative) / total. Range: -1.0 (all negative) to +1.0 (all positive). "
-        "A positive NSS indicates favourable overall sentiment; a negative NSS indicates unfavourable. "
-        "Neutral items (typically informational posts) are excluded from the NSS denominator in line with "
-        "Brandwatch / YouGov methodology."
+        "NSS is computed as (positive - negative) / total items. Range: -1.0 (all negative) to +1.0 (all positive). "
+        "Neutral and mixed items remain in the denominator, anchoring the score to the full corpus rather than "
+        "just polarised items. A positive NSS indicates net favourable sentiment; a negative NSS indicates net unfavourable."
     ), italic=True, color=GREY_MED)
 
     _add_chart(doc, run_dir / "report" / "chart_sentiment.png",

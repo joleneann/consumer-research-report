@@ -54,7 +54,7 @@ def normalize_and_deduplicate(
 
     # Sort by engagement (highest first) so we keep the best comments per thread
     deduped.sort(
-        key=lambda x: x.platform_metadata.score or 0,
+        key=lambda x: x.platform_metadata.score or x.platform_metadata.like_count or 0,
         reverse=True,
     )
 
