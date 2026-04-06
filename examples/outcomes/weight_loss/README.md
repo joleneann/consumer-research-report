@@ -1,4 +1,4 @@
-# Weight Loss in India — Consumer Sentiment Study
+# Weight Loss Medication in India — Consumer Sentiment Study
 
 ## Report
 
