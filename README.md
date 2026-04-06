@@ -34,15 +34,15 @@ See [What you need](#what-you-need-to-run-this) below, then [Quick Start](#quick
 ## What This Does
 
 - Accepts a brief: brand, category, geography, competitors, business questions
-- Collects from Reddit, YouTube, NewsData.io, OpenAlex, Google Trends, Serper — or ingests any pre-collected JSON
+- Collects from Reddit, YouTube, NewsData.io, OpenAlex, Google Trends, Serper - or ingests any pre-collected JSON
 - Normalizes all sources into a common schema with deterministic SHA-256 item IDs
 - Filters irrelevant content using LLM classification (multilingual, handles Hindi/Hinglish)
-- Extracts themes inductively from the corpus using a two-pass LLM approach — no predefined keyword lists
+- Extracts themes inductively from the corpus using a two-pass LLM approach - no predefined keyword lists
 - Synthesizes one structured insight per theme (Observation / Insight / Implication / Recommendation)
-- Scores each insight with data-driven confidence and signal metrics — no LLM judgment in scoring
+- Scores each insight with data-driven confidence and signal metrics - no LLM judgment in scoring
 - Generates charts and a versioned DOCX report
 
-Themes emerge from the data. If consumers are discussing something the brief never anticipated — a cultural reference, a misinformation narrative, an untracked quality perception — it surfaces.
+Themes emerge from the data. If consumers are discussing something the brief never anticipated - a cultural reference, a misinformation narrative, an untracked quality perception - it surfaces.
 
 ---
 
@@ -113,7 +113,7 @@ Brief -> Collect -> Normalize -> Filter -> Analyze -> Synthesize -> Score -> Rep
   [0]      [1]        [2]         [3]       [4]         [5]          [6]      [7]
 ```
 
-Every stage writes artifacts to `consumer_research/runs/<run_id>/`. If the pipeline fails, resume from the last completed stage — no re-collection, no wasted API calls.
+Every stage writes artifacts to `consumer_research/runs/<run_id>/`. If the pipeline fails, resume from the last completed stage - no re-collection, no wasted API calls.
 
 | Stage | What it does | Output |
 |-------|-------------|--------|
@@ -168,10 +168,10 @@ scripts/               Utility scripts: resume, re-score, regenerate report
 
 ## Documentation
 
-- [`CLAUDE.md`](CLAUDE.md) — Architecture, procedures, failure modes (developer reference)
-- [`docs/methodology.docx`](docs/methodology.docx) — Research methodology (client-facing)
-- [`docs/product_documentation.docx`](docs/product_documentation.docx) — Product guide
-- [`docs/running_with_your_own_data.md`](docs/running_with_your_own_data.md) — Bring-your-own-data guide
+- [`CLAUDE.md`](CLAUDE.md) - Architecture, procedures, failure modes (developer reference)
+- [`docs/methodology.docx`](docs/methodology.docx) - Research methodology (client-facing)
+- [`docs/product_documentation.docx`](docs/product_documentation.docx) - Product guide
+- [`docs/running_with_your_own_data.md`](docs/running_with_your_own_data.md) - Bring-your-own-data guide
 
 ---
 
@@ -181,7 +181,7 @@ Social listening methodology has structural limitations that cannot be fully eli
 
 - **Query framing bias**: Keywords presuppose contexts. You find what you search for.
 - **Platform demographic bias**: Reddit skews male/urban. YouTube skews extreme reactions. No demographic weighting applied.
-- **No sampling frame**: Prevalence is meaningful within the corpus only — never projectable to the general population.
+- **No sampling frame**: Prevalence is meaningful within the corpus only - never projectable to the general population.
 - **Engagement filter**: Minimum upvote/like thresholds exclude moderate consumers and over-index on extreme sentiment.
 - **No demographic data**: No platform provides verified age, gender, or location. Any demographic inference is speculative.
 - **Language gaps**: English and Hindi/Hinglish supported. Tamil, Telugu, Bengali, Marathi, Kannada are not.
