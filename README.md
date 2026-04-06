@@ -40,36 +40,43 @@ Every stage writes artifacts to disk. If the pipeline crashes, resume from the l
 
 ## Data Sources
 
+The pipeline supports both free and paid APIs, and can also ingest pre-collected data from any source via JSON.
+
 | Source | What it captures | Cost |
 |--------|-----------------|------|
-| Reddit | Long-form consumer opinion, complaints, comparisons | Free (rate limited) |
-| YouTube | Reactions to brand content, ad responses | Free (10K quota/day) |
-| NewsData.io | Media narrative, regulatory coverage | Free (200 credits/day) |
+| Reddit | Long-form consumer opinion, complaints, comparisons | Free (rate limited) or paid API |
+| YouTube | Reactions to brand content, ad responses | Free (10K quota/day) or paid API |
+| NewsData.io | Media narrative, regulatory coverage | Free (200 credits/day) or paid tier |
 | OpenAlex | Academic research, peer-reviewed context | Free (100K+/day) |
 | Google Trends | Search interest over time (quantitative layer) | Free |
-| Serper (Google) | Web-wide review sites, forums, articles | Free (2,500 queries) |
+| Serper (Google) | Web-wide review sites, forums, articles | Free (2,500 queries) or paid tier |
 | Twitter/X, Instagram | External data ingestion (any JSON format) | Bring your own data |
+| Any pre-collected data | JSON files from any scraper, export, or vendor | Bring your own data |
+
+**The sample report** was generated from pre-collected data (Reddit, Instagram, YouTube) ingested via JSON — demonstrating the flexible ingestion path rather than the built-in collectors.
 
 ## Quick Start
 
 ```bash
 # Clone and install
-git clone https://github.com/yourusername/consumer-research.git
-cd consumer-research
+git clone https://github.com/joleneann/consumer-research-report.git
+cd consumer-research-report
 pip install -r requirements.txt
 
-# Set API keys (only needed for automated pipeline runs)
-# Analysis runs at zero cost inside Claude Code / Claude Max
-echo "ANTHROPIC_API_KEY=sk-ant-..." > .env
+# Option 1: Run from pre-collected data (JSON file)
+# See studies/weight_loss/run_weight_loss.py for a complete example
+python studies/weight_loss/run_weight_loss.py
 
-# Run the pipeline
+# Option 2: Run the full pipeline with built-in collectors
+# Set API keys first
+echo "ANTHROPIC_API_KEY=sk-ant-..." > .env
 python -m consumer_research.run \
   --brand "Brand Name" \
   --category "Product Category" \
   --geo IN \
-  --objectives "What do consumers think about quality?" "How does pricing compare to competitors?"
+  --objectives "What do consumers think about quality?"
 
-# Or re-score and regenerate from existing data (no API needed)
+# Re-score and regenerate from existing run data (no API needed)
 python stage6_7_score_report.py [run_id]
 python regenerate_report.py [run_id]
 ```
