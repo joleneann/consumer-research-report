@@ -1,6 +1,6 @@
 # Brand Sentiment Report Generator
 
-Consumer Research Report Generator is a production-style decision-support system that turns a brand brief into a scored, client-ready consumer research report.
+A production-style decision-support system that turns a brand brief into a scored, client-ready consumer research report.
 
 Given a brand, category, geography, and business questions, the pipeline collects evidence from noisy online sources, normalizes it into a shared schema, filters for relevance, analyzes sentiment and themes, scores confidence from data, and generates a versioned DOCX deliverable.
 
