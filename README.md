@@ -16,7 +16,7 @@ Traditional consumer research costs $50-200K per study and takes 6-8 weeks. Soci
 
 ## Sample Output
 
-See [`docs/sample-reports/Weight_Loss_India_Consumer_Sentiment.docx`](docs/sample-reports/Weight_Loss_India_Consumer_Sentiment.docx) — a full report analyzing 2,526 consumer conversations about weight loss products in India across Reddit, Instagram, and YouTube. 15 insights, radar charts per theme, Brand Health Score, and methodology disclosure.
+See [`sample-reports/Weight_Loss_India_Consumer_Sentiment.docx`](sample-reports/Weight_Loss_India_Consumer_Sentiment.docx) — a full report analyzing 2,526 consumer conversations about weight loss products in India across Reddit, Instagram, and YouTube. 15 insights, radar charts per theme, Brand Health Score, and methodology disclosure.
 
 ## Pipeline
 
