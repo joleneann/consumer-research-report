@@ -20,7 +20,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from uuid import uuid4
 
-ROOT = Path(__file__).parent
+ROOT = Path(__file__).parent.parent.parent.parent  # examples/studies/weight_loss/ -> repo root
 sys.path.insert(0, str(ROOT))
 
 logging.basicConfig(
@@ -31,7 +31,7 @@ logging.basicConfig(
 logger = logging.getLogger("run_weight_loss")
 
 # ── Constants ──
-DATA_FILE = ROOT / "data weight loss.json"
+DATA_FILE = ROOT / "data" / "weight_loss.json"
 BRAND_NAME = "Weight Loss"
 CATEGORY = "health & wellness / pharmaceutical"
 MIN_CONTENT_LENGTH = 10  # Skip posts with fewer chars

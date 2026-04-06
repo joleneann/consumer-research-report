@@ -10,6 +10,12 @@ consumer_research/runs/
 # Large external datasets
 data/
 
+# Old tests location (replaced by top-level tests/)
+consumer_research/tests/
+
+# Study-specific scratch files and per-run scripts (not examples/)
+studies/
+
 # Doc backups
 *.bak
 *.bak2

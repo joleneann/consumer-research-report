@@ -1,0 +1,19 @@
+{
+  "brand_name": "Weight Loss",
+  "category": "health & wellness / pharmaceutical",
+  "geographic_focus": "IN",
+  "time_period_days": 730,
+  "business_objectives": [
+    "Understand the full weight loss conversation landscape in India - drugs, diets, surgery, Ayurveda, fitness",
+    "Map consumer perceptions of GLP-1 drugs (Ozempic, Mounjaro, Wegovy, Saxenda) in India",
+    "Identify safety concerns and side effects consumers are reporting or worried about",
+    "Understand cost and accessibility barriers for weight loss treatments in India",
+    "Explore how traditional/Ayurvedic remedies are discussed vs modern pharmaceuticals",
+    "Identify the role of influencers and medical professionals in shaping opinions",
+    "Understand how diet plans and lifestyle approaches are discussed alongside drug treatments",
+    "Surface demographic and regional differences in weight loss attitudes across India"
+  ],
+  "competitors": [],
+  "data_sources": "Pre-collected data ingested via JSON (Reddit, YouTube, Instagram, Twitter, News)",
+  "note": "This brief was used to configure Stages 2-7. Stage 1 (collection) was skipped."
+}

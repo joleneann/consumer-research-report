@@ -57,10 +57,9 @@ consumer_research/
   report/charts.py             — Matplotlib chart generation (Tufte-inspired, 11 chart types)
   report/templates/styles.css  — Consulting design spec
   report/templates/report.html — Jinja2 report template
-# Root-level entry points
-stage6_7_score_report.py       — Stages 6+7: data-driven scoring + chart/DOCX generation (no API). Loads config from run's config.json. Usage: `python stage6_7_score_report.py [run_id]` (defaults to latest run)
-regenerate_report.py           — Regenerate DOCX from existing scored data (no API). Usage: `python regenerate_report.py [run_id]` (defaults to latest run)
-# scripts/ — generic utilities
+# scripts/ — all runnable scripts
+scripts/stage6_7_score_report.py — Stages 6+7: data-driven scoring + chart/DOCX generation (no API). Loads config from run's config.json. Usage: `python scripts/stage6_7_score_report.py [run_id]` (defaults to latest run)
+scripts/regenerate_report.py   — Regenerate DOCX from existing scored data (no API). Usage: `python scripts/regenerate_report.py [run_id]` (defaults to latest run)
 scripts/fix_quotes.py          — Fix representative quotes: quality scoring, cross-theme dedup, consumer voice priority (per-study)
 scripts/add_narrative_themes.py — Add narrative themes missed by keyword pass (per-study). See Procedure 15
 scripts/resume_stage3.py       — Resume from Stage 3. Usage: `python scripts/resume_stage3.py <run_id>`
@@ -68,10 +67,10 @@ scripts/resume_stage4.py       — Resume from Stage 4. Usage: `python scripts/r
 scripts/rescore.py             — Re-score insights (data-driven, no API)
 scripts/resynthesize.py        — Re-synthesize insights via API
 scripts/export_to_excel.py     — Export run data to Excel
-# studies/ — per-study analysis scripts (each study has its own hardcoded themes/insights)
-studies/weight_loss/           — run_weight_loss.py, stage4_analysis.py, stage5_synthesis.py
-studies/make_in_india/         — run_make_in_india.py, stage3-5 scripts
-studies/thums_up/              — redo_thumsup.py, redo_thumsup_insights.py
+# examples/ — showcase artifacts and per-study scripts
+examples/studies/weight_loss/  — run_weight_loss.py, stage4_analysis.py, stage5_synthesis.py
+examples/outcomes/             — DOCX reports, manifests, READMEs for all completed studies
+examples/briefs/               — Research brief JSONs for all completed studies
 # data/ — raw input data files (gitignored)
 data/                          — make_in_india.json, weight_loss.json, working samples
 ```
@@ -199,7 +198,7 @@ Field names are auto-detected (text/content/body/message, source/platform/channe
 - **Executive Summary**: Opens with total items, NSS, insight count + theme count. Names top 3 insights by confidence. "Top Insights at a Glance" table shows top 5 by confidence with Confidence% and Signal% columns. No quadrant labels anywhere.
 - **Recommendations section**: Sorted by confidence (primary) then signal (tiebreaker). Headings are "Recommendation 01", "Recommendation 02", etc. — no quadrant bracket labels.
 - **Radar charts**: Named `chart_radar_{insight_id}.png` — never positional. Title = theme label only (no INS_xxx). Looked up by `ins.insight_id` in deep dives. One radar per insight (count varies per run). Total chart count = 6 standard + N radar charts.
-- **Regeneration**: `regenerate_report.py [run_id]` calls `generate_all_charts()` then `generate_docx_report()`. Defaults to latest run if no run_id given. Loads config from `config.json`. Always regenerate charts before DOCX to pick up any changes.
+- **Regeneration**: `scripts/regenerate_report.py [run_id]` calls `generate_all_charts()` then `generate_docx_report()`. Defaults to latest run if no run_id given. Loads config from `config.json`. Always regenerate charts before DOCX to pick up any changes.
 
 ## Report Naming Convention
 Reports use serial numbering: `report_v001.docx`, `report_v002.docx`, etc. Each regeneration auto-increments. Never overwrite previous versions. The generator scans for existing `report_v*.docx` files and picks the next number using numeric max (not alphabetical sort — mixed zero-padded versions break alphabetical).
@@ -256,7 +255,7 @@ Reports use serial numbering: `report_v001.docx`, `report_v002.docx`, etc. Each 
 | Main CLI doesn't produce DOCX | `run.py` → `run_pipeline()` → Stage 7 only generated PDF/PPTX. The flagship DOCX artifact required separate scripts. | **FIXED**: Orchestrator Stage 7 now calls `generate_all_charts()` + `generate_docx_report()` alongside PDF/PPTX. | The main entry point must produce the primary deliverable. |
 | Adaptive methodology never called | `select_methodology()` defined in `validate.py` but never called in the orchestrator. | **FIXED**: Orchestrator now calls `select_methodology()` before Stage 4 and logs the result. | Methodology selection must be called and logged even if the analysis path doesn't branch on it yet. |
 | Failed run printed as success | `run.py` always printed "Run complete" even when pipeline aborted at theme coverage gate. | **FIXED**: Checks for `summary.json` (only written on full completion). Prints "Run INCOMPLETE" and exits with code 1 if missing. | Never report success without verifying the run completed fully. |
-| "Latest run" picks wrong directory | `stage6_7_score_report.py` and `regenerate_report.py` sorted run dirs by name, not modification time. Mixed naming schemes broke lexical sort. | **FIXED**: Sort by `p.stat().st_mtime` instead of `p.name`. | Always sort run directories by modification time, not by name. |
+| "Latest run" picks wrong directory | `scripts/stage6_7_score_report.py` and `scripts/regenerate_report.py` sorted run dirs by name, not modification time. Mixed naming schemes broke lexical sort. | **FIXED**: Sort by `p.stat().st_mtime` instead of `p.name`. | Always sort run directories by modification time, not by name. |
 | Non-deterministic keyword order | `_generate_brand_variants()` used `list(set(...))` — undefined order across Python runs. | **FIXED**: Changed to `sorted(set(...))` for deterministic output. | Never use `list(set(...))` for reproducible pipelines. Always `sorted(set(...))`. |
 | DOCX insight count shows theme count | Cover page and Insight Landscape used `len(analysis.themes)` instead of `len(scored_insights)`. If synthesis under-generated, count was wrong. | **FIXED**: Both locations now use `len(scored_insights)`. | Insight count must always come from scored insights, not themes. |
 | Missing dependencies in requirements.txt | `python-docx` (needed by docx_generator.py) and `google-genai` (needed by llm_client.py) not listed. Fresh clone would fail. | **FIXED**: Both added to `requirements.txt`. | All imports must have corresponding entries in requirements.txt. |
@@ -274,8 +273,8 @@ Reports use serial numbering: `report_v001.docx`, `report_v002.docx`, etc. Each 
 10. **Verify theme quality after Stage 4**: Each theme should have ≥20 items and ≥1.5% prevalence for a 900+ item corpus. If themes are smaller, check that two-pass extraction ran (look for "Theme mapping: batch X/Y done" in logs).
 11. **In-context synthesis**: When running inside Claude Code, synthesize insights directly in the session by reading theme data from `analysis/results.json` and writing insights to `insights/insights.json`. Then run `rescore.py` (data-driven, no API needed). This avoids burning Anthropic API credits. Only use external API calls via `resynthesize.py` during automated pipeline runs.
 12. **Before re-running synthesis**: Always back up `insights/` and `scored/` directories first. A failed synthesis (e.g., depleted credits) will overwrite existing data with empty arrays.
-13. **External data ingestion**: Use `pipeline/ingest.py` for any pre-collected data: `from consumer_research.pipeline.ingest import ingest_external_data; items = ingest_external_data(Path("data/myfile.json"))`. Auto-detects format (platform-scraped with nested comments, simple flat list, or pre-normalized). For study-specific orchestration scripts, see `studies/weight_loss/run_weight_loss.py` as a template. Always add new platforms to `SourcePlatform` enum first.
-14. **In-context analysis workflow**: When running all analysis in-context (no API): (a) keyword-based relevance filter for Stage 3, (b) keyword-based sentiment/emotion/ABSA for Stage 4, (c) read stratified sample to discover themes then keyword-map all items, **(d) MANDATORY: narrative theme review pass** (see Procedure 15), (e) synthesise insights by reading theme quotes and writing Observation/Insight/Implication/Recommendation, (f) run `score_insights()` and `compute_brand_health()` (code-based, no API), (g) run `generate_all_charts()` then `generate_docx_report()`. Scripts: `studies/*/stage4_analysis*.py`, `studies/*/stage5_synthesis*.py`, `stage6_7_score_report.py`, `scripts/fix_quotes.py`, `scripts/add_narrative_themes.py`.
+13. **External data ingestion**: Use `pipeline/ingest.py` for any pre-collected data: `from consumer_research.pipeline.ingest import ingest_external_data; items = ingest_external_data(Path("data/myfile.json"))`. Auto-detects format (platform-scraped with nested comments, simple flat list, or pre-normalized). For study-specific orchestration scripts, see `examples/studies/weight_loss/run_weight_loss.py` as a template. Always add new platforms to `SourcePlatform` enum first.
+14. **In-context analysis workflow**: When running all analysis in-context (no API): (a) keyword-based relevance filter for Stage 3, (b) keyword-based sentiment/emotion/ABSA for Stage 4, (c) read stratified sample to discover themes then keyword-map all items, **(d) MANDATORY: narrative theme review pass** (see Procedure 15), (e) synthesise insights by reading theme quotes and writing Observation/Insight/Implication/Recommendation, (f) run `score_insights()` and `compute_brand_health()` (code-based, no API), (g) run `generate_all_charts()` then `generate_docx_report()`. Scripts: `examples/studies/*/stage4_analysis*.py`, `examples/studies/*/stage5_synthesis*.py`, `scripts/stage6_7_score_report.py`, `scripts/fix_quotes.py`, `scripts/add_narrative_themes.py`.
 15. **MANDATORY: Narrative theme review pass (never skip)**. After keyword-based theme mapping, check how many items remain unthemed. Read **ALL unthemed items** plus a **10% random sample of themed items** (for misclassification and cross-cutting patterns). If this total exceeds what fits in context, read in batches until all unthemed items are covered. Look specifically for **narrative patterns that keywords cannot detect**: (a) cultural/celebrity references and speculation, (b) misinformation and miracle-claim framing, (c) stigma, shame, and moral debate, (d) sarcasm, irony, and memes, (e) cross-cutting emotional narratives. The completion criterion is: **unthemed items must be below 10% of corpus**. If above 10%, keep reading and classifying until they are. Add discovered themes via `scripts/add_narrative_themes.py` pattern. **This step was skipped once and resulted in missing themes containing 21% of the corpus. Never skip it again.**
 
 ## Stage 4 Theme Extraction Architecture (Critical — Do Not Revert)

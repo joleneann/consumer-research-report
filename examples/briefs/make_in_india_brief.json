@@ -1,0 +1,19 @@
+{
+  "brand_name": "Make in India",
+  "category": "government initiative / economic policy / consumer nationalism",
+  "geographic_focus": "IN",
+  "time_period_days": 365,
+  "business_objectives": [
+    "Understand public sentiment toward the Make in India initiative - is it seen as succeeding or failing?",
+    "Map consumer purchase behaviour - are people actually buying Indian over imported? What drives the choice?",
+    "Assess Vocal for Local adoption - has it translated into sustained behaviour change or is it performative?",
+    "Identify quality perception gaps - how do consumers perceive Made in India product quality vs. imports?",
+    "Surface sector-specific perceptions - which sectors are seen as MII successes vs. failures?",
+    "Understand how US-India tariff tensions and trade war have shaped the Make in India conversation in 2025",
+    "Explore the nationalism vs. pragmatism tension - where does patriotic buying end and practical choice begin?",
+    "Assess how Indian startups, D2C brands, and homegrown companies are perceived in this conversation"
+  ],
+  "competitors": [],
+  "data_sources": "Pre-collected data ingested via JSON (Reddit, YouTube, Instagram, Twitter, News)",
+  "note": "This brief was used to configure Stages 2-7. Stage 1 (collection) was skipped."
+}

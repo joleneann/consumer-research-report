@@ -1,0 +1,16 @@
+{
+  "brand_name": "Thums Up",
+  "category": "cola beverage",
+  "geographic_focus": "IN",
+  "time_period_days": 180,
+  "business_objectives": [
+    "Understand current brand perception among Indian consumers",
+    "Identify key product associations and usage occasions",
+    "Find competitive positioning vs Coca-Cola and Pepsi",
+    "Surface any product quality or safety concerns",
+    "Discover untapped marketing opportunities"
+  ],
+  "competitors": [],
+  "data_sources": "Pre-collected data ingested via JSON (Reddit, YouTube, Instagram, Twitter, News)",
+  "note": "This brief was used to configure Stages 2-7. Stage 1 (collection) was skipped."
+}

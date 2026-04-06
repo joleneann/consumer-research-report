@@ -7,7 +7,7 @@ from pathlib import Path
 from datetime import datetime, timezone
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
-ROOT = Path(__file__).parent
+ROOT = Path(__file__).parent.parent  # scripts/ -> repo root
 sys.path.insert(0, str(ROOT))
 
 import logging

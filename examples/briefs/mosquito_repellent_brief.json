@@ -1,0 +1,19 @@
+{
+  "brand_name": "Mosquito Repellent",
+  "category": "household insect protection / personal care",
+  "geographic_focus": "",
+  "time_period_days": 365,
+  "business_objectives": [
+    "Understand how mosquitoes disrupt sleep and what consumers do about it",
+    "Map the product category landscape: coils, vaporizers, sprays, nets, electronic devices, natural remedies",
+    "Identify which brands surface organically in consumer conversation",
+    "Surface safety and health concerns around chemical repellents (DEET, transfluthrin, prallethrin), especially for children and babies",
+    "Explore the natural vs chemical repellent tension and what drives consumer choice",
+    "Identify unmet needs and product innovation opportunities",
+    "Understand use context segmentation: indoor nighttime vs outdoor/hiking vs travel vs baby/child protection",
+    "Assess how disease prevention (dengue, malaria) fear drives repellent purchase vs simple comfort/annoyance"
+  ],
+  "competitors": [],
+  "data_sources": "Pre-collected data ingested via JSON (Reddit, YouTube, Instagram, Twitter, News)",
+  "note": "This brief was used to configure Stages 2-7. Stage 1 (collection) was skipped."
+}

@@ -1,0 +1,35 @@
+{
+  "study": "Weight Loss in India \u2014 Consumer Sentiment Study",
+  "run_id": "20260401_164702_43c1ea",
+  "pipeline_version": "consumer_research v1.0",
+  "artifacts": {
+    "report": "weight_loss_report.docx",
+    "brief": "../../briefs/weight_loss_brief.json",
+    "run_config": "config.json (in examples/outcomes/weight_loss/ for weight_loss)",
+    "scored_insights": "scored_insights.json (in examples/outcomes/weight_loss/ for weight_loss)"
+  },
+  "corpus_stats": {
+    "items_analysed": 2526,
+    "platforms": {
+      "instagram": 975,
+      "reddit": 1397,
+      "youtube": 154
+    },
+    "themes_extracted": 15,
+    "insights_generated": 15,
+    "net_sentiment_score": "+22.9%",
+    "brand_health_score": "80.8/100"
+  },
+  "pipeline_stages_run": [
+    "normalize",
+    "filter",
+    "analyze",
+    "synthesize",
+    "score",
+    "report"
+  ],
+  "stages_skipped": [
+    "collect"
+  ],
+  "data_note": "Pre-collected data from Reddit, Instagram, YouTube. Covers Feb 2024 - Feb 2026."
+}
