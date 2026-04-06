@@ -2,15 +2,13 @@
 Consuma AI/
 Consuma Sample Reports/
 Jolene Growth Handover/
-Research Use Cases - Rapid Research Platform.pdf
+docs/Research Use Cases - Rapid Research Platform.pdf
 
 # Pipeline run outputs (large, contain raw data)
 consumer_research/runs/
 
 # Large external datasets
-data weight loss.json
-data make in india.json
-mii_*.txt
+data/
 
 # Doc backups
 *.bak
@@ -47,6 +45,12 @@ venv/
 # OS
 .DS_Store
 Thumbs.db
+
+# Other agent config files
+AGENTS.md
+
+# WIP architecture diagram (not ready yet)
+docs/pipeline_flowchart.html
 
 # Claude Code
 .claude/

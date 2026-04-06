@@ -1,0 +1,36 @@
+{
+  "run_id": "20260401_164702_43c1ea",
+  "created_at": "2026-04-01T11:17:05.275276Z",
+  "brand_name": "Weight Loss",
+  "category": "health & wellness / pharmaceutical",
+  "time_period_days": 730,
+  "keywords": [
+    "weight loss",
+    "weight loss drugs",
+    "Ozempic",
+    "Mounjaro",
+    "Wegovy",
+    "GLP-1",
+    "semaglutide",
+    "tirzepatide",
+    "bariatric",
+    "diet plan India"
+  ],
+  "business_objectives": [
+    "Understand the full weight loss conversation landscape in India - drugs, diets, surgery, Ayurveda, fitness",
+    "Map consumer perceptions of GLP-1 drugs (Ozempic, Mounjaro, Wegovy, Saxenda) in India",
+    "Identify safety concerns and side effects consumers are reporting or worried about",
+    "Understand cost and accessibility barriers for weight loss treatments in India",
+    "Explore how traditional/Ayurvedic remedies are discussed vs modern pharmaceuticals",
+    "Identify the role of influencers and medical professionals in shaping opinions",
+    "Understand how diet plans and lifestyle approaches are discussed alongside drug treatments",
+    "Surface demographic and regional differences in weight loss attitudes across India"
+  ],
+  "subreddits": [],
+  "trends_geo": "IN",
+  "news_country": "in",
+  "claude_model": "claude-sonnet-4-20250514",
+  "claude_temperature": 0.0,
+  "filter_prompt": null,
+  "analysis_prompts": null
+}

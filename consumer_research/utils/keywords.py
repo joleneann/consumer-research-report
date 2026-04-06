@@ -137,7 +137,7 @@ def _generate_brand_variants(brand: str) -> list[str]:
     elif "pepsi" in lower:
         variants.extend(["Pepsi Cola", "pepsi cola"])
 
-    return list(set(variants))
+    return sorted(set(variants))
 
 
 def _generate_category_terms(brand: str, category: str) -> list[str]:

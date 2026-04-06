@@ -7,7 +7,7 @@ Stage 3: Relevance Filtering → filtered/corpus.json + rejected.json
 Stage 4: Analysis → analysis/results.json (sentiment, themes, triangulation)
 Stage 5: Insight Synthesis → insights/insights.json
 Stage 6: Scoring → scored/scored_insights.json (confidence + signal strength)
-Stage 7: Report Generation → report/report.pdf + report.pptx
+Stage 7: Report Generation → report/report.docx + report.pdf + report.pptx
 
 Google Trends data is separated from the opinion pipeline and used as a
 quantitative validation layer in the report.
@@ -112,7 +112,7 @@ def run_pipeline(config: PipelineConfig, brief: ResearchBrief | None = None) -> 
 
     # ── Stage 3: Relevance Filtering ──
     logger.info("\n── STAGE 3: RELEVANCE FILTERING ──")
-    llm_client = create_llm_client()
+    llm_client = create_llm_client(model=config.analysis.claude_model)
 
     filtered = filter_corpus(
         corpus,
@@ -122,6 +122,15 @@ def run_pipeline(config: PipelineConfig, brief: ResearchBrief | None = None) -> 
         llm_client,
         batch_size=config.analysis.batch_size,
     )
+
+    # ── Methodology selection ──
+    from consumer_research.pipeline.validate import select_methodology
+    methodology = select_methodology(
+        corpus_size=len(filtered),
+        methodology=config.analysis.methodology,
+        threshold=config.analysis.full_read_threshold,
+    )
+    logger.info(f"Methodology selected: {methodology} (corpus={len(filtered)}, threshold={config.analysis.full_read_threshold})")
 
     # ── Stage 4: Analysis ──
     logger.info("\n── STAGE 4: ANALYSIS ──")
@@ -134,6 +143,29 @@ def run_pipeline(config: PipelineConfig, brief: ResearchBrief | None = None) -> 
         batch_size=config.analysis.batch_size,
         min_items_for_theme=config.analysis.min_items_for_theme,
     )
+
+    # ── Theme coverage validation gate (Procedure 15 enforcement) ──
+    themed_ids = set()
+    for theme in analysis.themes:
+        themed_ids.update(theme.supporting_item_ids)
+    unthemed_pct = 1.0 - (len(themed_ids) / len(filtered)) if filtered else 0.0
+    max_unthemed = getattr(config.analysis, "max_unthemed_pct", 0.10)
+    if unthemed_pct > max_unthemed:
+        logger.warning(
+            f"THEME COVERAGE GATE: {unthemed_pct:.1%} of items are unthemed "
+            f"(threshold: {max_unthemed:.0%}). "
+            f"Narrative review pass (Procedure 15) is required before proceeding to synthesis. "
+            f"Run scripts/add_narrative_themes.py or review unthemed items manually."
+        )
+        if getattr(config.analysis, "narrative_pass_required", True):
+            logger.error(
+                "Refusing to proceed to Stage 5 with >10% unthemed items. "
+                "Run narrative review pass first, then resume from Stage 5."
+            )
+            # Save what we have so the user can resume
+            return run_dir
+    else:
+        logger.info(f"Theme coverage: {1.0 - unthemed_pct:.1%} themed ({len(themed_ids)}/{len(filtered)} items) - PASSED")
 
     # ── Stage 5: Insight Synthesis ──
     logger.info("\n── STAGE 5: INSIGHT SYNTHESIS ──")
@@ -184,6 +216,17 @@ def run_pipeline(config: PipelineConfig, brief: ResearchBrief | None = None) -> 
         logger.info("PPTX report generated.")
     except ImportError:
         logger.warning("PPTX generator not yet implemented. Skipping PPTX.")
+
+    try:
+        from consumer_research.report.charts import generate_all_charts
+        from consumer_research.report.docx_generator import generate_docx_report
+        generate_all_charts(analysis, scored, filtered, report_dir)
+        generate_docx_report(scored, analysis, filtered, config, run_dir)
+        logger.info("DOCX report generated.")
+    except ImportError:
+        logger.warning("DOCX generator not available. Skipping DOCX.")
+    except Exception as e:
+        logger.error(f"DOCX generation failed: {e}")
 
     # ── Write Summary ──
     duration = time.time() - start_time

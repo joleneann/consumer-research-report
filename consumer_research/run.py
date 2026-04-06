@@ -81,7 +81,12 @@ def main():
     )
 
     run_dir = run_pipeline(config)
-    print(f"\nRun complete. Output: {run_dir}")
+    summary_path = run_dir / "summary.json"
+    if summary_path.exists():
+        print(f"\nRun complete. Output: {run_dir}")
+    else:
+        print(f"\nRun INCOMPLETE (stopped at validation gate). Partial output: {run_dir}")
+        sys.exit(1)
 
 
 if __name__ == "__main__":

@@ -129,6 +129,18 @@ def filter_corpus(
 
             # Map results back to items
             item_map = {item.item_id: item for item in batch}
+
+            # Check for incomplete LLM response — keep missing items (conservative)
+            returned_ids = {c.get("item_id") for c in classifications}
+            missing_ids = set(item_map.keys()) - returned_ids
+            if missing_ids:
+                logger.warning(
+                    f"  Filter batch: LLM returned {len(classifications)}/{len(batch)} items. "
+                    f"Keeping {len(missing_ids)} missing items as relevant (conservative)."
+                )
+                for mid in missing_ids:
+                    relevant_items.append(item_map[mid])
+
             for cls_data in classifications:
                 cls = RelevanceClassification(**cls_data)
                 all_classifications.append(cls)

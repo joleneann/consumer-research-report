@@ -8,7 +8,7 @@ Enterprise-grade brand perception analysis. Brief -> collect -> filter -> analyz
 - **Max volume always.** Every run uses maximum scraper limits. One quality report per day, not many weak ones.
 - **No collector crashes the pipeline.** All collector calls wrapped in `_safe_collect()`. Fail gracefully, log, continue.
 - **User brief first.** Never run without a user-approved brief. The brief drives keyword expansion.
-- **Data-driven scoring only.** Insights Matrix = Confidence × Signal Strength. Both axes from data. No LLM opinion on actionability.
+- **Data-driven scoring only.** Confidence × Signal Strength, both from data. Insights ranked by confidence (primary) and signal (tiebreaker). No quadrant labels, no LLM opinion on actionability.
 - **No AI slop.** Inter font throughout (headings and body), white bg, deep grey (#374151) text, navy (#1E3A5F) accent.
 
 ## Pipeline (8 stages, each writes artifacts to `runs/{run_id}/`)
@@ -39,7 +39,7 @@ consumer_research/
   run.py                       — CLI entry point
   models/schemas.py            — All Pydantic models (NormalizedItem, ScoredInsight, etc.)
   utils/llm_client.py          — Unified LLM client (Claude or Gemini)
-  utils/keywords.py            — Auto-expands brief → 50+ keywords
+  utils/keywords.py            — Auto-expands brief -> 50+ keywords
   utils/hashing.py             — Deterministic SHA-256 item IDs
   utils/rate_limiter.py        — Token-bucket rate limiter
   pipeline/brief.py            — Stage 0: structured research brief
@@ -49,20 +49,31 @@ consumer_research/
   pipeline/synthesize.py       — Stage 5: one insight per theme, mandatory coverage
   pipeline/scoring.py          — Stage 6: confidence (5 factors) + signal strength (4 factors) + Brand Health Score (0-100)
   pipeline/orchestrator.py     — Wires all stages, _safe_collect() wrapper
+  pipeline/ingest.py           — Generic data ingestion: auto-detects JSON format, handles scrapers + external data
+  pipeline/validate.py         — Validation gates: theme coverage check, methodology selector
   report/docx_generator.py     — python-docx DOCX report (flowing, Google Doc-compatible, serial-numbered)
-# Root-level scripts (external data / in-context analysis)
-run_weight_loss.py             — External data ingestion + full pipeline (template for new external datasets)
-stage4_analysis.py             — In-context Stage 4: keyword-based sentiment, emotion, ABSA, theme mapping (per-study)
-stage5_synthesis.py            — In-context Stage 5: insight synthesis (one per theme, written in-context, per-study)
-stage6_7_score_report.py       — Stages 6+7: data-driven scoring + chart/DOCX generation (no API). Loads config from run's config.json. Usage: `python stage6_7_score_report.py [run_id]` (defaults to latest run)
-fix_quotes.py                  — Fix representative quotes: quality scoring, cross-theme dedup, consumer voice priority (per-study)
-add_narrative_themes.py        — Add narrative themes missed by keyword pass (per-study). See Procedure 15
-regenerate_report.py           — Regenerate DOCX from existing scored data (no API). Usage: `python regenerate_report.py [run_id]` (defaults to latest run)
   report/pptx_generator.py     — python-pptx slide deck (legacy, no longer primary output)
-  report/pdf_generator.py      — WeasyPrint + Jinja2 HTML → PDF (legacy)
+  report/pdf_generator.py      — WeasyPrint + Jinja2 HTML -> PDF (legacy)
   report/charts.py             — Matplotlib chart generation (Tufte-inspired, 11 chart types)
   report/templates/styles.css  — Consulting design spec
   report/templates/report.html — Jinja2 report template
+# Root-level entry points
+stage6_7_score_report.py       — Stages 6+7: data-driven scoring + chart/DOCX generation (no API). Loads config from run's config.json. Usage: `python stage6_7_score_report.py [run_id]` (defaults to latest run)
+regenerate_report.py           — Regenerate DOCX from existing scored data (no API). Usage: `python regenerate_report.py [run_id]` (defaults to latest run)
+# scripts/ — generic utilities
+scripts/fix_quotes.py          — Fix representative quotes: quality scoring, cross-theme dedup, consumer voice priority (per-study)
+scripts/add_narrative_themes.py — Add narrative themes missed by keyword pass (per-study). See Procedure 15
+scripts/resume_stage3.py       — Resume from Stage 3. Usage: `python scripts/resume_stage3.py <run_id>`
+scripts/resume_stage4.py       — Resume from Stage 4. Usage: `python scripts/resume_stage4.py <run_id>`
+scripts/rescore.py             — Re-score insights (data-driven, no API)
+scripts/resynthesize.py        — Re-synthesize insights via API
+scripts/export_to_excel.py     — Export run data to Excel
+# studies/ — per-study analysis scripts (each study has its own hardcoded themes/insights)
+studies/weight_loss/           — run_weight_loss.py, stage4_analysis.py, stage5_synthesis.py
+studies/make_in_india/         — run_make_in_india.py, stage3-5 scripts
+studies/thums_up/              — redo_thumsup.py, redo_thumsup_insights.py
+# data/ — raw input data files (gitignored)
+data/                          — make_in_india.json, weight_loss.json, working samples
 ```
 
 ## Collection Defaults (MINIMUMS — do not reduce)
@@ -77,6 +88,67 @@ Reddit: 500 posts, 20 comments/post, min 3 upvotes | YouTube: 50 videos, 100 com
 
 **Why this matters**: In a prior run, category-only queries (e.g., "best [category]", "[category] review") returned 57% noise from YouTube - generic content unrelated to the brand under study. Root cause: brandless search terms plus brand name matching common words/gestures. All three layers prevent this from recurring.
 
+## Known Analytical Limitations (document honestly, never hide)
+These are structural limitations of social listening methodology. They cannot be fully eliminated - only mitigated and disclosed. Every report should acknowledge the ones relevant to that study.
+
+**Bias chain** (6 layers, each compounds the previous):
+```
+Brief scope → Keyword framing → Platform algorithms → Relevance filter → Engagement filter → Language
+```
+
+1. **Query framing bias** (CRITICAL): Keywords presuppose contexts. Searching "can't sleep mosquitoes" finds sleep disruption. Searching "dengue prevention" finds disease fear. You find what you search for. The keyword expansion engine (`keywords.py`) follows the brief's framing - it does not generate adversarial or blank-slate queries. This undermines the "discovery engine" claim for themes that the queries never touched. **Mitigation (not yet implemented)**: (a) mandatory blank-slate queries (brand name only, no context), (b) query attribution reporting showing which queries drove which themes, (c) adversarial query generation that deliberately searches for contexts the brief did NOT mention.
+
+2. **Platform demographic bias**: Reddit skews male/urban/18-34, Twitter skews politically engaged, YouTube comments skew toward extreme reactions, Instagram skews female/influencer-driven. We document this per-platform but do not weight items to correct for it. A corpus that is 60% Twitter will over-represent Twitter demographics regardless of what the actual consumer base looks like.
+
+3. **Unknown universe / no sampling frame**: Unlike surveys (n=1000 from population=10M), we have no denominator. Prevalence percentages are meaningful within the corpus only - never projectable. "33% of items mention sleep disruption" does NOT mean "33% of consumers experience sleep disruption." Always frame as "33% of online conversation."
+
+4. **Engagement filter excludes the silent majority**: Minimum upvotes/likes thresholds systematically exclude moderate, quiet consumers. The corpus over-indexes on extreme sentiment in both directions. The modal consumer opinion may never appear. **Mitigation (not yet implemented)**: include a random sample of below-threshold items alongside filtered ones.
+
+5. **No bot/astroturf detection**: Engagement thresholds filter some bots but zero detection of coordinated campaigns, paid reviews, brand-planted content, or bot networks. A brand could astroturf its own perception data.
+
+6. **Sarcasm/irony misclassification**: In keyword mode, "Oh great, another repellent that 'works'" registers as positive. The narrative review pass helps for unthemed items but does not audit already-themed items for sarcasm misclassification.
+
+7. **Influencer vs authentic voice conflated**: A 1M-subscriber sponsored review and a genuine Reddit complaint are weighted identically. No detection of sponsored content or follower-count weighting.
+
+8. **Near-duplicate inflation**: SHA-256 dedup catches exact copies but not paraphrases. Viral takes copy-pasted with slight modifications inflate theme prevalence.
+
+9. **Language coverage gaps**: English and Hindi/Hinglish supported. Tamil, Telugu, Bengali, Marathi, Kannada - representing hundreds of millions of consumers - are not. Non-English items often land in "unthemed" or get misclassified.
+
+10. **No temporal weighting in theme extraction**: A 6-month-old viral thread counts the same as last week's organic discussion in theme prevalence. Recency is scored at the insight level but not during theme extraction.
+
+11. **Cross-theme interactions invisible**: Items can belong to multiple themes but insights are one-per-theme. "Safety concerns about natural products" falls between themes and gets split rather than surfaced as a distinct interaction.
+
+12. **No reliable demographic data** (CRITICAL): No platform in this pipeline provides verified age, gender, or location for individual users. Reddit usernames are anonymous. Twitter/X does not expose demographics. YouTube comment authors have no verifiable profile data. Instagram provides follower counts but not demographics. Google Trends provides geographic data at state/city level but for search interest, not user identity. **What this means**: findings cannot be segmented by age, gender, income, or precise geography. Statements like "young consumers prefer natural remedies" or "women are more concerned about safety" are NOT supportable from this data. Any demographic inference (from subreddit type, language, cultural references) is speculative and must never be presented as fact. For demographic segmentation, commission a structured survey using this report's insights as stimulus.
+
+## Zero-API Architecture
+**No external API calls.** All analysis is performed by the Claude Code session itself - the model running this conversation IS the analysis engine. The Anthropic API is never called for sentiment, themes, or synthesis. This means:
+- $0 per run (included in Claude Code / Claude Max subscription)
+- No API key required for analysis (only for automated pipeline runs without Claude Code)
+- The session model reads the data, classifies it, and writes the results directly
+
+## Adaptive Methodology (corpus size determines approach)
+The pipeline automatically selects its analysis methodology based on corpus size (`config.analysis.methodology = "auto"`):
+
+**Small corpus (<=1,000 items)** -> `in_context_full`: Session LLM reads every item directly. Classifies sentiment, emotion, aspects, and themes by actually understanding the text. Highest quality - the model sees every consumer voice. Two-pass theme discovery + mapping still applies.
+
+**Large corpus (>1,000 items)** -> `keyword_narrative`: Keyword-based classification for initial sentiment and themes (fast, covers vocabulary-level patterns). Then **mandatory narrative review pass** (Procedure 15) where the session LLM reads ALL unthemed items + 10% sample of themed items to catch patterns keywords miss (cultural references, sarcasm, memes, emotional narratives). The narrative pass is enforced by a validation gate - the pipeline refuses to proceed to Stage 5 (synthesis) if >10% of items remain unthemed.
+
+Both approaches: zero API calls, same scoring/reporting pipeline, same insight quality. The methodology selection is logged. Override with `methodology: "in_context_full"` or `"keyword_narrative"` in `AnalysisConfig`.
+
+**Validation gate** (`pipeline/validate.py`): `validate_theme_coverage()` checks that >=90% of items are assigned to at least one theme. Called automatically in the orchestrator between Stage 4 and Stage 5. Also callable from any script via `from consumer_research.pipeline.validate import validate_theme_coverage`.
+
+## Flexible Data Ingestion
+The pipeline accepts data from any source via `pipeline/ingest.py`:
+
+**Built-in collectors**: Reddit, YouTube, News, Academic, Trends, Web Search (API-based collection)
+
+**External JSON** (pre-collected data): `ingest_external_data(path)` auto-detects format:
+- **Platform-scraped format**: `{metadata_content, engagements, comments, source}` - handles Twitter, YouTube, Reddit, Instagram with nested comments
+- **Simple format**: `[{text, source, url, date}]` - any flat list with a text field
+- **Pre-normalized format**: Already-normalized NormalizedItem dicts (pass-through)
+
+Field names are auto-detected (text/content/body/message, source/platform/channel, url/link/permalink, date/created_at/timestamp). No code changes needed for new data shapes - the ingester adapts.
+
 ## Insight Methodology
 1. **Observation**: What the data shows (theme + evidence)
 2. **Insight**: What it means for the consumer (the "why")
@@ -88,14 +160,14 @@ Reddit: 500 posts, 20 comments/post, min 3 upvotes | YouTube: 50 videos, 100 com
 
 **Quality gates** (all must pass): Grounded (≥3 sources), Non-obvious, Actionable, Specific, Falsifiable
 
-**In-context synthesis**: When Claude Code is running, synthesize insights directly in the session instead of calling the Anthropic API externally. The model running the session IS the analysis model. Only use external API calls during automated pipeline runs. This avoids burning API credits for work that can be done in-context.
+**In-context synthesis**: When Claude Code is running, synthesize insights directly in the session. The model running the session IS the analysis model. No external API calls needed - ever. All sentiment classification, theme extraction, and insight synthesis happens in-context at zero marginal cost.
 
 ## Scoring (fully data-driven)
 **Confidence** (5 factors, weights in `config.py: ScoringConfig`): Sample size (0.25), Source diversity (0.25), Temporal consistency (0.15), Internal agreement (0.20), Data recency (0.15). All factors use continuous logarithmic/percentile scoring for differentiation across insights.
 
 **Signal Strength** (4 factors, weights in `config.py: ScoringConfig`): Prevalence (0.35), Engagement level (0.30), Sentiment intensity (0.20), Conversation depth (0.15). Engagement uses percentile rank across insights to guarantee spread.
 
-**Matrix**: High confidence + Strong signal = **Key Finding** | High conf + Weak signal = **Emerging Trend** | Low conf + Strong signal = **Watch Closely** | Low + Low = **Noise**
+**Ranking**: Insights are sorted by confidence score (primary) then signal strength (tiebreaker). No quadrant labels — both scores are shown as percentages in the report, letting readers interpret relative strength directly. The matrix quadrant classification exists in the schema for backward compatibility but is NOT surfaced in the DOCX report. Thresholds: HIGH confidence >= 0.75, STRONG signal >= 0.75 (aligned with tier definitions).
 
 **Brand Health Score** (0-100, 5 components): Sentiment (0.30) + Engagement (0.25) + Advocacy (0.20) + Resilience (0.15) + Conversation (0.10). All data-driven. `scoring.py: compute_brand_health()`
 
@@ -125,7 +197,9 @@ Reddit: 500 posts, 20 comments/post, min 3 upvotes | YouTube: 50 videos, 100 com
 - **Brand Health section**: Components table followed by a conditional Note paragraph — if `conversation_component < 50`, adds a callout explaining what the low score means (thin organic conversation, reactive not spontaneous). This surfaces the "transactional brand" finding explicitly rather than burying it in a table row.
 - **Data Universe section**: Starts with a **Collection Funnel** table (3 rows: Raw collected → After dedup & engagement filter → After relevance classification) showing item counts and notes. Raw counts read from `run_dir/raw/*.json`, normalized from `run_dir/normalized/corpus.json`. Percentage of raw shown inline. Then Platform Breakdown table + platforms chart. Then Collection Methodology paragraph.
 - **Insight Landscape table**: 6 columns — Insight, Items, Prevalence in Dataset, Signal Strength, Confidence Score, NSS. Signal and Confidence joined from `scored_insights` by `theme_id`. No Insights Matrix chart.
-- **Insight Deep Dive structure** (exact order, do not change): (1) H2 heading with number + theme name, (2) single data line [quadrant | n= | Confidence | Signal | % of Dataset | NSS], (3) radar chart PNG, (4) What the Data Shows, (5) What it Means, (6) Business Implication & Rationale, (7) Recommendation, (8) Further Validation — no data stats here, (9) Representative Voices 2-3 quotes
+- **Insight Deep Dive structure** (exact order, do not change): (1) H2 heading with number + theme name, (2) single data line [n= | Confidence | Signal | % of Dataset | NSS], (3) radar chart PNG, (4) What the Data Shows, (5) What it Means, (6) Business Implication & Rationale, (7) Recommendation, (8) Further Validation — no data stats here, (9) Representative Voices 2-3 quotes
+- **Executive Summary**: Opens with total items, NSS, insight count + theme count. Names top 3 insights by confidence. "Top Insights at a Glance" table shows top 5 by confidence with Confidence% and Signal% columns. No quadrant labels anywhere.
+- **Recommendations section**: Sorted by confidence (primary) then signal (tiebreaker). Headings are "Recommendation 01", "Recommendation 02", etc. — no quadrant bracket labels.
 - **Radar charts**: Named `chart_radar_{insight_id}.png` — never positional. Title = theme label only (no INS_xxx). Looked up by `ins.insight_id` in deep dives. One radar per insight (count varies per run). Total chart count = 6 standard + N radar charts.
 - **Regeneration**: `regenerate_report.py [run_id]` calls `generate_all_charts()` then `generate_docx_report()`. Defaults to latest run if no run_id given. Loads config from `config.json`. Always regenerate charts before DOCX to pick up any changes.
 
@@ -177,6 +251,17 @@ Reports use serial numbering: `report_v001.docx`, `report_v002.docx`, etc. Each 
 | Data Provenance section hardcoded for specific brand | `_section_data_provenance()` had hardcoded platform table, geographic coverage, temporal coverage, and demographic accuracy text referencing a specific brand. None adapted to new runs. | **FIXED**: Section now derives everything from `items` parameter - platform table built from actual `source_platform` counts, date range from actual `source_timestamp` min/max, geographic coverage from `config.collection.trends_geo`, demographic bias text assembled from which platforms are actually present. No brand-specific references. | Data Provenance must NEVER contain hardcoded brand names, dates, platform lists, or subreddit names. Everything must be derived from the run's actual data and config. |
 | Radar charts identical across insights | Scoring used coarse bands (e.g., n>=100 -> 1.0, >=3 platforms -> 1.0) that saturated in large corpora. All insights got near-identical scores, producing identical-looking radar charts. | **FIXED**: Replaced band-based scoring with continuous functions: log-scaled sample size relative to corpus, Herfindahl diversity with balance penalty, temporal evenness across quartiles, exponential recency decay, percentile-ranked engagement. | Never use discrete bands for scoring factors. All factors must use continuous scoring that produces meaningful spread across the insight set. |
 | Methodology section hardcoded | Hardcoded "966 items", "claude-opus-4-6", "FMCG benchmark", "5 platforms", "Reddit >=3 upvotes", scoring weights as string literals. | **FIXED**: All values now derived from `config`, `analysis`, and `items` parameters. Platform list derived from actual data. Scoring weights read from `config.scoring`. | Methodology section must NEVER contain hardcoded numbers, model names, or platform lists. Everything derived from config and data. |
+| Scoring matrix threshold mismatch | `_matrix_quadrant()` used >= 0.5 for Key Finding but `_confidence_tier()` used >= 0.75 for HIGH. Result: MEDIUM-confidence insights labeled "Key Finding". In one run, 14/15 insights were Key Findings with 0 high-confidence insights. | **FIXED**: Matrix thresholds aligned to 0.75 for both confidence and signal, matching tier definitions. Quadrant labels removed from DOCX report entirely — insights now ranked by confidence score with both scores shown as percentages. | Matrix thresholds must always match tier thresholds. Never surface quadrant labels in the report — use continuous scores instead. |
+| LLM provider priority backwards | `create_llm_client()` docstring said "Claude first" but code tried Gemini first. `--model` CLI arg stored in config but never passed to LLM client. | **FIXED**: Auto-detect order swapped to Claude first. `create_llm_client()` now accepts optional `model` parameter. Orchestrator passes `config.analysis.claude_model`. | Provider priority: Claude → Gemini. Always pass model from config. |
+| Web search results mislabeled as NEWS | `SourcePlatform` had no `WEB` value. Serper results written as `NEWS`, corrupting platform counts and source diversity scoring. | **FIXED**: Added `WEB = "web"` to `SourcePlatform` enum. `web_search.py` now uses `SourcePlatform.WEB`. | Web search and news are distinct evidence layers. Never collapse them. |
+| Silent data loss on incomplete LLM batches | If LLM returned fewer items than sent in filter/analyze batches, missing items silently vanished. No completeness check. | **FIXED**: `filter.py` now checks returned item_ids against sent batch — missing items kept as relevant (conservative). `analyze.py` logs warning with missing item_ids. | After parsing any LLM batch response, always check that all sent item_ids are accounted for. |
+| Main CLI doesn't produce DOCX | `run.py` → `run_pipeline()` → Stage 7 only generated PDF/PPTX. The flagship DOCX artifact required separate scripts. | **FIXED**: Orchestrator Stage 7 now calls `generate_all_charts()` + `generate_docx_report()` alongside PDF/PPTX. | The main entry point must produce the primary deliverable. |
+| Adaptive methodology never called | `select_methodology()` defined in `validate.py` but never called in the orchestrator. | **FIXED**: Orchestrator now calls `select_methodology()` before Stage 4 and logs the result. | Methodology selection must be called and logged even if the analysis path doesn't branch on it yet. |
+| Failed run printed as success | `run.py` always printed "Run complete" even when pipeline aborted at theme coverage gate. | **FIXED**: Checks for `summary.json` (only written on full completion). Prints "Run INCOMPLETE" and exits with code 1 if missing. | Never report success without verifying the run completed fully. |
+| "Latest run" picks wrong directory | `stage6_7_score_report.py` and `regenerate_report.py` sorted run dirs by name, not modification time. Mixed naming schemes broke lexical sort. | **FIXED**: Sort by `p.stat().st_mtime` instead of `p.name`. | Always sort run directories by modification time, not by name. |
+| Non-deterministic keyword order | `_generate_brand_variants()` used `list(set(...))` — undefined order across Python runs. | **FIXED**: Changed to `sorted(set(...))` for deterministic output. | Never use `list(set(...))` for reproducible pipelines. Always `sorted(set(...))`. |
+| DOCX insight count shows theme count | Cover page and Insight Landscape used `len(analysis.themes)` instead of `len(scored_insights)`. If synthesis under-generated, count was wrong. | **FIXED**: Both locations now use `len(scored_insights)`. | Insight count must always come from scored insights, not themes. |
+| Missing dependencies in requirements.txt | `python-docx` (needed by docx_generator.py) and `google-genai` (needed by llm_client.py) not listed. Fresh clone would fail. | **FIXED**: Both added to `requirements.txt`. | All imports must have corresponding entries in requirements.txt. |
 
 ## Procedures
 1. **Before any run**: Get user-approved brief (brand, questions, competitors, geo, aspects). NEVER skip this.
@@ -185,15 +270,15 @@ Reports use serial numbering: `report_v001.docx`, `report_v002.docx`, etc. Each 
 4. **During run**: Monitor logs. If a collector fails, pipeline continues. Check `raw/` files after Stage 1 to verify data volume.
 5. **After run**: Check `summary.json` for item counts, insight count. Open `report/report_v###.docx`. Check insights have ≥10 items each — if insights have 3-5 items, the two-pass theme extraction may have failed.
 6. **If run crashes mid-pipeline**: Check the last log line. Fix the bug. **Resume from the failed stage** — raw data, normalized corpus, filtered corpus, and sentiment results are all saved to disk. Load from the last good artifact. Do NOT re-collect or re-classify what's already done.
-7. **Resume scripts**: `resume_stage3.py <run_id>` (from normalization), `resume_stage4.py <run_id>` (from filtering), `resume_stage4b.py <run_id>` (from theme extraction, reuses saved sentiment). All accept the source run ID as a CLI argument and load brand/category config from the source run's `config.json`. Never hardcode run IDs or brand configs in these scripts.
+7. **Resume scripts**: `scripts/resume_stage3.py <run_id>` (from normalization), `scripts/resume_stage4.py <run_id>` (from filtering). All accept the source run ID as a CLI argument and load brand/category config from the source run's `config.json`. Never hardcode run IDs or brand configs in these scripts.
 8. **Daily limit awareness**: NewsData.io resets daily (200 credits). Serper has 2,500 total (lifetime). Reddit rate limits recover in minutes. YouTube quota (10K units) resets daily. Anthropic credits deducted per token (~$2-3 per full 1000-item run).
 9. **If YouTube is timing out**: Check `ping www.googleapis.com`. If ping is fine, it's API throttling — let it grind through. If ping fails, switch to mobile hotspot or check VPN.
 10. **Verify theme quality after Stage 4**: Each theme should have ≥20 items and ≥1.5% prevalence for a 900+ item corpus. If themes are smaller, check that two-pass extraction ran (look for "Theme mapping: batch X/Y done" in logs).
 11. **In-context synthesis**: When running inside Claude Code, synthesize insights directly in the session by reading theme data from `analysis/results.json` and writing insights to `insights/insights.json`. Then run `rescore.py` (data-driven, no API needed). This avoids burning Anthropic API credits. Only use external API calls via `resynthesize.py` during automated pipeline runs.
 12. **Before re-running synthesis**: Always back up `insights/` and `scored/` directories first. A failed synthesis (e.g., depleted credits) will overwrite existing data with empty arrays.
-13. **External data ingestion**: When data is pre-collected (not from our collectors), use `run_weight_loss.py` as a template. Key steps: (a) detect platform from `source` field, (b) extract text from platform-specific fields (`content` for Reddit, `caption` for Instagram, `title+description` for YouTube), (c) flatten comments into separate `NormalizedItem` objects linked by `thread_id`, (d) skip empty/short content, (e) use `generate_item_id(url, text)` for deterministic IDs, (f) save to `raw/external.json` then run Stages 2-7. Always add new platforms to `SourcePlatform` enum first.
-14. **In-context analysis workflow**: When running all analysis in-context (no API): (a) keyword-based relevance filter for Stage 3, (b) keyword-based sentiment/emotion/ABSA for Stage 4, (c) read stratified sample to discover themes then keyword-map all items, **(d) MANDATORY: narrative theme review pass** (see Procedure 15), (e) synthesise insights by reading theme quotes and writing Observation/Insight/Implication/Recommendation, (f) run `score_insights()` and `compute_brand_health()` (code-based, no API), (g) run `generate_all_charts()` then `generate_docx_report()`. Scripts: `stage4_analysis.py`, `stage5_synthesis.py`, `stage6_7_score_report.py`, `fix_quotes.py`, `add_narrative_themes.py`.
-15. **MANDATORY: Narrative theme review pass (never skip)**. After keyword-based theme mapping, check how many items remain unthemed. Read **ALL unthemed items** plus a **10% random sample of themed items** (for misclassification and cross-cutting patterns). If this total exceeds what fits in context, read in batches until all unthemed items are covered. Look specifically for **narrative patterns that keywords cannot detect**: (a) cultural/celebrity references and speculation, (b) misinformation and miracle-claim framing, (c) stigma, shame, and moral debate, (d) sarcasm, irony, and memes, (e) cross-cutting emotional narratives. The completion criterion is: **unthemed items must be below 10% of corpus**. If above 10%, keep reading and classifying until they are. Add discovered themes via `add_narrative_themes.py` pattern. **This step was skipped once and resulted in missing themes containing 21% of the corpus. Never skip it again.**
+13. **External data ingestion**: Use `pipeline/ingest.py` for any pre-collected data: `from consumer_research.pipeline.ingest import ingest_external_data; items = ingest_external_data(Path("data/myfile.json"))`. Auto-detects format (platform-scraped with nested comments, simple flat list, or pre-normalized). For study-specific orchestration scripts, see `studies/weight_loss/run_weight_loss.py` as a template. Always add new platforms to `SourcePlatform` enum first.
+14. **In-context analysis workflow**: When running all analysis in-context (no API): (a) keyword-based relevance filter for Stage 3, (b) keyword-based sentiment/emotion/ABSA for Stage 4, (c) read stratified sample to discover themes then keyword-map all items, **(d) MANDATORY: narrative theme review pass** (see Procedure 15), (e) synthesise insights by reading theme quotes and writing Observation/Insight/Implication/Recommendation, (f) run `score_insights()` and `compute_brand_health()` (code-based, no API), (g) run `generate_all_charts()` then `generate_docx_report()`. Scripts: `studies/*/stage4_analysis*.py`, `studies/*/stage5_synthesis*.py`, `stage6_7_score_report.py`, `scripts/fix_quotes.py`, `scripts/add_narrative_themes.py`.
+15. **MANDATORY: Narrative theme review pass (never skip)**. After keyword-based theme mapping, check how many items remain unthemed. Read **ALL unthemed items** plus a **10% random sample of themed items** (for misclassification and cross-cutting patterns). If this total exceeds what fits in context, read in batches until all unthemed items are covered. Look specifically for **narrative patterns that keywords cannot detect**: (a) cultural/celebrity references and speculation, (b) misinformation and miracle-claim framing, (c) stigma, shame, and moral debate, (d) sarcasm, irony, and memes, (e) cross-cutting emotional narratives. The completion criterion is: **unthemed items must be below 10% of corpus**. If above 10%, keep reading and classifying until they are. Add discovered themes via `scripts/add_narrative_themes.py` pattern. **This step was skipped once and resulted in missing themes containing 21% of the corpus. Never skip it again.**
 
 ## Stage 4 Theme Extraction Architecture (Critical — Do Not Revert)
 Theme extraction uses a **two-pass approach** to handle large corpora without token limit issues:

@@ -20,7 +20,7 @@ from consumer_research.report.charts import generate_all_charts
 if len(sys.argv) > 1:
     RUN_ID = sys.argv[1]
 else:
-    runs = sorted((ROOT / "consumer_research" / "runs").iterdir(), key=lambda p: p.name, reverse=True)
+    runs = sorted((ROOT / "consumer_research" / "runs").iterdir(), key=lambda p: p.stat().st_mtime, reverse=True)
     if not runs:
         print("ERROR: No run directories found"); sys.exit(1)
     RUN_ID = runs[0].name

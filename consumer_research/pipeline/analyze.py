@@ -375,6 +375,16 @@ def _classify_sentiment(
                     secondary_emotion=secondary_emotion,
                 ))
 
+            # Check for incomplete LLM response
+            returned_ids = {d["item_id"] for d in parsed if "item_id" in d}
+            sent_ids = {item.item_id for item in batch}
+            missing_ids = sent_ids - returned_ids
+            if missing_ids:
+                logger.warning(
+                    f"  Sentiment batch {i // batch_size + 1}: LLM returned {len(parsed)}/{len(batch)} items. "
+                    f"Missing {len(missing_ids)} item(s): {list(missing_ids)[:5]}"
+                )
+
             logger.info(f"  Sentiment batch {i // batch_size + 1}: {len(parsed)} classified")
 
         except Exception as e:

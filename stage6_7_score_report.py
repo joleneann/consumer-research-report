@@ -19,7 +19,7 @@ if len(sys.argv) > 1:
     RUN_DIR = ROOT / "consumer_research" / "runs" / sys.argv[1]
 else:
     # Find the most recent run directory
-    runs = sorted(Path(ROOT / "consumer_research" / "runs").iterdir(), key=lambda p: p.name, reverse=True)
+    runs = sorted(Path(ROOT / "consumer_research" / "runs").iterdir(), key=lambda p: p.stat().st_mtime, reverse=True)
     if not runs:
         print("ERROR: No run directories found in consumer_research/runs/")
         sys.exit(1)

@@ -22,6 +22,7 @@ class SourcePlatform(str, Enum):
     NEWS = "news"
     ACADEMIC = "academic"
     TRENDS = "trends"
+    WEB = "web"
     AMAZON = "amazon"
     INSTAGRAM = "instagram"
     TWITTER = "twitter"

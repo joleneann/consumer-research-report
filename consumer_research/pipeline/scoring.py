@@ -413,8 +413,8 @@ def _signal_tier(score: float) -> SignalStrengthTier:
 
 
 def _matrix_quadrant(confidence: float, signal: float) -> MatrixQuadrant:
-    high_conf = confidence >= 0.5
-    strong_signal = signal >= 0.5
+    high_conf = confidence >= 0.75
+    strong_signal = signal >= 0.75
     if high_conf and strong_signal:
         return MatrixQuadrant.KEY_FINDING
     elif high_conf and not strong_signal:

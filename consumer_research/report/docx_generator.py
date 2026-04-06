@@ -26,7 +26,6 @@ import copy
 from consumer_research.config import PipelineConfig
 from consumer_research.models.schemas import (
     AnalysisResults,
-    MatrixQuadrant,
     NormalizedItem,
     ScoredInsight,
 )
@@ -48,12 +47,6 @@ TEAL      = RGBColor(0x4F, 0xD1, 0xC5)
 HEADING_FONT = "Inter"
 BODY_FONT    = "Inter"
 
-QUADRANT_LABELS = {
-    MatrixQuadrant.KEY_FINDING:    "Key Finding",
-    MatrixQuadrant.EMERGING_TREND: "Emerging Trend",
-    MatrixQuadrant.WATCH_CLOSELY:  "Watch Closely",
-    MatrixQuadrant.NOISE:          "Noise",
-}
 
 
 # ---- Low-level helpers ----
@@ -225,7 +218,7 @@ def _section_cover(doc: Document, brand_name: str, config: PipelineConfig,
                    brand_health: dict | None = None, items: list | None = None):
     total = analysis.total_items_analyzed
     nss = analysis.net_sentiment_score
-    n_insights = len(analysis.themes)
+    n_insights = len(scored_insights)
     bh_score = (brand_health or {}).get("overall_score", 0)
     n_platforms = len(set(i.source_platform for i in (items or [])))
 
@@ -295,29 +288,45 @@ def _section_executive_summary(doc: Document, scored_insights: list[ScoredInsigh
     _heading(doc, "Executive Summary", 1)
     nss = analysis.net_sentiment_score
     total = analysis.total_items_analyzed
-    n_key = sum(1 for s in scored_insights if s.matrix_quadrant == MatrixQuadrant.KEY_FINDING)
+
+    # Identify top insights by confidence for the summary narrative
+    top_sorted = sorted(scored_insights, key=lambda x: (-x.confidence_score, -x.signal_strength_score))
+    top_n = min(3, len(top_sorted))
+    theme_map = {t.theme_id: t.theme_label for t in analysis.themes}
+    top_names = []
+    for s in top_sorted[:top_n]:
+        for tid in s.insight.supporting_theme_ids:
+            if tid in theme_map:
+                top_names.append(theme_map[tid])
+                break
 
     _body(doc, (
-        f"This report synthesises {total:,} consumer conversations collected from Reddit, YouTube, "
-        f"news sources, and academic literature. Net Sentiment Score is {nss:+.1%}, with "
-        f"{n_key} Key Findings emerging from {len(analysis.themes)} distinct themes."
+        f"This report synthesises {total:,} consumer conversations collected across multiple platforms. "
+        f"Net Sentiment Score is {nss:+.1%}, with {len(scored_insights)} insights emerging from "
+        f"{len(analysis.themes)} distinct themes."
     ))
 
-    # Top findings table
-    key_findings = [s for s in scored_insights if s.matrix_quadrant == MatrixQuadrant.KEY_FINDING]
-    if key_findings:
-        _heading(doc, "Key Findings at a Glance", 2)
+    if top_names:
+        _body(doc, (
+            f"The strongest signals centre on {', '.join(top_names[:2])}"
+            f"{(' and ' + top_names[2]) if len(top_names) > 2 else ''}, "
+            f"each supported by substantial consumer evidence across multiple platforms."
+        ))
+
+    # Top insights table (ranked by confidence)
+    if top_sorted:
+        _heading(doc, "Top Insights at a Glance", 2)
+        show_n = min(5, len(top_sorted))
         table = doc.add_table(rows=1, cols=4)
         table.style = "Table Grid"
         table.alignment = WD_TABLE_ALIGNMENT.LEFT
         _add_table_header_row(table, ["#", "Finding", "Confidence", "Signal"])
-        for i, s in enumerate(key_findings, 1):
+        for i, s in enumerate(top_sorted[:show_n], 1):
             row = table.add_row()
             row.cells[0].text = str(i)
-            # Title from observation - first sentence
             row.cells[1].text = s.insight.observation
-            row.cells[2].text = f"{s.confidence_score:.0%} ({s.confidence_tier.value.title()})"
-            row.cells[3].text = f"{s.signal_strength_score:.0%} ({s.signal_strength_tier.value.title()})"
+            row.cells[2].text = f"{s.confidence_score:.0%}"
+            row.cells[3].text = f"{s.signal_strength_score:.0%}"
             for ci in range(4):
                 row.cells[ci].paragraphs[0].paragraph_format.space_before = Pt(3)
                 row.cells[ci].paragraphs[0].paragraph_format.space_after = Pt(3)
@@ -483,7 +492,7 @@ def _section_themes(doc: Document, analysis: AnalysisResults, run_dir: Path,
                     scored_insights: list | None = None):
     _heading(doc, "Insight Landscape", 1)
     _body(doc, (
-        f"{len(analysis.themes)} insights were identified from {analysis.total_items_analyzed:,} items "
+        f"{len(scored_insights) if scored_insights else len(analysis.themes)} insights were identified from {analysis.total_items_analyzed:,} items "
         f"using a two-pass extraction approach (stratified discovery sample + full-corpus mapping)."
     ))
 
@@ -536,7 +545,6 @@ def _section_deep_dives(doc: Document, scored_insights: list[ScoredInsight],
 
     for i, scored in enumerate(sorted(scored_insights, key=lambda x: -x.confidence_score), 1):
         ins = scored.insight
-        quadrant = QUADRANT_LABELS.get(scored.matrix_quadrant, scored.matrix_quadrant.value)
         conf_color = GREEN if scored.confidence_tier.value == "high" else (AMBER if scored.confidence_tier.value == "medium" else GREY_MED)
 
         theme_label = "Unknown Insight"
@@ -553,11 +561,10 @@ def _section_deep_dives(doc: Document, scored_insights: list[ScoredInsight],
         # 1. Insight heading
         _heading(doc, f"{i:02d}. {theme_label}", 2)
 
-        # 2. Single data line: quadrant | n= | Confidence | Signal | Prevalence | NSS
+        # 2. Single data line: n= | Confidence | Signal | Prevalence | NSS
         data_p = doc.add_paragraph()
         data_p.paragraph_format.space_after = Pt(8)
-        _run(data_p, f"[{quadrant}]", BODY_FONT, 9, bold=True, color=NAVY)
-        _run(data_p, f"  n={scored.sample_size}", BODY_FONT, 9, color=GREY_MED)
+        _run(data_p, f"n={scored.sample_size}", BODY_FONT, 9, color=GREY_MED)
         _run(data_p, "  |  Confidence: ", BODY_FONT, 9, color=SLATE)
         _run(data_p, f"{scored.confidence_score:.0%} ({scored.confidence_tier.value.title()})", BODY_FONT, 9, bold=True, color=conf_color)
         _run(data_p, "  |  Signal: ", BODY_FONT, 9, color=SLATE)
@@ -679,21 +686,14 @@ def _section_recommendations(doc: Document, scored_insights: list[ScoredInsight]
     _heading(doc, "Recommendations", 1)
     _body(doc, (
         "Recommendations are derived directly from insight implications. Priority order follows "
-        "Confidence × Signal Strength (highest combined score first)."
+        "confidence score (primary) and signal strength (secondary)."
     ))
 
-    key_findings = [s for s in scored_insights
-                    if s.matrix_quadrant == MatrixQuadrant.KEY_FINDING]
-    other = [s for s in scored_insights
-             if s.matrix_quadrant != MatrixQuadrant.KEY_FINDING]
-
-    all_sorted = (sorted(key_findings, key=lambda x: -(x.confidence_score + x.signal_strength_score))
-                  + sorted(other, key=lambda x: -(x.confidence_score + x.signal_strength_score)))
+    all_sorted = sorted(scored_insights, key=lambda x: (-x.confidence_score, -x.signal_strength_score))
 
     for i, s in enumerate(all_sorted, 1):
         ins = s.insight
-        quadrant = QUADRANT_LABELS.get(s.matrix_quadrant, s.matrix_quadrant.value)
-        _heading(doc, f"Recommendation {i:02d}  [{quadrant}]", 2)
+        _heading(doc, f"Recommendation {i:02d}", 2)
         _label_value(doc, "Recommendation", ins.recommendation)
         _label_value(doc, "Rationale", ins.implication)
         _label_value(doc, "Validation Required", ins.further_validation)

@@ -77,7 +77,7 @@ class WebSearchCollector(BaseCollector):
 
                 item = NormalizedItem(
                     item_id=item_id,
-                    source_platform=SourcePlatform.NEWS,
+                    source_platform=SourcePlatform.WEB,
                     source_url=url,
                     source_author="Web",
                     collected_at=self._now(),

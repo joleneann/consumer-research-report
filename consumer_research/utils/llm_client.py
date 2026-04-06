@@ -93,44 +93,43 @@ class GeminiClient(LLMClient):
         return self._model_name
 
 
-def create_llm_client(preferred_provider: str = "auto") -> LLMClient:
+def create_llm_client(preferred_provider: str = "auto", model: str | None = None) -> LLMClient:
     """Create an LLM client, auto-detecting available providers.
 
-    Priority: Claude (if ANTHROPIC_API_KEY set and has credits) → Gemini (if GOOGLE_API_KEY set)
+    Priority: Claude (if ANTHROPIC_API_KEY set) → Gemini (if GOOGLE_API_KEY set)
 
     Args:
         preferred_provider: "claude", "gemini", or "auto" (default)
+        model: Optional model name override. Passed to the client constructor.
 
     Returns:
         An LLMClient instance.
     """
     if preferred_provider == "claude":
-        return ClaudeClient()
+        return ClaudeClient(model=model) if model else ClaudeClient()
 
     if preferred_provider == "gemini":
-        return GeminiClient()
+        return GeminiClient(model=model) if model else GeminiClient()
 
-    # Auto-detect
-    # Try Gemini first (free tier available)
-    google_key = os.environ.get("GOOGLE_API_KEY", "")
-    if google_key:
-        try:
-            client = GeminiClient()
-            logger.info(f"Using Gemini ({client.model_name})")
-            return client
-        except Exception as e:
-            logger.warning(f"Gemini init failed: {e}")
-
-    # Try Claude
+    # Auto-detect — Claude first (primary provider), Gemini as fallback
     anthropic_key = os.environ.get("ANTHROPIC_API_KEY", "")
     if anthropic_key:
         try:
-            client = ClaudeClient()
+            client = ClaudeClient(model=model) if model else ClaudeClient()
             logger.info(f"Using Claude ({client.model_name})")
             return client
         except Exception as e:
             logger.warning(f"Claude init failed: {e}")
 
+    google_key = os.environ.get("GOOGLE_API_KEY", "")
+    if google_key:
+        try:
+            client = GeminiClient(model=model) if model else GeminiClient()
+            logger.info(f"Using Gemini ({client.model_name})")
+            return client
+        except Exception as e:
+            logger.warning(f"Gemini init failed: {e}")
+
     raise RuntimeError(
-        "No LLM provider available. Set either GOOGLE_API_KEY or ANTHROPIC_API_KEY."
+        "No LLM provider available. Set ANTHROPIC_API_KEY or GOOGLE_API_KEY."
     )
