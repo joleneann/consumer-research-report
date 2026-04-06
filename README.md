@@ -1,4 +1,4 @@
-# Consumer Research Report Generator
+# Brand/Topic Sentiment Report Generator
 
 Turn a research brief into a scored, client-ready consumer research report.
 
