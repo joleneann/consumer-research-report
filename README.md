@@ -1,169 +1,245 @@
 # Consumer Research Report Generator
 
-**Enterprise-grade brand perception analysis from social listening data.**
+Consumer Research Report Generator is a production-style decision-support system that turns a brand brief into a scored, client-ready consumer research report.
 
-Turn a research brief into a comprehensive DOCX report in hours, not weeks. Collects data from Reddit, YouTube, News, Academic sources, Google Trends, and web search. Discovers themes inductively from the corpus — no predefined hypotheses, no keyword dashboards. The pipeline finds what consumers are actually talking about.
+Given a brand, category, geography, and business questions, the pipeline collects evidence from noisy online sources, normalizes it into a shared schema, filters for relevance, analyzes sentiment and themes, scores confidence from data, and generates a versioned DOCX deliverable.
 
-## Why This Matters
+This repo is best understood as a workflow engine, not a dashboard and not just an "LLM project". The hard part is surviving messy inputs, partial failures, mixed data formats, and still producing a structured output with provenance.
 
-Traditional consumer research costs $50-200K per study and takes 6-8 weeks. Social listening dashboards track keywords but don't generate insights. This pipeline bridges the gap: it collects real consumer voices at scale, applies rigorous analytical methodology, and produces a report that reads like it came from a research agency.
+## What It Does
 
-**What makes it different from a social listening dashboard:**
-- Themes emerge from the data, not from predefined keyword lists
-- Every insight includes observation, consumer meaning, business implication, and recommendation
-- Scoring is fully data-driven — confidence and signal strength computed from 9 statistical factors
-- The report is a flowing DOCX document, not a dashboard screenshot
+- Accepts a research brief: brand, category, geography, competitors, and business questions
+- Collects from Reddit, YouTube, NewsData.io, OpenAlex, Google Trends, Serper, or ingests external JSON
+- Normalizes all sources into a common item schema
+- Filters irrelevant or low-signal content
+- Analyzes sentiment, emotion, aspect-level sentiment, and themes
+- Synthesizes one insight per theme
+- Scores each insight with data-driven confidence and signal metrics
+- Generates charts and a versioned DOCX report
 
-## Sample Output
+## Why This Project Exists
 
-See [`sample-reports/Weight_Loss_India_Consumer_Sentiment.docx`](sample-reports/Weight_Loss_India_Consumer_Sentiment.docx) — a full report analyzing 2,526 consumer conversations about weight loss products in India across Reddit, Instagram, and YouTube. 15 insights, radar charts per theme, Brand Health Score, and methodology disclosure.
+Traditional consumer research is expensive and slow. Social listening dashboards are fast but usually stop at keyword tracking and charts. This project sits in between: it is designed to turn messy online conversation into something a client or operator could actually use to make decisions.
+
+The engineering goal is not just "analyze text." It is to build a workflow that can handle unreliable collectors, ambiguous input data, multiple source types, and client-facing output requirements without collapsing into one-off scripts.
+
+## Current Status
+
+- Main reusable product code lives in [`consumer_research/`](consumer_research/)
+- Primary entry point is [`consumer_research/run.py`](consumer_research/run.py)
+- Generated artifacts are written to `consumer_research/runs/<run_id>/`
+- Final reports are versioned as `report_v###.docx`
+- Study-specific scripts in [`studies/`](studies/) are examples and historical analyses, not the main interface
+
+## Happy Path
+
+### 1. Install dependencies
+
+```bash
+git clone https://github.com/joleneann/consumer-research-report.git
+cd consumer-research-report
+pip install -r requirements.txt
+```
+
+### 2. Set environment variables
+
+Current pipeline runs use external APIs for collection and LLM analysis.
+
+Required for analysis:
+
+```bash
+ANTHROPIC_API_KEY=...
+```
+
+Optional, depending on which collectors you want to enable:
+
+```bash
+YOUTUBE_API_KEY=...
+NEWSDATA_API_KEY=...
+SERPER_API_KEY=...
+```
+
+Collectors fail gracefully. Missing keys do not crash the full pipeline; those sources are skipped and the run continues.
+
+### 3. Run a study
+
+```bash
+python -m consumer_research.run \
+  --brand "Thums Up" \
+  --category "Carbonated beverages" \
+  --geo IN \
+  --competitors "Coca-Cola" "Pepsi" \
+  --objectives \
+    "What are consumers saying about taste and quality?" \
+    "How is the brand discussed relative to competitors?"
+```
+
+### 4. Inspect the output
+
+Each run writes stage-by-stage artifacts under:
+
+```text
+consumer_research/runs/<run_id>/
+  brief.json
+  config.json
+  raw/
+  normalized/
+  filtered/
+  analysis/
+  insights/
+  scored/
+  report/report_v###.docx
+```
+
+## Quick Review Path
+
+If you are reviewing this repo for engineering quality, start here:
+
+1. Open the sample deliverable: [`sample-reports/Weight_Loss_India_Consumer_Sentiment.docx`](sample-reports/Weight_Loss_India_Consumer_Sentiment.docx)
+2. Read the primary workflow entry point: [`consumer_research/run.py`](consumer_research/run.py)
+3. Read the orchestration layer: [`consumer_research/pipeline/orchestrator.py`](consumer_research/pipeline/orchestrator.py)
+4. Read the shared schema definitions: [`consumer_research/models/schemas.py`](consumer_research/models/schemas.py)
+5. Read the report generator: [`consumer_research/report/docx_generator.py`](consumer_research/report/docx_generator.py)
+
+The repo also includes lightweight reference artifacts in [`sample-runs/`](sample-runs/), but it does not yet ship a full deterministic offline fixture run. That is still a gap.
 
 ## Pipeline
 
-```
+```text
 Brief -> Collect -> Normalize -> Filter -> Analyze -> Synthesize -> Score -> Report
   [0]      [1]        [2]         [3]       [4]         [5]          [6]      [7]
 ```
 
-| Stage | What it does | Output |
-|-------|-------------|--------|
+| Stage | Purpose | Primary output |
+| --- | --- | --- |
 | 0. Brief | Structure the research question | `brief.json` |
-| 1. Collect | Pull from 6+ sources at max limits | `raw/*.json` |
-| 2. Normalize | Deduplicate, engagement filter, common format | `normalized/corpus.json` |
-| 3. Filter | LLM relevance classification (multilingual) | `filtered/corpus.json` |
-| 4. Analyze | Sentiment, Plutchik emotion, ABSA, two-pass theme extraction | `analysis/results.json` |
-| 5. Synthesize | One insight per theme (Observation/Insight/Implication/Recommendation) | `insights/insights.json` |
-| 6. Score | Confidence (5 factors) + Signal Strength (4 factors) + Brand Health | `scored/scored_insights.json` |
-| 7. Report | Charts + DOCX report | `report/report_v###.docx` |
+| 1. Collect | Gather raw evidence from supported sources | `raw/*.json` |
+| 2. Normalize | Deduplicate, cap thread dominance, unify schema | `normalized/corpus.json` |
+| 3. Filter | LLM relevance classification | `filtered/corpus.json` |
+| 4. Analyze | Sentiment, emotion, aspect sentiment, theme extraction | `analysis/results.json` |
+| 5. Synthesize | One decision-grade insight per theme | `insights/insights.json` |
+| 6. Score | Confidence, signal strength, brand health | `scored/scored_insights.json` |
+| 7. Report | Charts plus DOCX output | `report/report_v###.docx` |
 
-Every stage writes artifacts to disk. If the pipeline crashes, resume from the last completed stage — no re-collection, no wasted API calls.
+Every stage writes artifacts to disk so partial runs can be resumed without recollecting everything.
 
 ## Data Sources
 
-The pipeline supports both free and paid APIs, and can also ingest pre-collected data from any source via JSON.
+| Source | Role in the pipeline | Notes |
+| --- | --- | --- |
+| Reddit | Long-form opinion, complaints, comparisons | Public JSON API, rate limited |
+| YouTube | Comment-driven reactions to brand content | Requires `YOUTUBE_API_KEY` |
+| NewsData.io | Media coverage and narrative context | Requires `NEWSDATA_API_KEY` |
+| OpenAlex | Academic and evidence layer | No key required |
+| Google Trends | Search interest over time | Quantitative validation layer |
+| Serper | Web-wide mentions from blogs, forums, review sites | Requires `SERPER_API_KEY` |
+| External JSON | Pre-collected Twitter/X, Instagram, vendor exports, or custom scrapes | Supported via flexible ingestion |
 
-| Source | What it captures | Cost |
-|--------|-----------------|------|
-| Reddit | Long-form consumer opinion, complaints, comparisons | Free (rate limited) or paid API |
-| YouTube | Reactions to brand content, ad responses | Free (10K quota/day) or paid API |
-| NewsData.io | Media narrative, regulatory coverage | Free (200 credits/day) or paid tier |
-| OpenAlex | Academic research, peer-reviewed context | Free (100K+/day) |
-| Google Trends | Search interest over time (quantitative layer) | Free |
-| Serper (Google) | Web-wide review sites, forums, articles | Free (2,500 queries) or paid tier |
-| Twitter/X, Instagram | External data ingestion (any JSON format) | Bring your own data |
-| Any pre-collected data | JSON files from any scraper, export, or vendor | Bring your own data |
+## Reliability Features
 
-**The sample report** was generated from pre-collected data (Reddit, Instagram, YouTube) ingested via JSON — demonstrating the flexible ingestion path rather than the built-in collectors.
+- Collector fault isolation: one failing source should not kill the run
+- Stage-by-stage artifacting: every stage writes output to disk
+- Resumability: later-stage utilities can regenerate or rescore existing runs
+- Provenance: normalized items retain source URLs, timestamps, and platform metadata
+- Deterministic IDs: item identity is derived from source URL and content
+- Versioned outputs: report generation increments `report_v###.docx` instead of overwriting
+- Flexible ingestion: external JSON can be normalized without rewriting the pipeline
 
-## Quick Start
+## Main Operational Scripts
 
-```bash
-# Clone and install
-git clone https://github.com/joleneann/consumer-research-report.git
-cd consumer-research-report
-pip install -r requirements.txt
+Primary interface:
 
-# Option 1: Run from pre-collected data (JSON file)
-# See studies/weight_loss/run_weight_loss.py for a complete example
-python studies/weight_loss/run_weight_loss.py
+- [`consumer_research/run.py`](consumer_research/run.py): run the end-to-end pipeline
 
-# Option 2: Run the full pipeline with built-in collectors
-# Set API keys first
-echo "ANTHROPIC_API_KEY=sk-ant-..." > .env
-python -m consumer_research.run \
-  --brand "Brand Name" \
-  --category "Product Category" \
-  --geo IN \
-  --objectives "What do consumers think about quality?"
+Regeneration and rescoring:
 
-# Re-score and regenerate from existing run data (no API needed)
-python stage6_7_score_report.py [run_id]
-python regenerate_report.py [run_id]
+- [`stage6_7_score_report.py`](stage6_7_score_report.py): rescore insights and regenerate report assets from an existing run
+- [`regenerate_report.py`](regenerate_report.py): regenerate charts and DOCX from existing scored output
+
+Recovery and utility scripts:
+
+- [`scripts/resume_stage3.py`](scripts/resume_stage3.py)
+- [`scripts/resume_stage4.py`](scripts/resume_stage4.py)
+- [`scripts/rescore.py`](scripts/rescore.py)
+- [`scripts/resynthesize.py`](scripts/resynthesize.py)
+- [`scripts/fix_quotes.py`](scripts/fix_quotes.py)
+- [`scripts/export_to_excel.py`](scripts/export_to_excel.py)
+
+## Repo Guide
+
+```text
+consumer_research/
+  collectors/         Source-specific collectors
+  models/             Shared schemas and scoring models
+  pipeline/           Core workflow stages
+  report/             Charts and DOCX generation
+  utils/              Keyword expansion, hashing, rate limiting, LLM client
+  tests/              Test package scaffold
+
+scripts/              Recovery and operational helpers
+studies/              Study-specific scripts and older one-off analyses
+sample-reports/       Example client-facing deliverable
+sample-runs/          Small reference artifacts for review
+docs/                 Methodology and product documentation
 ```
 
-## Zero-API Architecture
+If the structure feels busy, start with `consumer_research/` first. That is the reusable product code. The rest of the repo is mostly operator support, examples, and historical study-specific work.
 
-All analysis is designed to run inside a Claude Code session at zero marginal cost. The model running the session IS the analysis engine — it reads the data, classifies sentiment, extracts themes, and synthesizes insights directly. No external API calls for analysis.
+## Scoring Model
 
-For automated pipeline runs without Claude Code, the Anthropic API handles filtering and classification at ~$1-2 per run.
+Each insight receives two independent scores, both derived from data rather than LLM judgment.
 
-## Scoring
+Confidence score:
 
-Every insight receives two independent scores, both computed entirely from data:
+- Sample size
+- Source diversity
+- Temporal consistency
+- Internal agreement
+- Data recency
 
-**Confidence** (how sure we are this is real):
-- Sample size (log-scaled relative to corpus)
-- Source diversity (Herfindahl index with balance penalty)
-- Temporal consistency (evenness across time quartiles)
-- Internal agreement (sentiment consensus)
-- Data recency (exponential decay)
+Signal strength score:
 
-**Signal Strength** (how loud this is in the data):
-- Prevalence (% of corpus)
-- Engagement level (percentile-ranked)
+- Prevalence in the corpus
+- Engagement level
 - Sentiment intensity
 - Conversation depth
 
-Insights are ranked by confidence (primary) and signal strength (tiebreaker). Both scores shown as percentages — no categorical labels, no artificial quadrants.
-
-**Brand Health Score** (0-100): Sentiment (30%) + Engagement (25%) + Advocacy (20%) + Resilience (15%) + Conversation (10%).
-
-## Report Structure
-
-1. **Cover** — brand name, key metrics table (items analysed, insights, NSS, Brand Health, platforms)
-2. **Executive Summary** — top insights by confidence, "Top Insights at a Glance" table
-3. **Data Universe** — collection funnel, platform breakdown chart
-4. **Sentiment & Emotion** — NSS, Plutchik emotion distribution, ABSA heatmap
-5. **Insight Landscape** — all insights with prevalence, confidence, signal, NSS
-6. **Insight Deep Dives** — one per theme: data line, radar chart, observation, insight, implication, recommendation, verbatims
-7. **Brand Health Score** — component breakdown with conditional callouts
-8. **Methodology** — derived from run config (never hardcoded)
-9. **Data Provenance** — platform table, date range, known biases
+The pipeline also computes a composite Brand Health Score from sentiment, engagement, advocacy, resilience, and conversation volume/depth.
 
 ## Known Limitations
 
-These are structural limitations of social listening methodology. The pipeline cannot eliminate them — only mitigate and disclose.
+This project tries to be honest about both methodological limits and engineering maturity.
 
-- **Query framing bias**: Keywords presuppose contexts. You find what you search for. The keyword expansion follows the brief's framing — it doesn't generate adversarial queries.
-- **Platform demographic bias**: Reddit skews male/urban/18-34. YouTube skews toward extreme reactions. Instagram skews female/influencer. No demographic weighting applied.
-- **No sampling frame**: Prevalence is meaningful within the corpus only — never projectable to the general population. "33% of items" does not mean "33% of consumers."
-- **Engagement filter excludes quiet voices**: Minimum upvote/like thresholds systematically exclude moderate consumers. The corpus over-indexes on extreme sentiment.
-- **No bot/astroturf detection**: Engagement thresholds filter some bots but zero detection of coordinated campaigns or paid reviews.
-- **No reliable demographics**: No platform in this pipeline provides verified age, gender, or location. Any demographic inference is speculative.
-- **Language gaps**: English and Hindi/Hinglish supported. Tamil, Telugu, Bengali, Marathi, Kannada — representing hundreds of millions of consumers — are not.
+Methodological limits:
 
-For the full list of 12 documented limitations with mitigation strategies, see the Methodology section in any generated report.
+- Query framing affects what the system is likely to find
+- Platform composition introduces demographic and behavioral bias
+- Online conversation has no clean sampling frame, so prevalence is corpus-relative
+- Engagement filters suppress quieter voices
+- There is no bot or astroturf detection layer yet
+- Verified demographic segmentation is not supported
 
-## Project Structure
+Current engineering gaps:
 
-```
-consumer_research/
-  config.py                  — All defaults, scoring weights, collection limits
-  run.py                     — CLI entry point
-  models/schemas.py          — Pydantic models (NormalizedItem, ScoredInsight, etc.)
-  utils/llm_client.py        — Unified LLM client (Claude -> Gemini fallback)
-  utils/keywords.py          — Brief -> 50+ search keywords
-  pipeline/orchestrator.py   — Wires all 8 stages
-  pipeline/filter.py         — Stage 3: relevance classification
-  pipeline/analyze.py        — Stage 4: sentiment, emotion, ABSA, themes
-  pipeline/synthesize.py     — Stage 5: one insight per theme
-  pipeline/scoring.py        — Stage 6: data-driven confidence + signal
-  pipeline/validate.py       — Theme coverage gate, methodology selector
-  pipeline/ingest.py         — Generic data ingestion (any JSON format)
-  report/docx_generator.py   — DOCX report (primary output)
-  report/charts.py           — 11 chart types (Tufte-inspired, Inter font)
-scripts/                     — Utility scripts (resume, re-score, fix quotes)
-studies/                     — Per-study analysis scripts
-docs/                        — Methodology and product documentation
-sample-reports/              — Showcase report
-sample-runs/                 — Sample run artifacts (config, brief, scored insights)
-```
+- Test coverage is still minimal
+- The repo still mixes reusable product code with study-specific scripts
+- A fully reproducible offline demo dataset is not packaged yet
+- Some implementation and documentation cleanup is still in progress
+
+## What This Demonstrates
+
+This project is intended to show production-style engineering on top of messy, ambiguous, real-world inputs:
+
+- building a decision-support system instead of a toy text-analysis demo
+- designing for provenance, resumability, and fault tolerance
+- turning unstructured conversation into structured, client-facing output
+- balancing product requirements, data quality, and operational workflow
 
 ## Documentation
 
-- [`CLAUDE.md`](CLAUDE.md) — Complete technical reference (architecture, procedures, failure modes)
-- [`docs/methodology.docx`](docs/methodology.docx) — Full research methodology (client-facing)
-- [`docs/product_documentation.docx`](docs/product_documentation.docx) — Product guide for non-technical users
+- [`CLAUDE.md`](CLAUDE.md): detailed project reference and working notes
+- [`docs/methodology.docx`](docs/methodology.docx): client-facing methodology document
+- [`docs/product_documentation.docx`](docs/product_documentation.docx): product overview
 
 ## License
 
