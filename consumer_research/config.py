@@ -6,7 +6,7 @@ from dataclasses import dataclass, field
 
 
 BASE_DIR = Path(__file__).parent.parent
-RUNS_DIR = BASE_DIR / "consumer_research" / "runs"
+RUNS_DIR = Path(os.environ.get("CONSUMER_RESEARCH_RUNS_DIR", str(BASE_DIR / "runs")))
 
 
 @dataclass
@@ -44,7 +44,6 @@ class AnalysisConfig:
     claude_model: str = "claude-sonnet-4-20250514"
     claude_temperature: float = 0.0
     batch_size: int = 15  # items per Claude API call
-    max_corpus_size: int = 999_999  # No cap — always analyze everything collected
     min_items_for_theme: int = 3  # minimum supporting items for a theme
     min_items_for_insight: int = 3  # minimum items for insight quality gate
     # Narrative review enforcement

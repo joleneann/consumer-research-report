@@ -7,7 +7,7 @@ Sentiment (where classified) appended as extra columns.
 Usage:
     python export_to_excel.py [RUN_ID]
 
-If RUN_ID is omitted, uses the most recent run in consumer_research/runs/.
+If RUN_ID is omitted, uses the most recent run in runs/.
 """
 
 from __future__ import annotations
@@ -18,12 +18,11 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-ROOT = Path(__file__).parent
-sys.path.insert(0, str(ROOT))
+ROOT = Path(__file__).parent.parent  # scripts/ -> repo root
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 
 # ── Resolve run dir ──────────────────────────────────────────────────────────
-runs_dir = ROOT / "consumer_research" / "runs"
+runs_dir = ROOT / "runs"
 if len(sys.argv) > 1:
     run_id = sys.argv[1]
     run_dir = runs_dir / run_id

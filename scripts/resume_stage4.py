@@ -13,8 +13,7 @@ from pathlib import Path
 from uuid import uuid4
 from datetime import datetime, timezone
 
-ROOT = Path(__file__).parent
-sys.path.insert(0, str(ROOT))
+ROOT = Path(__file__).parent.parent  # scripts/ -> repo root
 
 logging.basicConfig(
     level=logging.INFO,
@@ -46,7 +45,7 @@ def main():
     else:
         logger.error("Usage: python resume_stage4.py <source_run_id>")
         sys.exit(1)
-    source_run = ROOT / "consumer_research" / "runs" / source_run_id
+    source_run = ROOT / "runs" / source_run_id
     filtered_path = source_run / "filtered" / "corpus.json"
     if not filtered_path.exists():
         logger.error(f"Filtered corpus not found: {filtered_path}")
@@ -54,7 +53,7 @@ def main():
 
     # New run directory
     run_id = f"{datetime.now().strftime('%Y%m%d_%H%M%S')}_{uuid4().hex[:6]}"
-    run_dir = ROOT / "consumer_research" / "runs" / run_id
+    run_dir = ROOT / "runs" / run_id
     run_dir.mkdir(parents=True, exist_ok=True)
     logger.info(f"New run: {run_id}")
 
@@ -99,7 +98,6 @@ def main():
         claude_model=_rc.get("claude_model", "claude-sonnet-4-20250514"),
         claude_temperature=0.0,
         batch_size=15,
-        max_corpus_size=999_999,
         min_items_for_theme=5,
     )
     config = PipelineConfig(collection=collection, analysis=analysis_cfg, scoring=ScoringConfig())

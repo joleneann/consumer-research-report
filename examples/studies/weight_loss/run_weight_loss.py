@@ -21,7 +21,6 @@ from pathlib import Path
 from uuid import uuid4
 
 ROOT = Path(__file__).parent.parent.parent.parent  # examples/studies/weight_loss/ -> repo root
-sys.path.insert(0, str(ROOT))
 
 logging.basicConfig(
     level=logging.INFO,

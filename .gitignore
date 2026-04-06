@@ -5,7 +5,7 @@ Jolene Growth Handover/
 docs/Research Use Cases - Rapid Research Platform.pdf
 
 # Pipeline run outputs (large, contain raw data)
-consumer_research/runs/
+runs/
 
 # Large external datasets
 data/
@@ -13,8 +13,8 @@ data/
 # Old tests location (replaced by top-level tests/)
 consumer_research/tests/
 
-# Study-specific scratch files and per-run scripts (not examples/)
-studies/
+# Study-specific scratch files at repo root (not examples/studies/)
+/studies/
 
 # Doc backups
 *.bak

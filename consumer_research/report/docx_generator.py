@@ -950,6 +950,25 @@ def _section_data_provenance(doc: Document, config: PipelineConfig, items: list 
     ))
 
 
+def _next_report_version(report_dir: Path) -> int:
+    """Get the next serial version number for report files.
+
+    Scans for existing report_v*.docx files, parses version numbers
+    numerically (not alphabetically), and returns max + 1.
+    Filters out Word lock files (~$...).
+    """
+    import re
+    existing = [p for p in report_dir.glob("report_v*.docx") if not p.name.startswith("~$")]
+    if not existing:
+        return 1
+    nums = []
+    for p in existing:
+        m = re.search(r"report_v(\d+)\.docx$", p.name)
+        if m:
+            nums.append(int(m.group(1)))
+    return max(nums) + 1 if nums else 1
+
+
 # ---- Main entry point ----
 
 def generate_docx_report(
@@ -964,18 +983,7 @@ def generate_docx_report(
     out_dir = run_dir / "report"
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    # Serial version numbering
-    existing = [p for p in out_dir.glob("report_v*.docx") if not p.name.startswith("~$")]
-    if existing:
-        import re
-        nums = []
-        for p in existing:
-            m = re.search(r"v(\d+)", p.name)
-            if m:
-                nums.append(int(m.group(1)))
-        next_ver = max(nums) + 1 if nums else 1
-    else:
-        next_ver = 1
+    next_ver = _next_report_version(out_dir)
     out_path = out_dir / f"report_v{next_ver:03d}.docx"
 
     doc = Document()

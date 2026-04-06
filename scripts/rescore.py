@@ -4,8 +4,7 @@ import io, json, os, sys
 from pathlib import Path
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
-ROOT = Path(__file__).parent
-sys.path.insert(0, str(ROOT))
+ROOT = Path(__file__).parent.parent  # scripts/ -> repo root
 
 import logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)-8s %(message)s", datefmt="%H:%M:%S")
@@ -16,7 +15,7 @@ from consumer_research.models.schemas import AnalysisResults, NormalizedItem, In
 from consumer_research.pipeline.scoring import score_insights
 
 RUN_ID = "20260327_162042_7d13c6"
-run_dir = ROOT / "consumer_research" / "runs" / RUN_ID
+run_dir = ROOT / "runs" / RUN_ID
 
 # Load filtered corpus
 corpus = [NormalizedItem(**d) for d in json.loads((run_dir / "filtered" / "corpus.json").read_text(encoding="utf-8"))]

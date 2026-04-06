@@ -140,27 +140,16 @@ def run_pipeline(config: PipelineConfig, brief: ResearchBrief | None = None) -> 
     )
 
     # ── Theme coverage validation gate (Procedure 15 enforcement) ──
-    themed_ids = set()
-    for theme in analysis.themes:
-        themed_ids.update(theme.supporting_item_ids)
-    unthemed_pct = 1.0 - (len(themed_ids) / len(filtered)) if filtered else 0.0
-    max_unthemed = getattr(config.analysis, "max_unthemed_pct", 0.10)
-    if unthemed_pct > max_unthemed:
-        logger.warning(
-            f"THEME COVERAGE GATE: {unthemed_pct:.1%} of items are unthemed "
-            f"(threshold: {max_unthemed:.0%}). "
-            f"Narrative review pass (Procedure 15) is required before proceeding to synthesis. "
-            f"Run scripts/add_narrative_themes.py or review unthemed items manually."
+    from consumer_research.pipeline.validate import validate_theme_coverage
+    coverage = validate_theme_coverage(
+        analysis, filtered, max_unthemed_pct=config.analysis.max_unthemed_pct
+    )
+    if not coverage["passed"] and config.analysis.narrative_pass_required:
+        logger.error(
+            "Refusing to proceed to Stage 5 with >10% unthemed items. "
+            "Run narrative review pass first, then resume from Stage 5."
         )
-        if getattr(config.analysis, "narrative_pass_required", True):
-            logger.error(
-                "Refusing to proceed to Stage 5 with >10% unthemed items. "
-                "Run narrative review pass first, then resume from Stage 5."
-            )
-            # Save what we have so the user can resume
-            return run_dir
-    else:
-        logger.info(f"Theme coverage: {1.0 - unthemed_pct:.1%} themed ({len(themed_ids)}/{len(filtered)} items) - PASSED")
+        return run_dir
 
     # ── Stage 5: Insight Synthesis ──
     logger.info("\n── STAGE 5: INSIGHT SYNTHESIS ──")

@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "consumer-research"
+version = "0.1.0"
+description = "Consumer research report generator - brand perception analysis from online sources"
+requires-python = ">=3.11"
+dependencies = [
+    "pydantic>=2.0",
+    "anthropic>=0.40.0",
+    "google-genai>=1.0.0",
+    "pytrends>=4.9.0",
+    "requests>=2.31.0",
+    "google-api-python-client>=2.100.0",
+    "scipy>=1.11.0",
+    "numpy>=1.24.0",
+    "weasyprint>=60.0",
+    "jinja2>=3.1.0",
+    "python-pptx>=0.6.21",
+    "python-docx>=0.8.11",
+    "matplotlib>=3.7.0",
+    "python-dateutil>=2.8.0",
+]
+
+[project.scripts]
+consumer-research = "consumer_research.run:main"
+
+[tool.setuptools.packages.find]
+include = ["consumer_research*"]
+exclude = ["tests*", "examples*", "scripts*", "docs*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

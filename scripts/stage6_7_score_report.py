@@ -8,7 +8,6 @@ from datetime import datetime, timezone
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 ROOT = Path(__file__).parent.parent  # scripts/ -> repo root
-sys.path.insert(0, str(ROOT))
 
 import logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)-8s %(message)s", datefmt="%H:%M:%S")
@@ -16,12 +15,12 @@ logger = logging.getLogger("stage6_7")
 
 # Accept run ID as CLI argument, default to latest weight loss run
 if len(sys.argv) > 1:
-    RUN_DIR = ROOT / "consumer_research" / "runs" / sys.argv[1]
+    RUN_DIR = ROOT / "runs" / sys.argv[1]
 else:
     # Find the most recent run directory
-    runs = sorted(Path(ROOT / "consumer_research" / "runs").iterdir(), key=lambda p: p.stat().st_mtime, reverse=True)
+    runs = sorted(Path(ROOT / "runs").iterdir(), key=lambda p: p.stat().st_mtime, reverse=True)
     if not runs:
-        print("ERROR: No run directories found in consumer_research/runs/")
+        print("ERROR: No run directories found in runs/")
         sys.exit(1)
     RUN_DIR = runs[0]
 logger.info(f"Run directory: {RUN_DIR.name}")

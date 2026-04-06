@@ -14,13 +14,12 @@ from pathlib import Path
 from collections import defaultdict
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
-ROOT = Path(__file__).parent
-sys.path.insert(0, str(ROOT))
+ROOT = Path(__file__).parent.parent  # scripts/ -> repo root
 
 if len(sys.argv) > 1:
-    RUN_DIR = ROOT / "consumer_research" / "runs" / sys.argv[1]
+    RUN_DIR = ROOT / "runs" / sys.argv[1]
 else:
-    runs = sorted((ROOT / "consumer_research" / "runs").iterdir(), key=lambda p: p.name, reverse=True)
+    runs = sorted((ROOT / "runs").iterdir(), key=lambda p: p.name, reverse=True)
     RUN_DIR = runs[0]
 print(f"Run directory: {RUN_DIR.name}")
 

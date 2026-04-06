@@ -1,82 +1,75 @@
 """CLI entry point for the consumer research pipeline.
 
 Usage:
-    python -m consumer_research.run --brand "Thums Up" --category "Carbonated Beverages" --geo IN
-    python -m consumer_research.run --interactive  # Interactive briefing mode
+    consumer-research run --brand "Thums Up" --category "Carbonated Beverages" --geo IN
+    consumer-research score-report [run_id]
+    consumer-research regenerate [run_id]
+    consumer-research resume --stage 3 <run_id>
 """
 
 from __future__ import annotations
 
 import argparse
+import json
 import logging
 import sys
+from pathlib import Path
 
-from consumer_research.config import (
-    AnalysisConfig,
-    CollectionConfig,
-    PipelineConfig,
-    ScoringConfig,
-)
-from consumer_research.pipeline.orchestrator import run_pipeline
+from consumer_research.config import RUNS_DIR
 
 
-def main():
-    parser = argparse.ArgumentParser(
-        description="Consumer Research Report Generator — Enterprise-grade brand perception analysis"
-    )
-    parser.add_argument("--brand", required=True, help="Brand name to analyze")
-    parser.add_argument("--category", required=True, help="Product category")
-    parser.add_argument(
-        "--keywords", nargs="*", default=[], help="Additional search keywords (auto-expanded from brief)"
-    )
-    parser.add_argument(
-        "--subreddits", nargs="*", default=[], help="Subreddits to search"
-    )
-    parser.add_argument("--geo", default="", help="Geographic region (e.g., IN for India)")
-    parser.add_argument(
-        "--objectives", nargs="*", default=[], help="Business objectives / research questions"
-    )
-    parser.add_argument(
-        "--competitors", nargs="*", default=[], help="Competitor brands to compare against"
-    )
-    parser.add_argument(
-        "--max-posts", type=int, default=500,
-        help="Max Reddit posts (default 500 — this is a MINIMUM, not a cap)"
-    )
-    parser.add_argument(
-        "--model", default="claude-sonnet-4-20250514", help="Claude model for analysis"
-    )
-    parser.add_argument(
-        "--max-corpus", type=int, default=1000,
-        help="Max corpus size for analysis (controls API cost)"
-    )
-    parser.add_argument(
-        "--verbose", "-v", action="store_true", help="Verbose logging"
-    )
+def _resolve_run_dir(run_id: str | None) -> Path:
+    """Resolve a run directory from an optional run ID (defaults to most recent)."""
+    if run_id:
+        run_dir = RUNS_DIR / run_id
+        if not run_dir.exists():
+            print(f"ERROR: Run directory not found: {run_dir}")
+            sys.exit(1)
+        return run_dir
+    else:
+        if not RUNS_DIR.exists():
+            print(f"ERROR: No runs directory found at {RUNS_DIR}")
+            sys.exit(1)
+        runs = sorted(RUNS_DIR.iterdir(), key=lambda p: p.stat().st_mtime, reverse=True)
+        if not runs:
+            print("ERROR: No run directories found")
+            sys.exit(1)
+        return runs[0]
 
-    args = parser.parse_args()
 
-    logging.basicConfig(
-        level=logging.DEBUG if args.verbose else logging.INFO,
-        format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
-        datefmt="%H:%M:%S",
+def _load_run_config(run_dir: Path) -> dict:
+    """Load config.json from a run directory."""
+    config_path = run_dir / "config.json"
+    if not config_path.exists():
+        print(f"ERROR: No config.json found in {run_dir}")
+        sys.exit(1)
+    return json.loads(config_path.read_text(encoding="utf-8"))
+
+
+def cmd_run(args):
+    """Full pipeline: Brief -> Collect -> Normalize -> Filter -> Analyze -> Synthesize -> Score -> Report."""
+    from consumer_research.config import (
+        AnalysisConfig,
+        CollectionConfig,
+        PipelineConfig,
+        ScoringConfig,
     )
+    from consumer_research.pipeline.orchestrator import run_pipeline
 
     config = PipelineConfig(
         collection=CollectionConfig(
             brand_name=args.brand,
             category=args.category,
-            keywords=args.keywords,
-            subreddits=args.subreddits,
+            keywords=args.keywords or [],
+            subreddits=args.subreddits or [],
             trends_geo=args.geo,
             news_country=args.geo.lower() if args.geo else "",
-            business_objectives=args.objectives,
-            competitors=args.competitors,
+            business_objectives=args.objectives or [],
+            competitors=args.competitors or [],
             reddit_max_posts=args.max_posts,
         ),
         analysis=AnalysisConfig(
             claude_model=args.model,
-            max_corpus_size=args.max_corpus,
         ),
     )
 
@@ -87,6 +80,149 @@ def main():
     else:
         print(f"\nRun INCOMPLETE (stopped at validation gate). Partial output: {run_dir}")
         sys.exit(1)
+
+
+def cmd_score_report(args):
+    """Stages 6+7: Score insights + generate charts and DOCX report (no API calls)."""
+    from consumer_research.config import CollectionConfig, PipelineConfig, ScoringConfig
+    from consumer_research.models.schemas import AnalysisResults, Insight, NormalizedItem
+    from consumer_research.pipeline.scoring import score_insights, compute_brand_health
+    from consumer_research.report.charts import generate_all_charts
+    from consumer_research.report.docx_generator import generate_docx_report
+
+    run_dir = _resolve_run_dir(args.run_id)
+    logger = logging.getLogger("score-report")
+    logger.info(f"Run directory: {run_dir.name}")
+
+    corpus = [NormalizedItem(**d) for d in json.loads((run_dir / "filtered" / "corpus.json").read_text(encoding="utf-8"))]
+    analysis_data = json.loads((run_dir / "analysis" / "results.json").read_text(encoding="utf-8"))
+    analysis = AnalysisResults(**analysis_data)
+    insights = [Insight(**d) for d in json.loads((run_dir / "insights" / "insights.json").read_text(encoding="utf-8"))]
+
+    rc = _load_run_config(run_dir)
+    config = PipelineConfig(
+        collection=CollectionConfig(
+            brand_name=rc.get("brand_name", "Unknown"),
+            category=rc.get("category", "general"),
+            business_objectives=rc.get("business_objectives", []),
+            competitors=rc.get("competitors", []),
+            trends_geo=rc.get("trends_geo", ""),
+            news_country=rc.get("news_country", ""),
+        ),
+        scoring=ScoringConfig(),
+    )
+
+    scored = score_insights(insights, analysis, corpus, run_dir, config=config.scoring)
+    brand_health = compute_brand_health(analysis, corpus)
+    analysis_data["brand_health"] = brand_health
+    (run_dir / "analysis" / "results.json").write_text(
+        json.dumps(analysis_data, indent=2, default=str), encoding="utf-8"
+    )
+
+    report_dir = run_dir / "report"
+    report_dir.mkdir(exist_ok=True)
+    charts = generate_all_charts(analysis=analysis, scored_insights=scored, items=corpus, output_dir=report_dir)
+    docx_path = generate_docx_report(scored_insights=scored, analysis=analysis, items=corpus, config=config, run_dir=run_dir, brand_health=brand_health)
+
+    logger.info(f"Scored: {len(scored)} insights | Brand Health: {brand_health.get('overall_score', 'N/A')}/100")
+    logger.info(f"DOCX: {docx_path}")
+
+
+def cmd_regenerate(args):
+    """Regenerate DOCX report from existing scored data (no API calls)."""
+    from consumer_research.config import CollectionConfig, PipelineConfig
+    from consumer_research.models.schemas import AnalysisResults, NormalizedItem, ScoredInsight
+    from consumer_research.report.charts import generate_all_charts
+    from consumer_research.report.docx_generator import generate_docx_report
+
+    run_dir = _resolve_run_dir(args.run_id)
+    logger = logging.getLogger("regenerate")
+    logger.info(f"Run directory: {run_dir.name}")
+
+    corpus = [NormalizedItem(**d) for d in json.loads((run_dir / "filtered" / "corpus.json").read_text(encoding="utf-8"))]
+    analysis_data = json.loads((run_dir / "analysis" / "results.json").read_text(encoding="utf-8"))
+    analysis = AnalysisResults(**analysis_data)
+    scored_insights = [ScoredInsight(**d) for d in json.loads((run_dir / "scored" / "scored_insights.json").read_text(encoding="utf-8"))]
+
+    rc = _load_run_config(run_dir)
+    config = PipelineConfig(collection=CollectionConfig(
+        brand_name=rc.get("brand_name", "Unknown"),
+        category=rc.get("category", "general"),
+        business_objectives=rc.get("business_objectives", []),
+        competitors=rc.get("competitors", []),
+        trends_geo=rc.get("trends_geo", ""),
+        news_country=rc.get("news_country", ""),
+    ))
+
+    brand_health = analysis_data.get("brand_health", {})
+    charts = generate_all_charts(analysis=analysis, scored_insights=scored_insights, items=corpus, output_dir=run_dir / "report")
+    docx_path = generate_docx_report(scored_insights=scored_insights, analysis=analysis, items=corpus, config=config, run_dir=run_dir, brand_health=brand_health)
+
+    logger.info(f"DOCX: {docx_path} ({docx_path.stat().st_size:,} bytes)")
+
+
+def cmd_resume(args):
+    """Resume pipeline from a specific stage using data from a previous run."""
+    stage = args.stage
+    if stage == 3:
+        print(f"Resuming from Stage 3. Use: python scripts/resume_stage3.py {args.run_id}")
+    elif stage == 4:
+        print(f"Resuming from Stage 4. Use: python scripts/resume_stage4.py {args.run_id}")
+    else:
+        print(f"ERROR: Unsupported resume stage: {stage}. Supported: 3, 4")
+        sys.exit(1)
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        prog="consumer-research",
+        description="Consumer research report generator",
+    )
+    subparsers = parser.add_subparsers(dest="command", help="Available commands")
+
+    # ── run ──
+    p_run = subparsers.add_parser("run", help="Run full pipeline (Stages 0-7)")
+    p_run.add_argument("--brand", required=True, help="Brand name to analyze")
+    p_run.add_argument("--category", required=True, help="Product category")
+    p_run.add_argument("--keywords", nargs="*", help="Additional search keywords")
+    p_run.add_argument("--subreddits", nargs="*", help="Subreddits to search")
+    p_run.add_argument("--geo", default="", help="Geographic region (e.g., IN)")
+    p_run.add_argument("--objectives", nargs="*", help="Business objectives / research questions")
+    p_run.add_argument("--competitors", nargs="*", help="Competitor brands")
+    p_run.add_argument("--max-posts", type=int, default=500, help="Max Reddit posts (default 500)")
+    p_run.add_argument("--model", default="claude-sonnet-4-20250514", help="Claude model for analysis")
+    p_run.set_defaults(func=cmd_run)
+
+    # ── score-report ──
+    p_sr = subparsers.add_parser("score-report", help="Run Stages 6+7: score + report (no API)")
+    p_sr.add_argument("run_id", nargs="?", default=None, help="Run ID (defaults to most recent)")
+    p_sr.set_defaults(func=cmd_score_report)
+
+    # ── regenerate ──
+    p_regen = subparsers.add_parser("regenerate", help="Regenerate DOCX from scored data (no API)")
+    p_regen.add_argument("run_id", nargs="?", default=None, help="Run ID (defaults to most recent)")
+    p_regen.set_defaults(func=cmd_regenerate)
+
+    # ── resume ──
+    p_resume = subparsers.add_parser("resume", help="Resume from a specific stage")
+    p_resume.add_argument("--stage", type=int, required=True, help="Stage to resume from (3 or 4)")
+    p_resume.add_argument("run_id", help="Source run ID to resume from")
+    p_resume.set_defaults(func=cmd_resume)
+
+    # ── Parse ──
+    args = parser.parse_args()
+
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+        datefmt="%H:%M:%S",
+    )
+
+    if not args.command:
+        parser.print_help()
+        sys.exit(1)
+
+    args.func(args)
 
 
 if __name__ == "__main__":

@@ -5,7 +5,6 @@ from pathlib import Path
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 ROOT = Path(__file__).parent.parent  # scripts/ -> repo root
-sys.path.insert(0, str(ROOT))
 
 import logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)-8s %(message)s", datefmt="%H:%M:%S")
@@ -20,12 +19,12 @@ from consumer_research.report.charts import generate_all_charts
 if len(sys.argv) > 1:
     RUN_ID = sys.argv[1]
 else:
-    runs = sorted((ROOT / "consumer_research" / "runs").iterdir(), key=lambda p: p.stat().st_mtime, reverse=True)
+    runs = sorted((ROOT / "runs").iterdir(), key=lambda p: p.stat().st_mtime, reverse=True)
     if not runs:
         print("ERROR: No run directories found"); sys.exit(1)
     RUN_ID = runs[0].name
     logger.info(f"No run ID provided, using most recent: {RUN_ID}")
-run_dir = ROOT / "consumer_research" / "runs" / RUN_ID
+run_dir = ROOT / "runs" / RUN_ID
 
 # Load filtered corpus
 corpus = [NormalizedItem(**d) for d in json.loads((run_dir / "filtered" / "corpus.json").read_text(encoding="utf-8"))]

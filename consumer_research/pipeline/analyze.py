@@ -399,7 +399,18 @@ def _classify_sentiment(
             logger.info(f"  Sentiment batch {i // batch_size + 1}: {len(parsed)} classified")
 
         except Exception as e:
-            logger.error(f"  Sentiment batch error: {e}")
+            logger.error(f"  Sentiment batch error: {e}. Assigning neutral defaults to {len(batch)} items.")
+            for item in batch:
+                results.append(SentimentResult(
+                    item_id=item.item_id,
+                    sentiment=Sentiment.NEUTRAL,
+                    sentiment_score=0.5,
+                    reasoning=f"Batch error: {e}",
+                    key_phrases=[],
+                    aspects=[],
+                    primary_emotion=Emotion.NONE,
+                    emotion_intensity=0.0,
+                ))
 
     return results
 
