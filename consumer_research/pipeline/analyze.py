@@ -306,6 +306,7 @@ def _classify_sentiment(
 ) -> list[SentimentResult]:
     """Classify sentiment for each item in batches."""
     results: list[SentimentResult] = []
+    degraded_count = 0
 
     for i in range(0, len(items), batch_size):
         batch = items[i : i + batch_size]
@@ -400,6 +401,7 @@ def _classify_sentiment(
 
         except Exception as e:
             logger.error(f"  Sentiment batch error: {e}. Assigning neutral defaults to {len(batch)} items.")
+            degraded_count += len(batch)
             for item in batch:
                 results.append(SentimentResult(
                     item_id=item.item_id,
@@ -411,6 +413,14 @@ def _classify_sentiment(
                     primary_emotion=Emotion.NONE,
                     emotion_intensity=0.0,
                 ))
+
+    if degraded_count > 0:
+        pct = degraded_count / len(items) * 100
+        logger.warning(
+            f"DEGRADED ANALYSIS: {degraded_count} of {len(items)} items ({pct:.1f}%) "
+            f"received default neutral classification due to batch errors. "
+            f"NSS and brand health scores may be flattened. Review batch error logs above."
+        )
 
     return results
 

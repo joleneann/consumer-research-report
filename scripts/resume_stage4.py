@@ -45,7 +45,7 @@ def main():
     else:
         logger.error("Usage: python resume_stage4.py <source_run_id>")
         sys.exit(1)
-    source_run = ROOT / "runs" / source_run_id
+    source_run = RUNS_DIR / source_run_id
     filtered_path = source_run / "filtered" / "corpus.json"
     if not filtered_path.exists():
         logger.error(f"Filtered corpus not found: {filtered_path}")
@@ -53,7 +53,7 @@ def main():
 
     # New run directory
     run_id = f"{datetime.now().strftime('%Y%m%d_%H%M%S')}_{uuid4().hex[:6]}"
-    run_dir = ROOT / "runs" / run_id
+    run_dir = RUNS_DIR / run_id
     run_dir.mkdir(parents=True, exist_ok=True)
     logger.info(f"New run: {run_id}")
 
@@ -75,7 +75,7 @@ def main():
 
     # Config
     from consumer_research.config import (
-        AnalysisConfig, CollectionConfig, PipelineConfig, ScoringConfig
+        AnalysisConfig, CollectionConfig, PipelineConfig, RUNS_DIR, ScoringConfig
     )
     # Load config from source run's config.json
     _config_path = source_run / "config.json"

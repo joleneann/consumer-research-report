@@ -15,10 +15,10 @@ logger = logging.getLogger("stage6_7")
 
 # Accept run ID as CLI argument, default to latest weight loss run
 if len(sys.argv) > 1:
-    RUN_DIR = ROOT / "runs" / sys.argv[1]
+    RUN_DIR = RUNS_DIR / sys.argv[1]
 else:
     # Find the most recent run directory
-    runs = sorted(Path(ROOT / "runs").iterdir(), key=lambda p: p.stat().st_mtime, reverse=True)
+    runs = sorted(Path(RUNS_DIR).iterdir(), key=lambda p: p.stat().st_mtime, reverse=True)
     if not runs:
         print("ERROR: No run directories found in runs/")
         sys.exit(1)
@@ -26,6 +26,7 @@ else:
 logger.info(f"Run directory: {RUN_DIR.name}")
 
 # Load all data
+from consumer_research.config import RUNS_DIR
 from consumer_research.models.schemas import (
     AnalysisResults, Insight, NormalizedItem, ScoredInsight,
 )

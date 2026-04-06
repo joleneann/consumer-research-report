@@ -21,14 +21,14 @@ import logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)-8s %(message)s", datefmt="%H:%M:%S")
 logger = logging.getLogger("resynth")
 
-from consumer_research.config import CollectionConfig, PipelineConfig, ScoringConfig
+from consumer_research.config import CollectionConfig, PipelineConfig, ScoringConfig, RUNS_DIR
 from consumer_research.models.schemas import AnalysisResults, NormalizedItem
 from consumer_research.pipeline.synthesize import synthesize_insights
 from consumer_research.pipeline.scoring import score_insights
 from consumer_research.utils.llm_client import create_llm_client
 
 RUN_ID = "20260327_162042_7d13c6"
-run_dir = ROOT / "runs" / RUN_ID
+run_dir = RUNS_DIR / RUN_ID
 
 # Load filtered corpus
 corpus = [NormalizedItem(**d) for d in json.loads((run_dir / "filtered" / "corpus.json").read_text(encoding="utf-8"))]

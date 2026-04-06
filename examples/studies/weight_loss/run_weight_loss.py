@@ -380,7 +380,6 @@ def main():
         claude_model="claude-sonnet-4-20250514",
         claude_temperature=0.0,
         batch_size=15,
-        max_corpus_size=999_999,
         min_items_for_theme=5,
     )
     config = PipelineConfig(collection=collection, analysis=analysis_cfg, scoring=ScoringConfig())

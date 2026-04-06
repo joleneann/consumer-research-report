@@ -43,7 +43,7 @@ def main():
     else:
         logger.error("Usage: python resume_stage3.py <source_run_id>")
         sys.exit(1)
-    source_run = ROOT / "runs" / source_run_id
+    source_run = RUNS_DIR / source_run_id
     normalized_path = source_run / "normalized" / "corpus.json"
     if not normalized_path.exists():
         logger.error(f"Normalized corpus not found: {normalized_path}")
@@ -51,7 +51,7 @@ def main():
 
     # ── New run directory ──
     run_id = f"{datetime.now().strftime('%Y%m%d_%H%M%S')}_{uuid4().hex[:6]}"
-    run_dir = ROOT / "runs" / run_id
+    run_dir = RUNS_DIR / run_id
     run_dir.mkdir(parents=True, exist_ok=True)
     logger.info(f"New run: {run_id}")
 
@@ -81,6 +81,7 @@ def main():
         AnalysisConfig,
         CollectionConfig,
         PipelineConfig,
+        RUNS_DIR,
         ScoringConfig,
     )
 
@@ -161,7 +162,7 @@ def main():
         run_dir,
         llm_client,
         batch_size=analysis_cfg.batch_size,
-        min_items_for_theme=analysis.min_items_for_theme,
+        min_items_for_theme=analysis_cfg.min_items_for_theme,
     )
     logger.info(f"Stage 4 done in {time.time()-t4:.0f}s: {len(analysis_results.themes)} themes")
 

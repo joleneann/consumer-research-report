@@ -161,18 +161,6 @@ def cmd_regenerate(args):
     logger.info(f"DOCX: {docx_path} ({docx_path.stat().st_size:,} bytes)")
 
 
-def cmd_resume(args):
-    """Resume pipeline from a specific stage using data from a previous run."""
-    stage = args.stage
-    if stage == 3:
-        print(f"Resuming from Stage 3. Use: python scripts/resume_stage3.py {args.run_id}")
-    elif stage == 4:
-        print(f"Resuming from Stage 4. Use: python scripts/resume_stage4.py {args.run_id}")
-    else:
-        print(f"ERROR: Unsupported resume stage: {stage}. Supported: 3, 4")
-        sys.exit(1)
-
-
 def main():
     parser = argparse.ArgumentParser(
         prog="consumer-research",
@@ -202,12 +190,6 @@ def main():
     p_regen = subparsers.add_parser("regenerate", help="Regenerate DOCX from scored data (no API)")
     p_regen.add_argument("run_id", nargs="?", default=None, help="Run ID (defaults to most recent)")
     p_regen.set_defaults(func=cmd_regenerate)
-
-    # ── resume ──
-    p_resume = subparsers.add_parser("resume", help="Resume from a specific stage")
-    p_resume.add_argument("--stage", type=int, required=True, help="Stage to resume from (3 or 4)")
-    p_resume.add_argument("run_id", help="Source run ID to resume from")
-    p_resume.set_defaults(func=cmd_resume)
 
     # ── Parse ──
     args = parser.parse_args()

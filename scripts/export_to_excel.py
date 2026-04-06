@@ -21,8 +21,10 @@ from pathlib import Path
 ROOT = Path(__file__).parent.parent  # scripts/ -> repo root
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 
+from consumer_research.config import RUNS_DIR
+
 # ── Resolve run dir ──────────────────────────────────────────────────────────
-runs_dir = ROOT / "runs"
+runs_dir = RUNS_DIR
 if len(sys.argv) > 1:
     run_id = sys.argv[1]
     run_dir = runs_dir / run_id
