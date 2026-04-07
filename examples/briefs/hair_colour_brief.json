@@ -1,0 +1,16 @@
+{
+  "brand_name": "India Hair Colour",
+  "category": "Hair Colour",
+  "business_questions": [
+    "Understand consumer perceptions of hair colour products in India",
+    "Identify key purchase drivers and barriers",
+    "Map the competitive landscape from a consumer perspective",
+    "Surface unmet needs and emerging trends"
+  ],
+  "aspects": [],
+  "target_audience": "",
+  "competitors": [],
+  "geographic_focus": "IN",
+  "time_period_months": 12,
+  "additional_context": "Ingested from data india hair colour.json (52931 raw items, 14436 after normalization)"
+}

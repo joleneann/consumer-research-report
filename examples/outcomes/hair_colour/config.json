@@ -1,0 +1,21 @@
+{
+  "run_id": "20260407_143544_98a8c6",
+  "created_at": "2026-04-07T09:05:47.755939Z",
+  "brand_name": "India Hair Colour",
+  "category": "Hair Colour",
+  "time_period_days": 180,
+  "keywords": [],
+  "business_objectives": [
+    "Understand consumer perceptions of hair colour products in India",
+    "Identify key purchase drivers and barriers",
+    "Map the competitive landscape from a consumer perspective",
+    "Surface unmet needs and emerging trends"
+  ],
+  "subreddits": [],
+  "trends_geo": "IN",
+  "news_country": "in",
+  "claude_model": "in-context",
+  "claude_temperature": 0.0,
+  "filter_prompt": null,
+  "analysis_prompts": null
+}
