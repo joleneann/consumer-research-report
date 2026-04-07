@@ -9,16 +9,16 @@
     "scored_insights": "scored_insights.json (in examples/outcomes/weight_loss/ for weight_loss)"
   },
   "corpus_stats": {
-    "items_analysed": 1761,
+    "items_analysed": 4408,
     "platforms": {
-      "reddit": 928,
-      "instagram": 737,
-      "youtube": 147
+      "reddit": 1907,
+      "instagram": 2340,
+      "youtube": 161
     },
     "themes_extracted": 12,
     "insights_generated": 12,
-    "net_sentiment_score": "+19.5%",
-    "brand_health_score": "68.7/100"
+    "net_sentiment_score": "+13.8%",
+    "brand_health_score": "56.2/100"
   },
   "pipeline_stages_run": [
     "normalize",
