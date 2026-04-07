@@ -4,7 +4,6 @@ Usage:
     consumer-research run --brand "Thums Up" --category "Carbonated Beverages" --geo IN
     consumer-research score-report [run_id]
     consumer-research regenerate [run_id]
-    consumer-research resume --stage 3 <run_id>
 """
 
 from __future__ import annotations
