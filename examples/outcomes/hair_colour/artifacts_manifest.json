@@ -10,11 +10,11 @@
   "corpus_stats": {
     "raw_collected": 75964,
     "after_dedup": 18153,
-    "items_analysed": 7688,
-    "themes": 11,
-    "insights_scored": 11,
-    "net_sentiment_score": 0.2535,
-    "brand_health_score": 72.6,
+    "items_analysed": 8969,
+    "themes": 16,
+    "insights_scored": 16,
+    "net_sentiment_score": 0.2234,
+    "brand_health_score": 67.9,
     "platforms": ["twitter", "youtube", "instagram", "amazon", "reddit"]
   }
 }

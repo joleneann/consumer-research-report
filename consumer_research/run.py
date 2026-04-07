@@ -78,12 +78,16 @@ def cmd_ingest(args):
     logger.info(f"Ingested {len(items)} items from {data_path.name}")
 
     # Save raw data for provenance (Collection Funnel in report reads from raw/)
+    # Stream-write to avoid MemoryError on large corpora (282K+ items)
     raw_dir = run_dir / "raw"
     raw_dir.mkdir(exist_ok=True)
-    (raw_dir / "external_ingested.json").write_text(
-        json.dumps([item.model_dump(mode="json") for item in items], default=str),
-        encoding="utf-8",
-    )
+    with open(raw_dir / "external_ingested.json", "w", encoding="utf-8") as f:
+        f.write("[\n")
+        for i, item in enumerate(items):
+            if i > 0:
+                f.write(",\n")
+            f.write(json.dumps(item.model_dump(mode="json"), default=str))
+        f.write("\n]")
 
     # Normalize and deduplicate
     corpus = normalize_and_deduplicate({"external": items}, run_dir)
