@@ -33,12 +33,6 @@ SENTIMENT_COLORS = {
     "mixed": AMBER,
 }
 
-QUADRANT_COLORS = {
-    "Key Finding": NAVY,
-    "Emerging Trend": TEAL,
-    "Watch Closely": AMBER,
-    "Noise": GREY,
-}
 
 # Plutchik's emotion colors (industry standard palette)
 EMOTION_COLORS = {
@@ -188,50 +182,6 @@ def generate_theme_chart(themes: list, output_dir: Path) -> Path | None:
         logger.warning(f"Theme chart failed: {e}")
         return None
 
-
-def generate_matrix_chart(scored_insights: list, output_dir: Path) -> Path | None:
-    """2x2 scatter plot: Confidence (x) vs Signal Strength (y)."""
-    try:
-        plt = _setup_chart_style()
-        fig, ax = plt.subplots(figsize=(7, 5.5))
-
-        # Draw quadrant background
-        ax.axhline(y=0.5, color=BORDER, linewidth=1, linestyle="--", alpha=0.7)
-        ax.axvline(x=0.5, color=BORDER, linewidth=1, linestyle="--", alpha=0.7)
-
-        # Quadrant labels
-        ax.text(0.25, 0.95, "WATCH CLOSELY", ha="center", va="top", fontsize=9, color=AMBER, fontweight="bold", alpha=0.6, transform=ax.transAxes)
-        ax.text(0.75, 0.95, "KEY FINDING", ha="center", va="top", fontsize=9, color=NAVY, fontweight="bold", alpha=0.6, transform=ax.transAxes)
-        ax.text(0.25, 0.05, "NOISE", ha="center", va="bottom", fontsize=9, color=GREY, fontweight="bold", alpha=0.6, transform=ax.transAxes)
-        ax.text(0.75, 0.05, "EMERGING TREND", ha="center", va="bottom", fontsize=9, color=TEAL, fontweight="bold", alpha=0.6, transform=ax.transAxes)
-
-        # Plot insights
-        for s in scored_insights:
-            color = QUADRANT_COLORS.get(s.matrix_quadrant.value, GREY)
-            ax.scatter(s.confidence_score, s.signal_strength_score, c=color, s=120, zorder=5, edgecolors="white", linewidth=1.5)
-            ax.annotate(s.insight.insight_id, (s.confidence_score, s.signal_strength_score),
-                       textcoords="offset points", xytext=(8, 8), fontsize=8, color=SLATE, fontweight="bold")
-
-        ax.set_xlabel("Confidence Score →", fontsize=11, fontweight="600", color=NAVY)
-        ax.set_ylabel("Signal Strength →", fontsize=11, fontweight="600", color=NAVY)
-        ax.set_title("Insights Matrix — Fully Data-Driven", color=NAVY, pad=15, fontsize=14)
-        ax.set_xlim(0, 1)
-        ax.set_ylim(0, 1)
-        ax.spines["left"].set_visible(True)
-        ax.spines["bottom"].set_color(BORDER)
-        ax.spines["bottom"].set_linewidth(0.5)
-        ax.spines["left"].set_color(BORDER)
-        ax.spines["left"].set_linewidth(0.5)
-        ax.grid(False)
-
-        plt.tight_layout()
-        path = output_dir / "chart_matrix.png"
-        plt.savefig(str(path), dpi=200, bbox_inches="tight", facecolor="white")
-        plt.close()
-        return path
-    except Exception as e:
-        logger.warning(f"Matrix chart failed: {e}")
-        return None
 
 
 def generate_confidence_radar(scored: object, output_dir: Path, index: int = 0,
@@ -481,7 +431,6 @@ def generate_all_charts(analysis, scored_insights, items, output_dir: Path) -> d
         "sentiment": generate_sentiment_chart(analysis.overall_sentiment, total, output_dir),
         "platforms": generate_platform_chart(platform_counts, output_dir),
         "themes": generate_theme_chart(analysis.themes, output_dir),
-        "matrix": generate_matrix_chart(scored_insights, output_dir),
         "emotions": generate_emotion_chart(
             getattr(analysis, "emotion_distribution", {}), output_dir
         ),

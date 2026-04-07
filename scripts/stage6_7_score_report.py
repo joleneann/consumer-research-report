@@ -109,7 +109,7 @@ docx_path = generate_docx_report(
 logger.info(f"DOCX: {docx_path} ({docx_path.stat().st_size:,} bytes)")
 
 # ── Summary ──
-from consumer_research.models.schemas import ConfidenceTier, MatrixQuadrant
+from consumer_research.models.schemas import ConfidenceTier
 platform_counts = {}
 for item in corpus:
     p = item.source_platform.value
@@ -123,6 +123,5 @@ logger.info(f"Insights:        {len(insights)}")
 logger.info(f"NSS:             {analysis.net_sentiment_score:+.2%}")
 logger.info(f"Brand Health:    {brand_health.get('overall_score', 'N/A')}/100")
 logger.info(f"High confidence: {sum(1 for s in scored if s.confidence_tier == ConfidenceTier.HIGH)}")
-logger.info(f"Key findings:    {sum(1 for s in scored if s.matrix_quadrant == MatrixQuadrant.KEY_FINDING)}")
 logger.info(f"Report:          {docx_path}")
 logger.info(f"{'='*50}")

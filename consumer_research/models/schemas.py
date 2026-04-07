@@ -71,14 +71,6 @@ class SignalStrengthTier(str, Enum):
     WEAK = "weak"            # 0.25-0.49
     TRACE = "trace"          # 0.00-0.24
 
-
-class MatrixQuadrant(str, Enum):
-    KEY_FINDING = "Key Finding"          # High confidence + Strong signal
-    EMERGING_TREND = "Emerging Trend"    # High confidence + Weak signal
-    WATCH_CLOSELY = "Watch Closely"      # Low confidence + Strong signal
-    NOISE = "Noise"                      # Low confidence + Weak signal
-
-
 # ─── Stage 1: Raw Collection ────────────────────────────────────────────────
 
 class PlatformMetadata(BaseModel):
@@ -314,7 +306,6 @@ class ScoredInsight(BaseModel):
     signal_strength_score: float = Field(ge=0.0, le=1.0)
     signal_strength_tier: SignalStrengthTier
     signal_strength_breakdown: SignalStrengthBreakdown
-    matrix_quadrant: MatrixQuadrant
     # Statistical context for any reported percentage
     sample_size: int
     confidence_interval_95: Optional[tuple[float, float]] = None
@@ -352,5 +343,4 @@ class RunSummary(BaseModel):
     insights_generated: int
     insights_passed_quality_gates: int
     high_confidence_insights: int
-    key_finding_insights: int
     duration_seconds: float

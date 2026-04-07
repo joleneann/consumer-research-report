@@ -658,8 +658,6 @@ def _section_deep_dives(doc: Document, scored_insights: list[ScoredInsight],
     doc.add_page_break()
 
 
-def _section_insights_matrix(doc: Document, scored_insights: list[ScoredInsight], run_dir: Path):
-    pass  # Chart moved to Insight Landscape section; table removed as redundant
 
 
 def _section_brand_health(doc: Document, bh: dict):

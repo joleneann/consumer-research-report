@@ -167,7 +167,7 @@ def main():
         logger.error(f"PPTX failed: {e}")
         import traceback; traceback.print_exc()
 
-    from consumer_research.models.schemas import ConfidenceTier, MatrixQuadrant
+    from consumer_research.models.schemas import ConfidenceTier
     platform_counts = {}
     for item in filtered:
         p = item.source_platform.value
@@ -180,7 +180,6 @@ def main():
     logger.info(f"Themes:          {len(analysis_results.themes)}")
     logger.info(f"Insights:        {len(insights)}")
     logger.info(f"High confidence: {sum(1 for s in scored if s.confidence_tier == ConfidenceTier.HIGH)}")
-    logger.info(f"Key findings:    {sum(1 for s in scored if s.matrix_quadrant == MatrixQuadrant.KEY_FINDING)}")
     logger.info(f"Report:          {run_dir / 'report' / 'report.pptx'}")
     logger.info("═══════════════════════════════════════")
 

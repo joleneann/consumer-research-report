@@ -75,6 +75,6 @@ scored = score_insights(
 )
 logger.info(f"Scored: {len(scored)} insights")
 for s in scored:
-    logger.info(f"  {s.insight.insight_id}: conf={s.confidence_score:.2f} ({s.confidence_tier.value}) | signal={s.signal_strength_score:.2f} ({s.signal_strength_tier.value}) | {s.matrix_quadrant.value}")
+    logger.info(f"  {s.insight.insight_id}: conf={s.confidence_score:.2f} ({s.confidence_tier.value}) | signal={s.signal_strength_score:.2f} ({s.signal_strength_tier.value})")
 
 logger.info("Done. Now run: python regenerate_report.py")

@@ -21,7 +21,6 @@ from consumer_research.models.schemas import (
     ConfidenceBreakdown,
     ConfidenceTier,
     Insight,
-    MatrixQuadrant,
     NormalizedItem,
     ScoredInsight,
     SignalStrengthBreakdown,
@@ -121,10 +120,9 @@ def score_insights(
             + config.signal_conversation_depth * sig_breakdown.conversation_depth_score
         )
 
-        # ── Tiers and Matrix ──
+        # ── Tiers ──
         conf_tier = _confidence_tier(confidence_score)
         sig_tier = _signal_tier(signal_score)
-        quadrant = _matrix_quadrant(confidence_score, signal_score)
 
         # ── Wilson CI ──
         n = insight.supporting_item_count
@@ -139,7 +137,6 @@ def score_insights(
             signal_strength_score=round(signal_score, 3),
             signal_strength_tier=sig_tier,
             signal_strength_breakdown=sig_breakdown,
-            matrix_quadrant=quadrant,
             sample_size=n,
             confidence_interval_95=ci,
         )
@@ -155,10 +152,9 @@ def score_insights(
     )
 
     high_conf = sum(1 for s in scored if s.confidence_tier == ConfidenceTier.HIGH)
-    key_findings = sum(1 for s in scored if s.matrix_quadrant == MatrixQuadrant.KEY_FINDING)
     logger.info(
         f"Scoring complete: {len(scored)} insights scored. "
-        f"{high_conf} high confidence, {key_findings} key findings."
+        f"{high_conf} high confidence."
     )
 
     return scored
@@ -410,18 +406,6 @@ def _signal_tier(score: float) -> SignalStrengthTier:
     elif score >= 0.25:
         return SignalStrengthTier.WEAK
     return SignalStrengthTier.TRACE
-
-
-def _matrix_quadrant(confidence: float, signal: float) -> MatrixQuadrant:
-    high_conf = confidence >= 0.75
-    strong_signal = signal >= 0.75
-    if high_conf and strong_signal:
-        return MatrixQuadrant.KEY_FINDING
-    elif high_conf and not strong_signal:
-        return MatrixQuadrant.EMERGING_TREND
-    elif not high_conf and strong_signal:
-        return MatrixQuadrant.WATCH_CLOSELY
-    return MatrixQuadrant.NOISE
 
 
 def _wilson_ci(successes: int, total: int, z: float = 1.96) -> tuple[float, float]:

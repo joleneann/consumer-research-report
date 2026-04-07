@@ -31,7 +31,6 @@ from consumer_research.collectors.youtube import YouTubeCollector
 from consumer_research.config import RUNS_DIR, PipelineConfig
 from consumer_research.models.schemas import (
     ConfidenceTier,
-    MatrixQuadrant,
     RunConfig,
     RunSummary,
 )
@@ -233,9 +232,6 @@ def run_pipeline(config: PipelineConfig, brief: ResearchBrief | None = None) -> 
         high_confidence_insights=sum(
             1 for s in scored if s.confidence_tier == ConfidenceTier.HIGH
         ),
-        key_finding_insights=sum(
-            1 for s in scored if s.matrix_quadrant == MatrixQuadrant.KEY_FINDING
-        ),
         duration_seconds=round(duration, 1),
     )
     (run_dir / "summary.json").write_text(
@@ -248,7 +244,6 @@ def run_pipeline(config: PipelineConfig, brief: ResearchBrief | None = None) -> 
     logger.info(f"Themes: {summary.themes_extracted}")
     logger.info(f"Insights: {summary.insights_generated} ({summary.insights_passed_quality_gates} passed gates)")
     logger.info(f"High confidence: {summary.high_confidence_insights}")
-    logger.info(f"Key findings: {summary.key_finding_insights}")
 
     return run_dir
 
