@@ -1,7 +1,7 @@
 """Chart generation for reports — produces PNG images embeddable in PPTX and HTML.
 
 All charts follow the consulting design spec:
-- Inter/Source Sans Pro fonts
+- Lato/Source Sans Pro fonts
 - Navy (#1E3A5F) primary, deep grey (#374151) text
 - No decorative elements, no 3D, no gradients
 - Horizontal bars preferred, sorted by value
@@ -62,7 +62,7 @@ def _setup_chart_style():
 
     plt.rcParams.update({
         "font.family": "sans-serif",
-        "font.sans-serif": ["Inter", "Source Sans Pro", "Segoe UI", "Arial"],
+        "font.sans-serif": ["Lato", "Source Sans Pro", "Segoe UI", "Arial"],
         "font.size": 10,
         "axes.titlesize": 13,
         "axes.titleweight": "bold",

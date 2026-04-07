@@ -71,8 +71,8 @@ class ScoringConfig:
 class ReportDesign:
     """Visual design specification for reports."""
     # Typography
-    heading_font: str = "Inter"
-    body_font: str = "Inter"
+    heading_font: str = "Lato"
+    body_font: str = "Lato"
     heading_size_pt: int = 16
     body_size_pt: int = 11
     stat_callout_size_pt: int = 32

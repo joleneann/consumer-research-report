@@ -44,8 +44,8 @@ GREY_LITE = RGBColor(0xF3, 0xF4, 0xF6)
 WHITE     = RGBColor(0xFF, 0xFF, 0xFF)
 TEAL      = RGBColor(0x4F, 0xD1, 0xC5)
 
-HEADING_FONT = "Inter"
-BODY_FONT    = "Inter"
+HEADING_FONT = "Lato"
+BODY_FONT    = "Lato"
 
 
 

@@ -9,7 +9,7 @@ Enterprise-grade brand perception analysis. Brief -> collect -> filter -> analyz
 - **No collector crashes the pipeline.** All collector calls wrapped in `_safe_collect()`. Fail gracefully, log, continue.
 - **User brief first.** Never run without a user-approved brief. The brief drives keyword expansion.
 - **Data-driven scoring only.** Confidence × Signal Strength, both from data. Insights ranked by confidence (primary) and signal (tiebreaker). No quadrant labels, no LLM opinion on actionability.
-- **No AI slop.** Inter font throughout (headings and body), white bg, deep grey (#374151) text, navy (#1E3A5F) accent.
+- **No AI slop.** Lato font throughout (headings and body), white bg, deep grey (#374151) text, navy (#1E3A5F) accent.
 
 ## Pipeline (8 stages, each writes artifacts to `runs/{run_id}/`)
 ```
@@ -166,14 +166,14 @@ Field names are auto-detected (text/content/body/message, source/platform/channe
 ## Report Design Principles (DOCX)
 - **No truncation**: DOCX cells wrap naturally — never add `[:N]` character limits anywhere
 - **No em dashes**: Never use `—` or `–` anywhere. All LLM text passes through `_clean()` (replaces with `-`). Blockquote source uses ` - ` not ` — `.
-- **Typography**: Inter font throughout — headings and body. `HEADING_FONT = "Inter"`, `BODY_FONT = "Inter"`. Inter TTF files installed in matplotlib font dir and font cache rebuilt. Charts also use Inter via `rcParams["font.sans-serif"] = ["Inter", ...]`.
+- **Typography**: Lato font throughout — headings and body. `HEADING_FONT = "Lato"`, `BODY_FONT = "Lato"`. Charts also use Lato via `rcParams["font.sans-serif"] = ["Lato", ...]`.
 - **Table contrast**: Headers Navy bg + white text. Alternating rows for readability.
-- **Charts**: Embedded as PNG inline at natural reading points. Tufte-inspired — no left spine, light gridlines. Inter font in all chart text.
+- **Charts**: Embedded as PNG inline at natural reading points. Tufte-inspired — no left spine, light gridlines. Lato font in all chart text.
 - **Colours**: Navy (#1E3A5F), Green (#059669) positive, Red (#DC2626) negative, Amber (#D97706) neutral/watch
 - **Verbatims**: Block-quoted, indented, italic, 10pt. Source platform shown after ` - `. Max 3 per insight.
 - **Report sections** (8, current): Cover → Data Universe → Sentiment & Emotion → Insight Landscape → Insight Deep Dives → Brand Health Score → Methodology → Data Provenance
 - **Cover page structure** (exact, do not change):
-  1. Brand name — left-aligned, 36pt Inter Bold, Navy
+  1. Brand name — left-aligned, 36pt Lato Bold, Navy
   2. `Research Report: Consumer Sentiment & Brand Perception` — 14pt, slate grey
   3. `Analysis Date: Month YYYY` — 11pt, grey
   4. Divider rule
@@ -210,7 +210,7 @@ Reports use serial numbering: `report_v001.docx`, `report_v002.docx`, etc. Each 
 | Brand name collisions | Brand name matches unrelated content (e.g., when brand name has colloquial meaning) | Stage 3 relevance filter removes them | LLM classification with reasons; rejected items saved for audit |
 | Mixed timezone datetimes | Some collectors return UTC-aware, others naive datetimes | `_to_utc()` normalizes all to UTC-aware before any comparison or sort | Applied in normalize.py sort, stats min/max, AND scoring.py temporal consistency. Every `sorted(timestamps)` must use normalized timestamps |
 | Pipeline crash after collection | Bug in Stage 2+ crashes after raw data already saved | **Resume from Stage 2** — load `raw/*.json`, skip re-collection | Raw data always saved to disk BEFORE any processing begins |
-| Inter font not in matplotlib cache | Inter TTFs extracted to matplotlib font dir but cache not rebuilt — charts render in fallback font | Delete `~/.matplotlib/fontlist-*.json` and restart Python. Or call `fm._load_fontmanager(try_read_cache=False)` once. Inter-Regular/Bold/Italic/Medium/SemiBold extracted from GitHub releases to `matplotlib/mpl-data/fonts/ttf/`. | Cache rebuilds automatically on next matplotlib import after cache file is deleted. |
+| Lato font not in matplotlib cache | Lato TTFs not found by matplotlib — charts render in fallback font | Install Lato via system fonts or copy TTFs to `matplotlib/mpl-data/fonts/ttf/`. Delete `~/.matplotlib/fontlist-*.json` and restart Python. | Cache rebuilds automatically on next matplotlib import after cache file is deleted. |
 | Anthropic credits not seen | API key created under "Claude Code" workspace doesn't see org credits | Create key under "Default" workspace | Test key with simple API call before running pipeline |
 | PyTrends duplicate keywords | Auto-expanded keywords include duplicates | PyTrends throws "already exists" error | Caught by `_safe_collect()`; related queries still collected |
 | Theme extraction sees only 200 items | `_extract_themes()` had `items[:200]` hardcoded cap — themes had 3-5 items despite 900+ corpus | **FIXED**: Two-pass approach — discover themes from 300-item stratified sample, map ALL items in batches of 30 | analyze.py now uses `THEME_DISCOVERY_PROMPT` + `THEME_MAPPING_PROMPT` |
