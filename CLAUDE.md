@@ -262,8 +262,100 @@ Reports use serial numbering: `report_v001.docx`, `report_v002.docx`, etc. Each 
 11. **In-context synthesis**: When running inside Claude Code, synthesize insights directly in the session by reading theme data from `analysis/results.json` and writing insights to `insights/insights.json`. Then run `rescore.py` (data-driven, no API needed). This avoids burning Anthropic API credits. Only use external API calls via `resynthesize.py` during automated pipeline runs.
 12. **Before re-running synthesis**: Always back up `insights/` and `scored/` directories first. A failed synthesis (e.g., depleted credits) will overwrite existing data with empty arrays.
 13. **External data ingestion**: Use `pipeline/ingest.py` for any pre-collected data: `from consumer_research.pipeline.ingest import ingest_external_data; items = ingest_external_data(Path("data/myfile.json"))`. Auto-detects format (platform-scraped with nested comments, simple flat list, or pre-normalized). For study-specific orchestration scripts, see `examples/studies/weight_loss/run_weight_loss.py` as a template. Always add new platforms to `SourcePlatform` enum first.
-14. **In-context analysis workflow**: When running all analysis in-context (no API): (a) keyword-based relevance filter for Stage 3, (b) keyword-based sentiment/emotion/ABSA for Stage 4, (c) read stratified sample to discover themes then keyword-map all items, **(d) MANDATORY: narrative theme review pass** (see Procedure 15), (e) synthesise insights by reading theme quotes and writing Observation/Insight/Implication/Recommendation, (f) run `score_insights()` and `compute_brand_health()` (code-based, no API), (g) run `generate_all_charts()` then `generate_docx_report()`. Scripts: `examples/studies/*/stage4_analysis*.py`, `examples/studies/*/stage5_synthesis*.py`, `scripts/stage6_7_score_report.py`, `scripts/fix_quotes.py`, `scripts/add_narrative_themes.py`.
-15. **MANDATORY: Narrative theme review pass (never skip)**. After keyword-based theme mapping, check how many items remain unthemed. Read **ALL unthemed items** plus a **10% random sample of themed items** (for misclassification and cross-cutting patterns). If this total exceeds what fits in context, read in batches until all unthemed items are covered. Look specifically for **narrative patterns that keywords cannot detect**: (a) cultural/celebrity references and speculation, (b) misinformation and miracle-claim framing, (c) stigma, shame, and moral debate, (d) sarcasm, irony, and memes, (e) cross-cutting emotional narratives. The completion criterion is: **unthemed items must be below 10% of corpus**. If above 10%, keep reading and classifying until they are. Add discovered themes via `scripts/add_narrative_themes.py` pattern. **This step was skipped once and resulted in missing themes containing 21% of the corpus. Never skip it again.**
+14. **In-context analysis workflow (BYO data, no API calls)**
+
+When a user says "analyse run X" or "run stages 3-5 on run X", follow this procedure. You ARE the analysis engine - read the data, classify it, and write results directly to disk. No external API calls needed.
+
+**Prerequisites**: A run directory exists at `runs/<run_id>/` with `normalized/corpus.json` and `config.json` (created by `consumer-research ingest`).
+
+**Step 1 - Load and understand the corpus**
+```python
+import json
+from pathlib import Path
+from consumer_research.config import RUNS_DIR
+
+run_id = "<run_id>"
+run_dir = RUNS_DIR / run_id
+config = json.loads((run_dir / "config.json").read_text(encoding="utf-8"))
+corpus = json.loads((run_dir / "normalized" / "corpus.json").read_text(encoding="utf-8"))
+brand = config["brand_name"]
+category = config["category"]
+```
+Read a sample of 20-30 items to understand the data shape, platforms present, and content types.
+
+**Step 2 - Stage 3: Relevance filter**
+Read each item and classify as relevant or not to the brand/topic. Remove items that are generic category discussion with no brand connection, spam, or completely off-topic. Write results:
+- `runs/<run_id>/filtered/corpus.json` - list of relevant NormalizedItem dicts
+- `runs/<run_id>/filtered/rejected.json` - rejected items with reasons (for audit)
+
+**Step 3 - Stage 4a: Sentiment, emotion, and ABSA**
+For each filtered item, classify:
+- Sentiment: positive / negative / neutral / mixed (with score 0.0-1.0)
+- Primary Plutchik emotion: joy / trust / fear / surprise / sadness / disgust / anger / anticipation / none
+- Aspect-based sentiment: per-aspect scores (e.g., taste: positive 0.85, price: negative 0.3)
+Write as `SentimentResult` objects. Process in batches if corpus is large.
+
+**Step 4 - Stage 4b: Theme extraction (two-pass)**
+- Pass 1 (Discovery): Read a stratified sample of ~300 items across platforms. Identify 8-15 candidate themes with labels, descriptions, and keywords.
+- Pass 2 (Mapping): Classify ALL remaining items against discovered themes in batches of ~30. Each item can map to 0+ themes.
+- Verify: each theme should have >=20 items and >=1.5% prevalence for a 900+ corpus.
+
+**Step 5 - Stage 4c: Narrative review pass (MANDATORY - never skip)**
+After keyword-based theme mapping, check how many items remain unthemed.
+- Read **ALL unthemed items** plus a **10% random sample of themed items**
+- If this exceeds context, read in batches until all unthemed items are covered
+- Look for narrative patterns keywords cannot detect: (a) cultural/celebrity references, (b) misinformation and miracle claims, (c) stigma, shame, moral debate, (d) sarcasm, irony, memes, (e) cross-cutting emotional narratives
+- **Completion criterion: unthemed items must be below 10% of corpus**. If above 10%, keep reading and classifying.
+- This step was skipped once and resulted in missing themes containing 21% of the corpus.
+
+**Step 6 - Write analysis results**
+Assemble all results into `AnalysisResults` and write to `runs/<run_id>/analysis/results.json`:
+```python
+from consumer_research.models.schemas import AnalysisResults, compute_nss
+results = AnalysisResults(
+    sentiment_results=all_sentiment_results,
+    themes=all_themes,
+    overall_sentiment={"positive": n_pos, "negative": n_neg, "neutral": n_neu, "mixed": n_mix},
+    net_sentiment_score=compute_nss(overall_sentiment),
+    total_items_analyzed=len(filtered),
+    analysis_model="claude-code-in-context",
+    analysis_prompts={"method": "in-context analysis by Claude Code session"},
+)
+(run_dir / "analysis" / "results.json").write_text(
+    json.dumps(results.model_dump(mode="json"), indent=2, default=str), encoding="utf-8"
+)
+```
+
+**Step 7 - Stage 5: Synthesise insights**
+Read theme data from `analysis/results.json`. For each theme, write one structured insight:
+- Observation: what the data shows (theme + evidence)
+- Insight: what it means for the consumer (the "why")
+- Implication: what it means for the business ("So What")
+- Recommendation: what the client should do ("Now What")
+- Further Validation: what additional research would strengthen this
+
+Quality gates (all must pass): Grounded, Non-obvious, Actionable, Specific, Falsifiable.
+Write to `runs/<run_id>/insights/insights.json` as a list of `Insight` dicts.
+
+**Step 8 - Score and generate report**
+```bash
+consumer-research score-report <run_id>
+```
+This runs Stage 6 (scoring) and Stage 7 (charts + DOCX) automatically. No API calls.
+
+**Expected artifacts when complete:**
+```
+runs/<run_id>/
+  brief.json                    # from ingest
+  config.json                   # from ingest
+  raw/external_ingested.json    # from ingest
+  normalized/corpus.json        # from ingest
+  filtered/corpus.json          # Stage 3 (you wrote this)
+  analysis/results.json         # Stage 4 (you wrote this)
+  insights/insights.json        # Stage 5 (you wrote this)
+  scored/scored_insights.json   # Stage 6 (score-report wrote this)
+  report/report_v001.docx       # Stage 7 (score-report wrote this)
+```
 
 ## Stage 4 Theme Extraction Architecture (Critical — Do Not Revert)
 Theme extraction uses a **two-pass approach** to handle large corpora without token limit issues:
