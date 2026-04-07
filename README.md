@@ -18,7 +18,7 @@ Go to [`examples/outcomes/`](examples/outcomes/). Three complete studies are the
 |-------|------|-------|----------|-----|
 | [Weight Loss Medication in India](examples/outcomes/weight_loss/) | Topic | 2,484 | 12 | +16.8% |
 | [Make in India](examples/outcomes/make_in_india/) | Brand | 5,814 | 16 | +15.9% |
-| [India Hair Colour](examples/outcomes/hair_colour/) | Topic | 4,314 | 21 | +38.8% |
+| [India Hair Colour](examples/outcomes/hair_colour/) | Topic | 7,688 | 11 | +25.4% |
 
 Each folder has the research brief, a study README, the final DOCX report, and a manifest of what the pipeline produced.
 
