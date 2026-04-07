@@ -2,7 +2,7 @@
 
 ## Report
 
-[`make_in_india_report.docx`](make_in_india_report.docx) — 5,814 items analysed, 16 insights, NSS +15.9%
+[`make_in_india_report.docx`](make_in_india_report.docx) — 3,516 items analysed, 12 insights, NSS +24.0%
 
 Open the DOCX file to see the full deliverable. It contains all charts, verbatims, methodology disclosure, and data provenance.
 
@@ -24,24 +24,24 @@ The research brief is at [`../../briefs/make_in_india_brief.json`](../../briefs/
 
 | | |
 |---|---|
-| Items analysed | 5,814 |
-| Themes identified | 16 |
-| Insights generated | 16 |
-| Net Sentiment Score | +15.9% |
-| Brand Health Score | 54.9/100 |
-| Data sources | twitter: 3,873, youtube: 1,359, reddit: 502, instagram: 80 |
+| Items analysed | 3,516 |
+| Themes identified | 12 |
+| Insights generated | 12 |
+| Net Sentiment Score | +24.0% |
+| Brand Health Score | 69.4/100 |
+| Data sources | twitter: 2,438, youtube: 958, reddit: 337, instagram: 64 |
 
 ## Top Themes
 
-- Make in India Policy - Success vs Failure Debate (34.2%)
-- Political Polarisation & Narrative Wars (34.8%)
-- PLI Scheme, FDI & Industrial Policy (16.0%)
-- China Dependency Paradox (13.2%)
-- Employment, Jobs & MSME Impact (14.8%)
+- Make in India: Success vs Failure Debate (50.0%)
+- Indian Brand Ecosystem & D2C/Startup Growth (29.7%)
+- Infrastructure & Industrial Capacity Building (26.8%)
+- Manufacturing GDP & Economic Fundamentals (19.4%)
+- Vocal for Local & Swadeshi Movement (17.3%)
 
 ## Data
 
-Pre-collected data from Twitter/X, YouTube, Reddit, Instagram. Covers 2024-2026.
+Pre-collected data from Twitter/X, YouTube, Reddit, Instagram. Covers 2024-2026. 22,860 items normalized from 282,355 raw, then filtered to 3,516 after relevance classification and quality audit.
 
 Raw data is not included in this repository. The pipeline accepts any pre-collected JSON in platform-scraped or simple format. See [`docs/running_with_your_own_data.md`](../../../docs/running_with_your_own_data.md) for ingestion instructions.
 
