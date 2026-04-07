@@ -311,7 +311,7 @@ def main():
 
     # ── New run directory ──
     run_id = f"{datetime.now().strftime('%Y%m%d_%H%M%S')}_{uuid4().hex[:6]}"
-    run_dir = ROOT / "consumer_research" / "runs" / run_id
+    run_dir = ROOT / "runs" / run_id
     run_dir.mkdir(parents=True, exist_ok=True)
     logger.info(f"New run: {run_id}")
 
