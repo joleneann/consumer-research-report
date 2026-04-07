@@ -153,15 +153,48 @@ Insights are ranked by confidence (primary) and signal strength (tiebreaker). Bo
 
 ## Project Structure
 
+There are three layers. Each has a different purpose.
+
+**Product interface** - the packaged CLI:
+
 ```
-consumer_research/     Core package: collectors, pipeline stages, report generation
-tests/                 Unit tests (no API calls required)
-docs/                  Methodology, product documentation, running guide
-examples/
-  outcomes/            Four complete study outcomes with reports and briefs
-  briefs/              Input brief JSONs for each study
-  studies/             Study-specific runner scripts
-scripts/               Utility scripts: resume, re-score, regenerate report
+consumer-research run           Full pipeline (Stages 0-7)
+consumer-research score-report  Re-score + regenerate report (no API)
+consumer-research regenerate    Regenerate DOCX only (no API)
+```
+
+This is the canonical way to use the system. Installed via `pip install -e .`.
+
+**Operator tools** - recovery and maintenance scripts:
+
+```
+scripts/resume_stage3.py        Resume pipeline from Stage 3
+scripts/resume_stage4.py        Resume pipeline from Stage 4
+scripts/rescore.py              Re-score insights from a specific run
+scripts/resynthesize.py         Re-run synthesis + scoring
+scripts/fix_quotes.py           Fix representative quotes per theme
+scripts/add_narrative_themes.py Add narrative themes missed by keyword pass
+scripts/export_to_excel.py      Export run data to Excel
+```
+
+These are for operators recovering from failures or re-running specific stages on existing data. They accept run IDs as arguments and load config from the run's own `config.json`.
+
+**Example study workflows** - demonstrations of completed research:
+
+```
+examples/outcomes/              Four complete studies with DOCX reports
+examples/briefs/                Research brief JSONs
+examples/studies/weight_loss/   Study-specific analysis scripts
+```
+
+The study scripts (`run_weight_loss.py`, `stage4_analysis.py`, `stage5_synthesis.py`) are intentionally custom - they show how a specific study was conducted, not how to build a generic pipeline. Evaluate the product through the CLI and the outcomes, not through the study scripts.
+
+**Source code:**
+
+```
+consumer_research/              Core package: collectors, pipeline, report generation
+tests/                          Unit + smoke tests (108 tests, no API calls)
+docs/                           Methodology, product docs, running guide
 ```
 
 ---
