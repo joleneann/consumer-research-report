@@ -1,6 +1,6 @@
 # Changelog
 
-## v0.2.0 (2026-04-07)
+## v2.0 (2026-04-07)
 
 ### Breaking Change: Engagement thresholds removed
 

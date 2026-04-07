@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "consumer-research"
-version = "0.2.0"
+version = "2.0"
 description = "Consumer research report generator - brand perception analysis from online sources"
 requires-python = ">=3.11"
 dependencies = [
