@@ -73,11 +73,37 @@ class TestScriptEntrypoints:
         "regenerate_report.py",
         "rescore.py",
         "export_to_excel.py",
+        "fix_quotes.py",
+        "add_narrative_themes.py",
     ])
     def test_script_entrypoint(self, script_name):
         script = SCRIPTS_DIR / script_name
         if script.exists():
             _check_script_runs(script)
+
+    @pytest.mark.parametrize("script_name", [
+        "resume_stage3.py",
+        "resume_stage4.py",
+    ])
+    def test_resume_script_entrypoint(self, script_name):
+        """Resume scripts require a run_id arg. Pass a dummy to verify import wiring."""
+        script = SCRIPTS_DIR / script_name
+        if not script.exists():
+            pytest.skip(f"{script_name} not found")
+        result = subprocess.run(
+            [sys.executable, str(script), "nonexistent_run_id"],
+            capture_output=True,
+            text=True,
+            timeout=15,
+            cwd=str(REPO_ROOT),
+            env={**__import__("os").environ, "ANTHROPIC_API_KEY": "sk-ant-test-dummy"},
+        )
+        stderr = result.stderr
+        for error_type in ["NameError", "ImportError", "TypeError", "AttributeError"]:
+            if error_type in stderr:
+                pytest.fail(
+                    f"{script_name} crashed with {error_type}:\n{stderr[-500:]}"
+                )
 
 
 class TestCLIEntrypoint:

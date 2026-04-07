@@ -88,9 +88,9 @@ python examples/studies/weight_loss/run_weight_loss.py
 **Option 2: Run the full pipeline with built-in collectors**
 
 ```bash
-echo "ANTHROPIC_API_KEY=sk-ant-..." > .env
+pip install -e .
 
-python -m consumer_research.run \
+consumer-research run \
   --brand "Brand Name" \
   --category "Product Category" \
   --geo IN \
@@ -100,8 +100,8 @@ python -m consumer_research.run \
 **Re-score and regenerate from an existing run (no API calls needed)**
 
 ```bash
-python scripts/stage6_7_score_report.py [run_id]
-python scripts/regenerate_report.py [run_id]
+consumer-research score-report [run_id]
+consumer-research regenerate [run_id]
 ```
 
 ---
@@ -113,7 +113,7 @@ Brief -> Collect -> Normalize -> Filter -> Analyze -> Synthesize -> Score -> Rep
   [0]      [1]        [2]         [3]       [4]         [5]          [6]      [7]
 ```
 
-Every stage writes artifacts to `consumer_research/runs/<run_id>/`. If the pipeline fails, resume from the last completed stage - no re-collection, no wasted API calls.
+Every stage writes artifacts to `runs/<run_id>/`. If the pipeline fails, resume from the last completed stage - no re-collection, no re-analysis.
 
 | Stage | What it does | Output |
 |-------|-------------|--------|
