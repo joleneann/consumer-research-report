@@ -2,7 +2,7 @@
 
 ## Report
 
-[`weight_loss_report.docx`](weight_loss_report.docx) — 2,526 items analysed, 15 insights, NSS +22.9%
+[`weight_loss_report.docx`](weight_loss_report.docx) — 1,761 items analysed, 12 insights, NSS +19.5%
 
 Open the DOCX file to see the full deliverable. It contains all charts, verbatims, methodology disclosure, and data provenance.
 
@@ -24,20 +24,27 @@ The research brief is at [`../../briefs/weight_loss_brief.json`](../../briefs/we
 
 | | |
 |---|---|
-| Items analysed | 2,526 |
-| Themes identified | 15 |
-| Insights generated | 15 |
-| Net Sentiment Score | +22.9% |
-| Brand Health Score | 80.8/100 |
-| Data sources | reddit: 1,397, instagram: 975, youtube: 154 |
+| Items analysed | 1,761 |
+| Themes identified | 12 |
+| Insights generated | 12 |
+| Net Sentiment Score | +19.5% |
+| Brand Health Score | 68.7/100 |
+| Data sources | reddit: 928, instagram: 737, youtube: 147 |
 
 ## Top Themes
 
-- GLP-1 Drug Experiences & Journeys (29.3% of corpus, NSS +14%)
-- Protein, Supplements & Nutrition Science (19.2%)
-- Exercise, Fitness & Active Lifestyle (14.7%)
-- Indian Diet Plans & Calorie Management (13.0%)
-- PCOS, Hormones & Medical Weight Issues (16.5%)
+- GLP-1 Medication Efficacy & Personal Journeys (50.5% of corpus)
+- India Market Access & Affordability (43.1%)
+- Diet & Nutrition on GLP-1 (39.5%)
+- Medical Science & GLP-1 Education (25.6%)
+- Indian Weight Loss Culture & Desi Diet (22.3%)
+- Natural Alternatives & Anti-Medication Stance (16.0%)
+- PCOS, Hormones & Women's Health (16.0%)
+- Side Effects & Health Risks (15.1%)
+- Stigma, Shame & Social Judgment (14.8%)
+- Sustainability & Weight Regain Fears (12.1%)
+- Celebrity & Bollywood Ozempic Speculation (6.4%)
+- Obesity Epidemic & Systemic Food Issues (5.7%)
 
 ## Data
 

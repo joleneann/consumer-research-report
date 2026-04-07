@@ -2,37 +2,16 @@
   {
     "insight": {
       "insight_id": "INS_007",
-      "observation": "Protein and nutrition science is the second-most discussed theme at 19.2% (484 mentions) with strong positive sentiment (+37.2%). Indian consumers actively discuss protein intake targets, whey supplements, and macronutrient balance. There is significant concern about protein deficiency in vegetarian Indian diets. Collagen, omega-3, and B12 supplementation are frequently mentioned alongside weight loss discussions.",
-      "insight": "The Indian weight loss consumer has crossed a knowledge threshold - they understand that weight loss is not just about eating less but about eating differently, with protein as the anchor nutrient. This represents a fundamental shift from the traditional Indian diet (carb-heavy, protein-light) toward protein-first thinking. However, achieving adequate protein on a vegetarian Indian diet remains a practical challenge, creating a large market for protein supplementation.",
-      "implication": "The convergence of weight loss awareness and protein consciousness creates a dual opportunity: protein-enriched versions of Indian staples (high-protein atta, protein-fortified dal) and targeted supplementation for the vegetarian majority. GLP-1 brands specifically need to address protein intake because muscle preservation during medication-induced weight loss requires increased protein consumption.",
-      "recommendation": "For GLP-1 brands: include protein intake targets (1.2-1.6g/kg) in all patient education materials. Partner with Indian protein supplement brands for co-branded starter kits. For food brands: develop high-protein versions of Indian staples that do not compromise on taste. Create content around 'vegetarian protein hacks' specific to Indian ingredients (paneer, soy chunks, chana, sprouts).",
-      "further_validation": "Survey actual protein intake among Indian GLP-1 users vs. recommendations. Measure the market size for protein-fortified Indian foods targeted at the weight-loss-aware consumer.",
+      "observation": "Diet and nutrition while on GLP-1 medication is the second-largest theme with 709 mentions (39.5% prevalence). Dominant topics include protein prioritization (hitting 100-150g daily with suppressed appetite), food aversion management, 'food noise' reduction, and practical meal planning. A sub-narrative exists around Indian food compatibility with GLP-1 medication, including concerns about spicy food causing heartburn on Ozempic.",
+      "insight": "GLP-1 users face a paradox: the medication suppresses appetite effectively, but this creates a nutritional deficit risk where users are not consuming enough protein, vitamins, and calories to maintain muscle mass and overall health. The content reveals that many users are under-eating rather than eating differently, turning appetite suppression into inadvertent malnutrition. Indian users face the additional challenge that traditional vegetarian diets are carbohydrate-heavy, making the protein pivot especially difficult.",
+      "implication": "The nutrition management gap represents an unmet service opportunity worth capturing before competitors do. GLP-1 patients need not just the medication but a comprehensive nutritional support system - and Indian patients specifically need vegetarian-friendly, high-protein meal plans that work with their cultural food preferences.",
+      "recommendation": "Develop a GLP-1-specific nutrition support program for the Indian market featuring vegetarian and regional meal plans (South Indian, North Indian) optimized for high protein and low volume. Partner with Indian dietitians to create practical content addressing the specific challenge of hitting 100g+ protein on a vegetarian diet with suppressed appetite.",
+      "further_validation": "Survey GLP-1 users in India to quantify protein intake vs. targets and identify the most common nutritional deficiencies. Test whether nutrition support programs improve medication adherence and outcomes.",
       "supporting_theme_ids": [
-        "THM_007"
+        "THM_07"
       ],
-      "supporting_item_count": 484,
-      "source_urls": [
-        "https://reddit.com/r/BollyBlindsNGossip/comments/1hhumiq/new_patient_of_ozempic_in_frame_ram_kapoor/#comment_m2ubzqp",
-        "https://www.instagram.com/p/DUhlxpbgaAc#comment_1676854632_d85e2503",
-        "https://www.instagram.com/p/DPsPGHejPJC#comment_1443638496_7577df58",
-        "https://www.youtube.com/watch?v=7-UQbo5qpJU",
-        "https://reddit.com/r/TwoXIndia/comments/1gvkd35/ladies_who_lost_weight_organically_what_did_you_do/#comment_ly2h2xd",
-        "https://reddit.com/r/twoxindiamums/comments/1ex3e73/low_supply_issue/",
-        "https://reddit.com/r/Ozempic/comments/1hxijey/so_what_do_you_eat_now_that_ozempic_has_changed/#comment_m69d3sp",
-        "https://www.instagram.com/p/DPgJUk2jNWA",
-        "https://www.instagram.com/p/DMVJfK-IlfR",
-        "https://reddit.com/r/pune/comments/1ixkm73/fitness_freaks_what_does_your_high_protein/",
-        "https://www.instagram.com/p/C8pQNKBvzcV",
-        "https://reddit.com/r/desmoines/comments/1haknzg/doctors_who_will_help_with_weight_loss/#comment_m19nhh4",
-        "https://reddit.com/r/newzealand/comments/1dbjrog/weight_loss_surgery/",
-        "https://www.instagram.com/p/DK_smMCx49n",
-        "https://www.instagram.com/p/DSwjK7xjKt6",
-        "https://www.instagram.com/p/DU5ikw8iNzQ",
-        "https://reddit.com/r/IndianFood/comments/1j68bzu/really_lowcarb_indian_food_ideas/#comment_mgn3izr",
-        "https://reddit.com/r/twoxindiamums/comments/1ex3e73/low_supply_issue/#comment_lj4h193",
-        "https://www.instagram.com/p/DUieu7Qj-Nx",
-        "https://www.instagram.com/p/DLMQyBGRSQ_"
-      ],
+      "supporting_item_count": 709,
+      "source_urls": [],
       "is_grounded": true,
       "is_non_obvious": true,
       "is_actionable": true,
@@ -40,194 +19,42 @@
       "is_falsifiable": true,
       "passed_quality_gates": true
     },
-    "confidence_score": 0.691,
+    "confidence_score": 0.727,
     "confidence_tier": "medium",
     "confidence_breakdown": {
-      "sample_size_score": 0.6,
-      "source_diversity_score": 0.91,
-      "temporal_consistency_score": 0.84,
-      "internal_agreement_score": 0.33,
-      "data_recency_score": 0.81
+      "sample_size_score": 0.77,
+      "source_diversity_score": 0.92,
+      "temporal_consistency_score": 0.83,
+      "internal_agreement_score": 0.3,
+      "data_recency_score": 0.8
     },
-    "signal_strength_score": 0.729,
+    "signal_strength_score": 0.721,
     "signal_strength_tier": "moderate",
     "signal_strength_breakdown": {
-      "prevalence_score": 0.78,
-      "engagement_level_score": 0.79,
-      "sentiment_intensity_score": 0.87,
+      "prevalence_score": 0.87,
+      "engagement_level_score": 0.83,
+      "sentiment_intensity_score": 0.61,
       "conversation_depth_score": 0.3
     },
-    "matrix_quadrant": "Noise",
-    "sample_size": 484,
+    "sample_size": 709,
     "confidence_interval_95": [
-      0.1767,
-      0.2074
-    ]
-  },
-  {
-    "insight": {
-      "insight_id": "INS_006",
-      "observation": "Transformation and motivation content has the highest positive sentiment in the dataset (+48.0%) with 408 mentions (16.2%). Before/after stories, progress updates, and motivational posts dominate Instagram. Celebrity weight loss (Tanmay Bhat, Anant Ambani) drives significant Reddit discussion. The content is aspirational but also practical - users share specific kg-lost numbers, timelines, and methods used.",
-      "insight": "Transformation stories serve as the primary social proof mechanism in the Indian weight loss ecosystem. They function as peer-reviewed testimonials - consumers trust specific numbers ('lost 19 kgs in 5 months') from real people over clinical trial data. Celebrity transformations amplify this effect but also create unrealistic expectations. The Indian consumer needs to see someone like them succeed before they will commit to a method.",
-      "implication": "User-generated transformation content is the most powerful marketing asset in this category. However, there is a credibility gap - consumers are increasingly sceptical of sponsored transformations and seek authenticity markers (specific timelines, honest setback reporting, real food shown). Brands that can curate authentic Indian transformation stories will outperform those relying on clinical messaging.",
-      "recommendation": "Build a structured transformation story programme featuring diverse Indian demographics (age, gender, city tier, starting weight, method used). Require honesty protocols - participants must report plateaus, side effects, and costs alongside results. Create a community platform where users can follow others at the same stage of their journey.",
-      "further_validation": "A/B test transformation-led content vs. clinical-evidence-led content in Indian digital advertising to measure conversion impact. Track whether transformation posts with specific numbers drive higher engagement than vague success stories.",
-      "supporting_theme_ids": [
-        "THM_006"
-      ],
-      "supporting_item_count": 408,
-      "source_urls": [
-        "https://reddit.com/r/BollyBlindsNGossip/comments/1irrez2/salman_bhai_ft_ozempic_wtf/",
-        "https://www.instagram.com/p/DUsjPKrkW6f",
-        "https://reddit.com/r/medicine/comments/1hp448d/the_next_big_glp1_med_orforglipron_an_oral_once/",
-        "https://www.youtube.com/watch?v=7-UQbo5qpJU",
-        "https://www.instagram.com/p/DU8R9i6iNvJ",
-        "https://www.instagram.com/p/DFo_wBVTKWJ",
-        "https://www.instagram.com/p/C8pQNKBvzcV#comment_1983810268_95cd0a43",
-        "https://reddit.com/r/hyderabad/comments/1gk4k30/to_the_once_obese_now_fit_people/#comment_lvia9aq",
-        "https://www.instagram.com/p/DPgJUk2jNWA",
-        "https://www.instagram.com/p/DUSVThQiYe-",
-        "https://www.instagram.com/p/C8pQNKBvzcV",
-        "https://www.youtube.com/watch?v=rF63Jtirev4",
-        "https://www.instagram.com/p/DSPmrtAEVwB",
-        "https://www.instagram.com/p/DK_smMCx49n",
-        "https://www.instagram.com/p/DH36qLNN3BJ",
-        "https://www.youtube.com/watch?v=JfqmQ0gKHL0",
-        "https://www.instagram.com/p/DU2OuJyE7Pl",
-        "https://www.instagram.com/p/DU0WVHkE9Uy",
-        "https://www.instagram.com/p/DKR_Smyqfhc",
-        "https://www.instagram.com/p/DNYkRv4NFYz"
-      ],
-      "is_grounded": true,
-      "is_non_obvious": true,
-      "is_actionable": true,
-      "is_specific": true,
-      "is_falsifiable": true,
-      "passed_quality_gates": true
-    },
-    "confidence_score": 0.649,
-    "confidence_tier": "medium",
-    "confidence_breakdown": {
-      "sample_size_score": 0.56,
-      "source_diversity_score": 0.87,
-      "temporal_consistency_score": 0.61,
-      "internal_agreement_score": 0.39,
-      "data_recency_score": 0.81
-    },
-    "signal_strength_score": 0.738,
-    "signal_strength_tier": "moderate",
-    "signal_strength_breakdown": {
-      "prevalence_score": 0.78,
-      "engagement_level_score": 0.85,
-      "sentiment_intensity_score": 0.94,
-      "conversation_depth_score": 0.15
-    },
-    "matrix_quadrant": "Noise",
-    "sample_size": 408,
-    "confidence_interval_95": [
-      0.1477,
-      0.1764
-    ]
-  },
-  {
-    "insight": {
-      "insight_id": "INS_004",
-      "observation": "Exercise and fitness content accounts for 14.7% of conversation (372 mentions) with strong positive sentiment (+35.8%). Walking and gym-based weight training dominate over cardio-only approaches. Users actively discuss combining exercise with diet or medication. Cult.Fit appears as a recognisable brand. There is practical sharing of routines adapted for Indian lifestyles - morning walks, yoga, and home workouts for those without gym access.",
-      "insight": "Indian consumers increasingly view exercise not as optional but as the non-negotiable foundation of weight loss - even when using medication. The prominence of weight training discussions signals a maturity shift from 'just do cardio' to understanding body composition. However, the conversation reveals a practical accessibility gap - many users lack gym access or time, leading to walking and home workouts as the default mode.",
-      "implication": "The Indian fitness market opportunity lies at the intersection of accessibility and effectiveness. Consumers know weight training is superior but many cannot access or afford gyms. Solutions that bring structured strength training into accessible formats (home, park, minimal equipment) have a large addressable market.",
-      "recommendation": "For GLP-1 brands: create mandatory exercise pairing guidance that addresses muscle preservation during weight loss. Partner with accessible fitness platforms (not just premium gyms) to reach tier-2 and tier-3 city consumers. Develop walking-plus-resistance band programmes as a minimum effective exercise protocol.",
-      "further_validation": "Measure the correlation between exercise-combined-with-medication users and sustained weight loss outcomes. Survey gym access rates across Indian city tiers to size the accessibility gap.",
-      "supporting_theme_ids": [
-        "THM_004"
-      ],
-      "supporting_item_count": 372,
-      "source_urls": [
-        "https://reddit.com/r/BollyBlindsNGossip/comments/1hhumiq/new_patient_of_ozempic_in_frame_ram_kapoor/#comment_m2ubzqp",
-        "https://www.instagram.com/p/DUsjPKrkW6f",
-        "https://reddit.com/r/medicine/comments/1hp448d/the_next_big_glp1_med_orforglipron_an_oral_once/",
-        "https://www.youtube.com/watch?v=7-UQbo5qpJU",
-        "https://reddit.com/r/GLP1India/comments/1lotonz/why_is_india_still_so_weird_about_glp1_meds/#comment_n0qabok",
-        "https://www.instagram.com/p/DPsPGHejPJC#comment_1443638496_7577df58",
-        "https://reddit.com/r/TwoXIndia/comments/1gvkd35/ladies_who_lost_weight_organically_what_did_you_do/#comment_ly2h2xd",
-        "https://reddit.com/r/AskIndia/comments/1cf7ukl/hey_guys_how_did_you_lose_belly_fat/",
-        "https://www.instagram.com/p/DPgJUk2jNWA",
-        "https://www.instagram.com/p/DUSVThQiYe-",
-        "https://reddit.com/r/PetiteFitness/comments/1hi5ppd/how_are_yall_loosing_weight/#comment_m2wqfyt",
-        "https://www.instagram.com/p/DSPmrtAEVwB",
-        "https://www.instagram.com/p/DH36qLNN3BJ",
-        "https://www.instagram.com/p/DU0WVHkE9Uy",
-        "https://www.instagram.com/p/DU2OuJyE7Pl",
-        "https://www.instagram.com/p/DU-9J4HCZgw",
-        "https://reddit.com/r/bodyweightfitness/comments/1lkz7cx/5_weeks_backpacking_in_india_how_to_stay_active/#comment_mzvhie6",
-        "https://reddit.com/r/xxfitness/comments/1r7060r/weekly_thread_talk_it_out_tuesday_advice_and/#comment_o5w7u9y",
-        "https://reddit.com/r/adhdwomen/comments/1k5msff/has_ayurvedic_medicine_worked_for_any_of_you/",
-        "https://www.instagram.com/p/DUaD8EiEkt3"
-      ],
-      "is_grounded": true,
-      "is_non_obvious": true,
-      "is_actionable": true,
-      "is_specific": true,
-      "is_falsifiable": true,
-      "passed_quality_gates": true
-    },
-    "confidence_score": 0.679,
-    "confidence_tier": "medium",
-    "confidence_breakdown": {
-      "sample_size_score": 0.54,
-      "source_diversity_score": 0.9,
-      "temporal_consistency_score": 0.89,
-      "internal_agreement_score": 0.32,
-      "data_recency_score": 0.81
-    },
-    "signal_strength_score": 0.699,
-    "signal_strength_tier": "moderate",
-    "signal_strength_breakdown": {
-      "prevalence_score": 0.72,
-      "engagement_level_score": 0.76,
-      "sentiment_intensity_score": 0.86,
-      "conversation_depth_score": 0.31
-    },
-    "matrix_quadrant": "Noise",
-    "sample_size": 372,
-    "confidence_interval_95": [
-      0.134,
-      0.1616
+      0.3691,
+      0.414
     ]
   },
   {
     "insight": {
       "insight_id": "INS_003",
-      "observation": "Indian diet plans represent 13% of conversation (329 mentions) with strongly positive sentiment (+35.3%). The discussion centres on adapting weight loss to Indian staples - roti, dal, sabji, paratha, dosa, idli - rather than adopting Western diets. Calorie deficit awareness is high, with users sharing TDEE calculations and MyFitnessPal logs. YouTube doctors (Dr. Shikha Singh, Pooja Makhija) drive significant volume. Content spans Hindi, English, Tamil, and Telugu.",
-      "insight": "The Indian weight loss consumer refuses to abandon their food culture for results. Unlike Western markets where diet plans often mean eliminating food groups, Indian consumers want to know how to make their existing rotis, dals, and rice work within a calorie deficit. This is not resistance to change - it is a sophisticated understanding that sustainable weight loss must be culturally embedded. The multilingual nature of this content shows it cuts across demographics.",
-      "implication": "Any weight loss product or service that requires Indians to abandon their food culture will face adoption resistance. Conversely, solutions that work with Indian dietary patterns - helping consumers optimise their existing meals rather than replace them - have a significant market advantage.",
-      "recommendation": "Develop Indian-specific meal plans that show calorie-optimised versions of popular regional dishes (South Indian breakfast, Punjabi dinner, etc.). Create a macro calculator pre-loaded with common Indian foods and portion sizes. For GLP-1 brands, publish diet-while-on-medication guides featuring Indian food rather than Western meal plans.",
-      "further_validation": "Test whether Indian-food-specific diet content drives higher engagement and adherence than generic weight loss content. Survey regional food preferences to develop state-level meal plan templates.",
+      "observation": "India-specific market access and affordability discussion involves 774 mentions (43.12% prevalence). Key topics include the Mounjaro launch in India, cost concerns (perceived as expensive), where to find prescribing doctors in specific Indian cities (Delhi, Mumbai, Bangalore, Hyderabad), patent expiration timelines for generics, and the emergence of platforms like Sugar.fit offering doctor-guided GLP-1 programs.",
+      "insight": "Indian consumers face a triple access barrier: cost (perceived as unaffordable for the middle class), medical gatekeeping (difficulty finding doctors willing to prescribe for weight loss vs. diabetes), and information asymmetry (not knowing which medications are available in India vs. abroad). The patent expiration narrative creates a 'wait and see' attitude among price-sensitive consumers who believe generics will make these drugs accessible soon.",
+      "implication": "The Indian GLP-1 market is at an inflection point where affordability and doctor education will determine adoption velocity. First-to-generic and first-to-prescribe-access will capture the massive latent demand visible in the data. The emergence of telehealth GLP-1 platforms signals that traditional pharma distribution may be disrupted.",
+      "recommendation": "For pharma companies: prioritize generic timeline communication and patient assistance programs for the Indian market. For healthcare platforms: invest in endocrinologist education programs to expand the prescriber base beyond metro cities. Track the Sugar.fit model as a potential distribution channel disruption.",
+      "further_validation": "Quantitative survey of Indian consumers to establish willingness-to-pay thresholds at different price points and the impact of generic availability announcements on purchase intent.",
       "supporting_theme_ids": [
-        "THM_003"
+        "THM_03"
       ],
-      "supporting_item_count": 329,
-      "source_urls": [
-        "https://www.youtube.com/watch?v=7-UQbo5qpJU",
-        "https://reddit.com/r/TwoXIndia/comments/1gvkd35/ladies_who_lost_weight_organically_what_did_you_do/#comment_ly2h2xd",
-        "https://www.instagram.com/p/DFo_wBVTKWJ",
-        "https://www.instagram.com/p/DMVJfK-IlfR",
-        "https://reddit.com/r/pune/comments/1ixkm73/fitness_freaks_what_does_your_high_protein/",
-        "https://www.instagram.com/p/C8pQNKBvzcV",
-        "https://www.instagram.com/p/DRFamwfEnWl#comment_8974302416_227a32f5",
-        "https://reddit.com/r/PetiteFitness/comments/1hi5ppd/how_are_yall_loosing_weight/#comment_m2wqfyt",
-        "https://reddit.com/r/IndianFood/comments/1ocukec/indian_cooking_is_so_healthy_what_am_i_missing/#comment_nkpdg4q",
-        "https://www.instagram.com/p/DSXdldNgZJI",
-        "https://reddit.com/r/IndianFood/comments/1j68bzu/really_lowcarb_indian_food_ideas/#comment_mgn3izr",
-        "https://reddit.com/r/IndianFood/comments/1b3raj6/meal_planning_apps_in_india/#comment_laulh22",
-        "https://www.instagram.com/p/DUieu7Qj-Nx",
-        "https://www.instagram.com/p/DRFamwfEnWl#comment_8974302416_04a3d2ee",
-        "https://reddit.com/r/IndianFood/comments/1bw4062/how_do_i_increase_my_protein_intake_with_indian/",
-        "https://www.instagram.com/p/DDeaRZBu4DA#comment_333428870_f2ed6475",
-        "https://reddit.com/r/AskIndia/comments/1flsaky/can_i_lose_weight_without_going_to_the_gym/#comment_lo5c2yx",
-        "https://reddit.com/r/hyderabad/comments/1q98cl0/which_doctordepartment_should_i_consult_in/#comment_nytbido",
-        "https://reddit.com/r/IndiaInvestments/comments/1hznk8w/does_any_health_insurance_policy_in_india_covers/#comment_m6qwuzd",
-        "https://www.instagram.com/p/DTouW2DgXiz"
-      ],
+      "supporting_item_count": 774,
+      "source_urls": [],
       "is_grounded": true,
       "is_non_obvious": true,
       "is_actionable": true,
@@ -235,64 +62,42 @@
       "is_falsifiable": true,
       "passed_quality_gates": true
     },
-    "confidence_score": 0.675,
+    "confidence_score": 0.726,
     "confidence_tier": "medium",
     "confidence_breakdown": {
-      "sample_size_score": 0.51,
-      "source_diversity_score": 0.9,
-      "temporal_consistency_score": 0.91,
-      "internal_agreement_score": 0.32,
+      "sample_size_score": 0.79,
+      "source_diversity_score": 0.91,
+      "temporal_consistency_score": 0.78,
+      "internal_agreement_score": 0.31,
       "data_recency_score": 0.81
     },
-    "signal_strength_score": 0.679,
+    "signal_strength_score": 0.665,
     "signal_strength_tier": "moderate",
     "signal_strength_breakdown": {
-      "prevalence_score": 0.69,
-      "engagement_level_score": 0.73,
-      "sentiment_intensity_score": 0.87,
-      "conversation_depth_score": 0.3
+      "prevalence_score": 0.9,
+      "engagement_level_score": 0.6,
+      "sentiment_intensity_score": 0.67,
+      "conversation_depth_score": 0.24
     },
-    "matrix_quadrant": "Noise",
-    "sample_size": 329,
+    "sample_size": 774,
     "confidence_interval_95": [
-      0.1177,
-      0.1439
+      0.4046,
+      0.4501
     ]
   },
   {
     "insight": {
       "insight_id": "INS_001",
-      "observation": "GLP-1 receptor agonists dominate the weight loss conversation in India with 739 mentions (29.3% of all discussion), spanning personal journey updates on Instagram, medical explainers on YouTube, and experience-sharing on Reddit. Mounjaro and Ozempic are the most frequently named drugs, with growing awareness of next-generation oral options like orforglipron. Sentiment is net positive (+14%) but notably mixed - 30% of mentions are neutral (information-seeking) and 16% negative.",
-      "insight": "Indian consumers are in an active discovery phase with GLP-1 medications - they are simultaneously fascinated by the dramatic results and cautious about committing. Unlike Western markets where GLP-1 adoption is more normalised, Indian users treat these drugs as a significant life decision requiring extensive peer validation before starting. The high volume of neutral (information-gathering) content signals that a large pool of potential users is researching but has not yet converted.",
-      "implication": "The Indian GLP-1 market is at an inflection point between awareness and adoption. The consumer is educated enough to know these drugs exist and work, but needs reassurance on safety, cost, and medical supervision before starting. Brands that can bridge the trust gap - through doctor endorsements, transparent pricing, and realistic outcome expectations - will capture this converting audience.",
-      "recommendation": "Develop a 'first 90 days' content programme featuring Indian patients and endocrinologists documenting real GLP-1 journeys with honest side effect reporting. Partner with Indian healthcare influencers who already have trust (e.g., Dr. Pal, Dr. Balamurugan) rather than celebrity endorsements. Create a cost calculator tool showing monthly expense vs. outcomes.",
-      "further_validation": "Conduct a quantitative survey among the neutral/information-seeking segment to measure intent-to-adopt and specific barriers. Track conversion rates from awareness to prescription across tier-1 vs tier-2 Indian cities.",
+      "observation": "GLP-1 medications dominate the weight loss conversation with 906 consumer mentions (50.47% prevalence). Personal journey narratives - weekly weigh-ins, dose titration updates, before-and-after stories - constitute the largest content category. Sentiment skews positive (NSS +0.22) with consumers reporting significant weight loss (10-25kg over 3-6 months). Indian users on Mounjaro (tirzepatide) are particularly active, sharing weekly progress with specific metrics.",
+      "insight": "Consumers treat GLP-1 medications as a shared journey rather than a private medical decision. The public documentation of dose changes, side effects, and weekly weigh-ins creates a peer-support ecosystem that pharmaceutical marketing cannot replicate. This transparency signals that users want community validation and accountability, not just clinical information.",
+      "implication": "The peer-narrative ecosystem is the primary trust-building mechanism for GLP-1 adoption in India. Brands that enable and amplify authentic user stories will capture first-mover advantage in a market where clinical authority alone is insufficient to overcome cultural resistance to weight loss medication.",
+      "recommendation": "Build a platform or community feature that facilitates structured journey-sharing (weekly updates, milestone tracking) for GLP-1 users in India. Partner with early Indian adopters (like the Himani from India Mounjaro chronicle seen across Instagram) as authentic ambassadors rather than paid influencers.",
+      "further_validation": "Conduct a structured survey among Indian GLP-1 users to quantify the role of peer narratives vs. doctor recommendations in adoption decisions. Track whether journey-sharing correlates with medication adherence.",
       "supporting_theme_ids": [
-        "THM_001"
+        "THM_01"
       ],
-      "supporting_item_count": 739,
-      "source_urls": [
-        "https://reddit.com/r/chennaicity/comments/1j1cq15/ozempic_wegovy/",
-        "https://reddit.com/r/BollyBlindsNGossip/comments/1irrez2/salman_bhai_ft_ozempic_wtf/",
-        "https://reddit.com/r/mumbai/comments/1hj71jt/looking_for_ozempic_experiences_before_i_finalise/#comment_n6hqx5d",
-        "https://reddit.com/r/psychology/comments/1kjruch/ozempic_and_similar_drugs_are_safe_and_effective/",
-        "https://reddit.com/r/BollyBlindsNGossip/comments/1hhumiq/new_patient_of_ozempic_in_frame_ram_kapoor/#comment_m2ubzqp",
-        "https://www.instagram.com/p/DUsjPKrkW6f",
-        "https://reddit.com/r/medicine/comments/1hp448d/the_next_big_glp1_med_orforglipron_an_oral_once/",
-        "https://www.instagram.com/p/DPsPGHejPJC#comment_1443638496_7577df58",
-        "https://reddit.com/r/BollyBlindsNGossip/comments/1jbuosx/ozempic_popularity/",
-        "https://www.instagram.com/p/DIe1U8hOgnF#comment_181906492_fc4e0db3",
-        "https://reddit.com/r/askscience/comments/1dm7ly4/how_are_ozempic_and_wegovy_the_same_drug/",
-        "https://reddit.com/r/indianmedschool/comments/1nv98y4/ozempic/",
-        "https://reddit.com/r/BollyBlindsNGossip/comments/1cb4k0w/sometimes_i_wonder_if_actresses_in_india_also_use/#comment_l0wakyf",
-        "https://www.instagram.com/p/DDvPk1BAB8h#comment_44143001_84d81364",
-        "https://reddit.com/r/mumbai/comments/1d0yyhz/weight_loss_doctors_in_mumbai_wholl_prescribe_meds/#comment_l5uu64m",
-        "https://www.instagram.com/p/DU5_dyXEbuH",
-        "https://www.instagram.com/p/DMVJfK-IlfR",
-        "https://www.youtube.com/watch?v=_QRNDItGI9E",
-        "https://reddit.com/r/pune/comments/1ixkm73/fitness_freaks_what_does_your_high_protein/",
-        "https://www.youtube.com/watch?v=rF63Jtirev4"
-      ],
+      "supporting_item_count": 906,
+      "source_urls": [],
       "is_grounded": true,
       "is_non_obvious": true,
       "is_actionable": true,
@@ -300,64 +105,42 @@
       "is_falsifiable": true,
       "passed_quality_gates": true
     },
-    "confidence_score": 0.7,
+    "confidence_score": 0.726,
     "confidence_tier": "medium",
     "confidence_breakdown": {
-      "sample_size_score": 0.7,
-      "source_diversity_score": 0.93,
-      "temporal_consistency_score": 0.75,
+      "sample_size_score": 0.83,
+      "source_diversity_score": 0.92,
+      "temporal_consistency_score": 0.73,
       "internal_agreement_score": 0.29,
       "data_recency_score": 0.81
     },
-    "signal_strength_score": 0.651,
+    "signal_strength_score": 0.652,
     "signal_strength_tier": "moderate",
     "signal_strength_breakdown": {
-      "prevalence_score": 0.85,
-      "engagement_level_score": 0.54,
-      "sentiment_intensity_score": 0.76,
-      "conversation_depth_score": 0.26
+      "prevalence_score": 0.92,
+      "engagement_level_score": 0.56,
+      "sentiment_intensity_score": 0.63,
+      "conversation_depth_score": 0.24
     },
-    "matrix_quadrant": "Noise",
-    "sample_size": 739,
+    "sample_size": 906,
     "confidence_interval_95": [
-      0.2751,
-      0.3106
+      0.477,
+      0.523
     ]
   },
   {
     "insight": {
       "insight_id": "INS_008",
-      "observation": "PCOS, hormonal, and medical weight issues account for 16.5% of conversation (416 mentions) with moderate positive sentiment (+22.6%). PCOS/PCOD is the most-discussed medical condition, followed by thyroid disorders, insulin resistance, and diabetes management. Women sharing personal PCOS weight struggles dominate Instagram, while Reddit and YouTube feature clinical discussions about metformin, hormonal treatment, and postpartum weight management.",
-      "insight": "For a significant segment of Indian women, weight loss is not a lifestyle choice but a medical necessity entangled with reproductive health. PCOS affects an estimated 1 in 5 Indian women, and the weight-PCOS cycle (weight gain worsens PCOS, PCOS makes weight loss harder) creates a uniquely frustrating experience. These consumers are not looking for general weight loss advice - they need medically-informed solutions that address the hormonal root cause. The emotional intensity of this conversation (sadness, frustration) is notably higher than other themes.",
-      "implication": "The PCOS-weight-loss segment is underserved by both the weight loss and pharmaceutical industries. Generic diet advice fails because it does not account for insulin resistance. GLP-1 drugs show particular promise here (dual action on weight and insulin sensitivity) but are not being marketed to this segment. Whoever builds the bridge between PCOS treatment and modern weight management will capture a loyal, medically-motivated audience.",
-      "recommendation": "Develop PCOS-specific weight management programmes that integrate GLP-1 medication with hormonal treatment, Indian dietary modifications, and cycle-aware exercise. Partner with gynaecologists (not just endocrinologists) as prescribing advocates. Create community support groups for women navigating the PCOS-weight cycle, with medical professional moderation.",
-      "further_validation": "Quantify the overlap between PCOS diagnosis and GLP-1 interest in the Indian market. Conduct clinical outcomes research on GLP-1 efficacy specifically in PCOS-related weight management among Indian women.",
+      "observation": "Sustainability and weight regain fears generate 217 mentions (12.09% prevalence) with notably negative sentiment (NSS +0.25). The core fear is lifelong medication dependency - consumers ask 'do I have to take this forever?' and cite statistics about weight regain after discontinuation. The 'exit strategy' concept recurs frequently, with consumers wanting to know the plan for coming off medication.",
+      "insight": "The sustainability concern is not primarily about the medication's biological mechanism - it reflects a deeper anxiety about losing agency over one's own body. Consumers interpret 'you may need to take this long-term' as 'you will never be able to manage your weight independently,' which triggers the same shame-based response as the initial weight struggle. This fear is amplified in India where lifelong medication is culturally associated with chronic illness rather than health optimization.",
+      "implication": "The sustainability narrative is suppressing trial initiation and causing premature discontinuation. Without addressing this concern directly, the GLP-1 market will see high dropout rates and negative word-of-mouth from consumers who stopped prematurely and regained weight, creating a self-fulfilling prophecy.",
+      "recommendation": "Reframe the long-term narrative from 'lifelong dependency' to 'health management tool with exit options.' Develop and communicate structured tapering protocols and lifestyle transition plans. Highlight success stories of consumers who maintained weight loss after tapering - the data shows these exist but are drowned out by regain stories.",
+      "further_validation": "Longitudinal study tracking Indian GLP-1 users at 6, 12, and 24 months post-discontinuation to establish India-specific regain rates and identify factors predicting successful maintenance.",
       "supporting_theme_ids": [
-        "THM_008"
+        "THM_08"
       ],
-      "supporting_item_count": 416,
-      "source_urls": [
-        "https://reddit.com/r/BollyBlindsNGossip/comments/1hhumiq/new_patient_of_ozempic_in_frame_ram_kapoor/#comment_m2ubzqp",
-        "https://www.instagram.com/p/DPsPGHejPJC#comment_1443638496_7577df58",
-        "https://reddit.com/r/medicine/comments/1hp448d/the_next_big_glp1_med_orforglipron_an_oral_once/",
-        "https://www.youtube.com/watch?v=7-UQbo5qpJU",
-        "https://reddit.com/r/TwoXIndia/comments/1gvkd35/ladies_who_lost_weight_organically_what_did_you_do/#comment_ly2h2xd",
-        "https://reddit.com/r/askscience/comments/1dm7ly4/how_are_ozempic_and_wegovy_the_same_drug/",
-        "https://www.instagram.com/p/DFo_wBVTKWJ",
-        "https://www.instagram.com/p/DPgJUk2jNWA",
-        "https://www.instagram.com/p/DUSVThQiYe-",
-        "https://www.youtube.com/watch?v=_QRNDItGI9E",
-        "https://www.instagram.com/p/C8pQNKBvzcV",
-        "https://www.instagram.com/p/DUuWrJ1DSyB#comment_53913097_a2d749bd",
-        "https://reddit.com/r/twoxindiamums/comments/1oo5bab/can_anyone_who_tried_the_typical_indian_ayurvedic/#comment_nn2apak",
-        "https://reddit.com/r/doctorsUK/comments/1lbwjww/dear_ozempic_youve_ruined_me_latest_research/",
-        "https://www.instagram.com/p/DK_smMCx49n",
-        "https://www.instagram.com/p/DSwjK7xjKt6",
-        "https://www.instagram.com/p/DU-9J4HCZgw",
-        "https://www.youtube.com/watch?v=1spTVygmroA",
-        "https://reddit.com/r/BollyBlindsNGossip/comments/1lv8z4k/what_has_happened_to_kjo/#comment_n25525s",
-        "https://www.instagram.com/p/DSXdldNgZJI"
-      ],
+      "supporting_item_count": 217,
+      "source_urls": [],
       "is_grounded": true,
       "is_non_obvious": true,
       "is_actionable": true,
@@ -365,64 +148,42 @@
       "is_falsifiable": true,
       "passed_quality_gates": true
     },
-    "confidence_score": 0.654,
+    "confidence_score": 0.638,
     "confidence_tier": "medium",
     "confidence_breakdown": {
-      "sample_size_score": 0.57,
-      "source_diversity_score": 0.94,
-      "temporal_consistency_score": 0.71,
-      "internal_agreement_score": 0.25,
+      "sample_size_score": 0.49,
+      "source_diversity_score": 0.92,
+      "temporal_consistency_score": 0.7,
+      "internal_agreement_score": 0.3,
       "data_recency_score": 0.8
     },
-    "signal_strength_score": 0.659,
+    "signal_strength_score": 0.704,
     "signal_strength_tier": "moderate",
     "signal_strength_breakdown": {
-      "prevalence_score": 0.77,
-      "engagement_level_score": 0.64,
-      "sentiment_intensity_score": 0.81,
+      "prevalence_score": 0.67,
+      "engagement_level_score": 0.91,
+      "sentiment_intensity_score": 0.8,
       "conversation_depth_score": 0.24
     },
-    "matrix_quadrant": "Noise",
-    "sample_size": 416,
+    "sample_size": 217,
     "confidence_interval_95": [
-      0.1507,
-      0.1797
+      0.1056,
+      0.1355
     ]
   },
   {
     "insight": {
       "insight_id": "INS_009",
-      "observation": "Ayurveda and alternative remedies represent 5.3% of conversation (134 mentions) with surprisingly positive sentiment (+37.3%). However, the conversation is deeply polarised - passionate advocates promote turmeric, amla, ashwagandha, and triphala for weight loss while equally vocal critics call out Herbalife as a scam and AYUSH as dangerous pseudoscience. Detox drinks (green tea, jeera water, lemon water) occupy a middle ground as low-risk traditional practices.",
-      "insight": "The Indian weight loss market operates on a dual-track belief system: modern medicine and traditional remedies are not seen as mutually exclusive but as complementary layers. Even consumers interested in GLP-1 drugs simultaneously consume turmeric milk and green tea. However, there is a growing sophistication gap - educated urban consumers are becoming vocally anti-pseudoscience (the Herbalife and AYUSH criticism) while still embracing evidence-backed Ayurvedic ingredients. The scam-awareness around MLM nutrition products (Herbalife) represents a broader trust erosion that affects all alternative health products.",
-      "implication": "Brands entering the Indian weight loss market must navigate the traditional-vs-modern tension carefully. Dismissing Ayurveda alienates a large cultural audience; endorsing unproven remedies loses credibility with the evidence-seeking segment. The opportunity lies in 'evidence-based traditional' positioning - Ayurvedic ingredients with clinical backing.",
-      "recommendation": "Do not position modern weight loss solutions in opposition to traditional remedies. Instead, create 'complementary care' messaging that respects cultural practices while being transparent about what has clinical evidence and what does not. For Ayurvedic brands: invest in clinical trials for ingredients like ashwagandha and triphala to earn evidence-based credibility. Distance from MLM models which are damaging the category.",
-      "further_validation": "Conduct a belief-mapping study to understand which traditional remedies Indian consumers use alongside modern weight loss methods. Measure the sales impact of the anti-Herbalife/anti-MLM sentiment on legitimate traditional health products.",
+      "observation": "Indian weight loss culture and desi diet discussions generate 400 mentions (22.28% prevalence). Topics include Indian-specific diet plans (1200-1500 calorie vegetarian plans), protein challenges for vegetarians (paneer, soya chunks, dal, tofu), cultural food practices (ghee, oil content in cooking), and Indian fitness influencers promoting calorie deficit approaches. Content spans English, Hindi, Hinglish, Tamil, Telugu, and Kannada.",
+      "insight": "Indian weight loss culture is undergoing a protein revolution - consumers are actively trying to increase protein intake within traditional vegetarian frameworks, which were historically optimized for carbohydrates and fats, not protein. This represents a fundamental shift in how Indians think about food, driven by fitness influencers and medical education rather than by pharmaceutical messaging. The challenge is structural: traditional Indian meals average 40-50g protein daily, while weight loss protocols demand 100-150g.",
+      "implication": "The protein gap in Indian vegetarian diets creates a market opportunity for high-protein Indian food products, supplements, and meal solutions that don't require consumers to abandon their cultural food identity. Companies that solve 'how do I get 30g protein from a traditional Indian breakfast' will capture this demand.",
+      "recommendation": "For the weight loss medication ecosystem: create India-specific nutritional guidance that works within vegetarian and regional food traditions. For food companies: develop high-protein versions of traditional Indian foods (protein-enriched roti, fortified paneer, high-protein dosa batter). Position these as enablers of both natural weight loss and GLP-1 medication success.",
+      "further_validation": "Dietary recall study with Indian weight loss consumers to quantify the actual protein gap and identify the most promising food categories for protein fortification.",
       "supporting_theme_ids": [
-        "THM_009"
+        "THM_09"
       ],
-      "supporting_item_count": 134,
-      "source_urls": [
-        "https://reddit.com/r/indianmedschool/comments/1kpi2sx/not_ai_but_ayurveda_will_take_over_medical_jobs/#comment_msxxsik",
-        "https://reddit.com/r/hyderabad/comments/1ct37a6/how_do_i_complainreport_about_herbalife_in_india/#comment_l49gdux",
-        "https://reddit.com/r/indianmedschool/comments/1kpi2sx/not_ai_but_ayurveda_will_take_over_medical_jobs/#comment_msxvshw",
-        "https://reddit.com/r/GLP1India/comments/1lotonz/why_is_india_still_so_weird_about_glp1_meds/#comment_n0u1azg",
-        "https://www.youtube.com/watch?v=7-UQbo5qpJU",
-        "https://www.instagram.com/p/DJOWgTLsBu4",
-        "https://www.instagram.com/p/DHYMVN-xoSj",
-        "https://reddit.com/r/indianmedschool/comments/1h3w3ie/why_is_india_so_open_to_pseudoscience_within/#comment_lztz7rr",
-        "https://reddit.com/r/twoxindiamums/comments/1ex3e73/low_supply_issue/",
-        "https://reddit.com/r/indiasocial/comments/1dyyx6a/the_biggest_scam_going_on_in_india_herbalife/",
-        "https://www.instagram.com/p/DUhlxpbgaAc#comment_77734063887_fe766d5b",
-        "https://www.youtube.com/watch?v=WFutpbe5k2w",
-        "https://reddit.com/r/adhdwomen/comments/1k5msff/has_ayurvedic_medicine_worked_for_any_of_you/#comment_mojhzu8",
-        "https://www.instagram.com/p/C8pQNKBvzcV",
-        "https://reddit.com/r/IndianFood/comments/1h0ecjj/need_help_recently_turned_vegetarian_struggling/#comment_lz4e5ka",
-        "https://reddit.com/r/AsianBeauty/comments/1p6zc53/must_buy_products_in_india/#comment_nqvn9y9",
-        "https://reddit.com/r/LegalAdviceIndia/comments/1lt0gjr/we_need_to_seriously_discuss_legally_banning/",
-        "https://www.instagram.com/p/DN0fG4V5AEE#comment_51771082828_a48cd403",
-        "https://reddit.com/r/twoxindiamums/comments/1oo5bab/can_anyone_who_tried_the_typical_indian_ayurvedic/#comment_nn2ybr7",
-        "https://reddit.com/r/tea/comments/1cl38rm/what_is_your_favourite_green_tea_brand/#comment_l2rbf5q"
-      ],
+      "supporting_item_count": 400,
+      "source_urls": [],
       "is_grounded": true,
       "is_non_obvious": true,
       "is_actionable": true,
@@ -430,64 +191,42 @@
       "is_falsifiable": true,
       "passed_quality_gates": true
     },
-    "confidence_score": 0.613,
+    "confidence_score": 0.684,
     "confidence_tier": "medium",
     "confidence_breakdown": {
-      "sample_size_score": 0.33,
-      "source_diversity_score": 0.9,
-      "temporal_consistency_score": 0.8,
-      "internal_agreement_score": 0.33,
+      "sample_size_score": 0.63,
+      "source_diversity_score": 0.91,
+      "temporal_consistency_score": 0.78,
+      "internal_agreement_score": 0.31,
       "data_recency_score": 0.8
     },
-    "signal_strength_score": 0.666,
+    "signal_strength_score": 0.641,
     "signal_strength_tier": "moderate",
     "signal_strength_breakdown": {
-      "prevalence_score": 0.5,
-      "engagement_level_score": 0.91,
-      "sentiment_intensity_score": 0.88,
+      "prevalence_score": 0.77,
+      "engagement_level_score": 0.67,
+      "sentiment_intensity_score": 0.64,
       "conversation_depth_score": 0.28
     },
-    "matrix_quadrant": "Noise",
-    "sample_size": 134,
+    "sample_size": 400,
     "confidence_interval_95": [
-      0.045,
-      0.0625
+      0.2023,
+      0.2404
     ]
   },
   {
     "insight": {
-      "insight_id": "INS_002",
-      "observation": "Safety concerns represent 11.3% of the conversation (286 mentions) with the only negative NSS in the dataset (-11.2%). Nausea, sulphur burps, fatigue, and muscle mass loss are the most frequently cited side effects. More alarming concerns about gastroparesis, pancreatitis, and 'Ozempic face' appear in Reddit threads. The conversation is notably cross-platform - Instagram users share personal side effect experiences, YouTube features doctors explaining risks, and Reddit hosts detailed clinical discussions.",
-      "insight": "Indian consumers have a heightened fear-to-trust ratio with GLP-1 drugs compared to general weight loss topics. The safety conversation is not just about discomfort (nausea, bloating) but about fundamental body integrity - muscle loss and facial ageing (Ozempic face) are particularly alarming to a culture that values physical appearance and strength. The fact that doctors on YouTube are actively addressing these concerns suggests they are hearing them repeatedly from patients.",
-      "implication": "Safety concerns are the primary conversion blocker for the Indian GLP-1 market. Consumers who have done their research are not worried about whether these drugs work - they are worried about what else these drugs do. Any brand communication that minimises side effects will lose credibility with this informed audience.",
-      "recommendation": "Create a transparent side effect guide in Hindi and English that ranks side effects by frequency and severity, with clear protocols for when to call a doctor. Develop content around 'GLP-1 + strength training' protocols to address the muscle loss fear directly. Never use language that dismisses side effects - acknowledge them and provide management strategies.",
-      "further_validation": "Conduct a fear-mapping study among prospective GLP-1 users to rank safety concerns by severity. Monitor whether muscle-loss and Ozempic-face concerns are increasing or stabilising over time.",
+      "insight_id": "INS_006",
+      "observation": "Stigma and social judgment around weight loss medication generate 266 mentions (14.82% prevalence). The dominant narrative frames GLP-1 use as 'the easy way out,' 'cheating,' and 'lazy.' Counter-narratives position obesity as a disease requiring medical treatment. Indian-specific commentary includes concerns about shortcuts culture ('Sabko shortcuts chahiye, koi workout nahi karna chahta') and framing medication use as a moral failure.",
+      "insight": "Weight loss medication stigma in India operates at the intersection of three cultural forces: the 'hard work' ethic that equates suffering with deserving results, the Ayurvedic tradition that positions health as a matter of personal discipline, and the social media comparison culture where visible transformation must be 'earned.' This triple stigma is stronger in India than in Western markets, where the medical framing of obesity has more cultural traction.",
+      "implication": "Stigma is the primary demand suppressor for GLP-1 medications in India, more significant than cost or access barriers. Consumers who might benefit from medication are deterred by anticipated social judgment. The 'obesity is a disease' messaging that works in Western markets may be insufficient in India where the moral dimension of weight management is deeply ingrained.",
+      "recommendation": "Launch a culturally adapted destigmatization campaign that reframes the conversation from 'shortcuts vs. hard work' to 'all tools for health are valid.' Use the language of the data - consumers themselves are already pushing back on stigma with phrases like 'obesity is a disease, not a personal failure.' Amplify these existing counter-narratives rather than creating new messaging.",
+      "further_validation": "Conduct focus groups with Indian consumers to map the specific stigma triggers and test messaging frameworks. Compare stigma intensity across Indian metros vs. tier-2 cities.",
       "supporting_theme_ids": [
-        "THM_002"
+        "THM_06"
       ],
-      "supporting_item_count": 286,
-      "source_urls": [
-        "https://reddit.com/r/Noom/comments/1hipbzz/noom_med_glp1_experiences/",
-        "https://reddit.com/r/diabetes_t2/comments/1nvihyg/how_is_your_diet_like_on_ozempic/#comment_nh8xon8",
-        "https://www.instagram.com/p/DHggXxvT9fo",
-        "https://reddit.com/r/BollyBlindsNGossip/comments/1hhumiq/new_patient_of_ozempic_in_frame_ram_kapoor/#comment_m2ubzqp",
-        "https://www.instagram.com/p/DLkSPP6Icir#comment_348745417_ea2b5e51",
-        "https://www.instagram.com/p/DIjVwp0vYtI",
-        "https://www.instagram.com/p/DUsjPKrkW6f",
-        "https://reddit.com/r/medicine/comments/1hp448d/the_next_big_glp1_med_orforglipron_an_oral_once/",
-        "https://reddit.com/r/BollyBlindsNGossip/comments/1m9kk06/brooo/",
-        "https://www.instagram.com/p/DJOWgTLsBu4",
-        "https://www.instagram.com/p/DRuaJIwDDlQ",
-        "https://www.instagram.com/p/DQGx5DAjH0J#comment_5940794671_35ca12fe",
-        "https://www.instagram.com/p/DSxby3WkTUm",
-        "https://www.instagram.com/p/DO-8R9JgRsn",
-        "https://www.youtube.com/watch?v=xi-zHJL5bnI",
-        "https://reddit.com/r/BollyBlindsNGossip/comments/1hhumiq/new_patient_of_ozempic_in_frame_ram_kapoor/#comment_m2tx5l1",
-        "https://www.instagram.com/p/DTrd5UJj02z",
-        "https://www.instagram.com/p/DI1lWaMN7JY",
-        "https://www.instagram.com/p/DPgJUk2jNWA",
-        "https://www.instagram.com/p/DL75Df1zmCv"
-      ],
+      "supporting_item_count": 266,
+      "source_urls": [],
       "is_grounded": true,
       "is_non_obvious": true,
       "is_actionable": true,
@@ -495,194 +234,85 @@
       "is_falsifiable": true,
       "passed_quality_gates": true
     },
-    "confidence_score": 0.633,
+    "confidence_score": 0.669,
     "confidence_tier": "medium",
     "confidence_breakdown": {
-      "sample_size_score": 0.48,
-      "source_diversity_score": 0.94,
-      "temporal_consistency_score": 0.72,
-      "internal_agreement_score": 0.24,
-      "data_recency_score": 0.81
-    },
-    "signal_strength_score": 0.63,
-    "signal_strength_tier": "moderate",
-    "signal_strength_breakdown": {
-      "prevalence_score": 0.7,
-      "engagement_level_score": 0.58,
-      "sentiment_intensity_score": 0.86,
-      "conversation_depth_score": 0.26
-    },
-    "matrix_quadrant": "Noise",
-    "sample_size": 286,
-    "confidence_interval_95": [
-      0.1014,
-      0.1262
-    ]
-  },
-  {
-    "insight": {
-      "insight_id": "INS_013",
-      "observation": "Celebrity weight loss speculation dominates 191 items (7.6% of corpus) across all 3 platforms with moderately positive sentiment. Reddit hosts heated debates about whether Karan Johar, Bhumi Pednekar, Kapil Sharma, and Vidya Balan used Ozempic. Instagram features celebrity-adjacent content (Bollywood diet routines, transformation reels). The dominant narrative is accusation - consumers believe most celebrity weight loss is drug-assisted and are frustrated by the lack of transparency.",
-      "insight": "Bollywood celebrities have become the unwitting marketing vehicle for GLP-1 drugs in India - not through endorsement but through speculation. Every visible celebrity transformation triggers a cycle of 'definitely Ozempic' accusations, which simultaneously normalises awareness of these drugs and attaches stigma to using them. The Indian consumer has developed a sophisticated 'detection radar' for drug-assisted weight loss (sunken face, rapid timeline, lack of muscle definition) and applies it mercilessly to public figures. The paradox: celebrities who admit to Ozempic (like Oprah internationally) are respected for honesty, while those who deny it (most Bollywood) are mocked as dishonest.",
-      "implication": "Celebrity weight loss is the single largest organic awareness driver for GLP-1 drugs in India, yet it operates entirely through suspicion rather than endorsement. This creates a unique brand challenge: the drugs are famous but carry a 'vanity' stigma. Any brand strategy that relies on traditional celebrity endorsement will backfire - the consumer already assumes celebrities use these drugs and will see paid endorsement as hypocritical confirmation.",
-      "recommendation": "Avoid celebrity endorsements for GLP-1 brands in India - the market has already priced in celebrity usage as assumed fact. Instead, create content addressing the transparency gap directly: 'Why people use GLP-1 and why that is okay.' Partner with celebrities who have been open about their methods (Tanmay Bhat, who is credited as genuinely working out) rather than those under suspicion. Use the Bollywood speculation as a cultural hook for educational content that redirects from gossip to science.",
-      "further_validation": "Track whether celebrity Ozempic speculation correlates with search volume spikes for GLP-1 drugs in India. Survey consumers on whether celebrity usage makes them more or less likely to consider these drugs themselves.",
-      "supporting_theme_ids": [
-        "THM_013"
-      ],
-      "supporting_item_count": 185,
-      "source_urls": [
-        "https://www.instagram.com/p/DQCDzUfEzHd",
-        "https://reddit.com/r/antidietglp1/comments/1e1j6u0/will_i_stop_enjoying_food/",
-        "https://reddit.com/r/BollyBlindsNGossip/comments/1nexm78/bollywood_couple_reportedly_demanded_11_vanity/",
-        "https://www.instagram.com/p/DITdwtJyneR#comment_7292227296_92343ab4",
-        "https://reddit.com/r/BollyBlindsNGossip/comments/1hrqs6r/wamiqa_gabbi_looks_very_different_in_a_old_vide/#comment_m4zrwzq",
-        "https://www.instagram.com/p/DRHlb_1COqp",
-        "https://reddit.com/r/TwoXIndia/comments/1f7rqz6/hello_people_of_india_can_you_please_drop/#comment_ll9kvda",
-        "https://www.instagram.com/p/DRZ8IliEgSS",
-        "https://www.instagram.com/p/DO5QvS_El-K",
-        "https://www.youtube.com/watch?v=G3V5enRhuP8",
-        "https://reddit.com/r/InstaCelebsGossip/comments/1q6a2df/aishwarya_mohanrajs_weightloss_looks_so_weird_is/#comment_ny625x7",
-        "https://reddit.com/r/indianmedschool/comments/1jivh1o/with_glp1_patent_expiring_in_2026_will_weight/#comment_mjivepu",
-        "https://reddit.com/r/PlantBasedDiet/comments/1cc3rjy/any_indians_here_i_need_some_advice/",
-        "https://reddit.com/r/psychology/comments/1kjruch/ozempic_and_similar_drugs_are_safe_and_effective/#comment_mrp8kj9",
-        "https://reddit.com/r/BollyBlindsNGossip/comments/1lztlzh/actors_not_owning_up_to_their_ozempic_journeys/",
-        "https://reddit.com/r/BollyBlindsNGossip/comments/1m63djf/some_insider_tea_about_ahaan_panday_plus_a_dash/#comment_n4guvqs",
-        "https://www.youtube.com/watch?v=RrpjVRY4JnI",
-        "https://reddit.com/r/InstaCelebsGossip/comments/1grx48f/so_a_lot_of_the_gossips_we_read_about_kusha_arent/#comment_lx9xfa8",
-        "https://reddit.com/r/45PlusSkincare/comments/1e3kxcs/has_anyone_tried_morpheus8_and_what_were_your/#comment_ld8yqlz",
-        "https://www.youtube.com/watch?v=xi-zHJL5bnI"
-      ],
-      "is_grounded": true,
-      "is_non_obvious": true,
-      "is_actionable": true,
-      "is_specific": true,
-      "is_falsifiable": true,
-      "passed_quality_gates": true
-    },
-    "confidence_score": 0.621,
-    "confidence_tier": "medium",
-    "confidence_breakdown": {
-      "sample_size_score": 0.39,
-      "source_diversity_score": 0.88,
-      "temporal_consistency_score": 0.84,
-      "internal_agreement_score": 0.28,
-      "data_recency_score": 0.81
-    },
-    "signal_strength_score": 0.639,
-    "signal_strength_tier": "moderate",
-    "signal_strength_breakdown": {
-      "prevalence_score": 0.59,
-      "engagement_level_score": 0.82,
-      "sentiment_intensity_score": 0.74,
-      "conversation_depth_score": 0.26
-    },
-    "matrix_quadrant": "Noise",
-    "sample_size": 185,
-    "confidence_interval_95": [
-      0.0637,
-      0.0841
-    ]
-  },
-  {
-    "insight": {
-      "insight_id": "INS_014",
-      "observation": "Misinformation and miracle claims account for 217 items (8.6% of corpus) spanning fear-based content ('Ozempic destroys your body'), miracle framing ('lose 10kg in 10 days'), pseudoscience (Gila monster venom narratives), and fact-checking responses. The conversation is bifurcated: Instagram hosts the most misleading content (miracle claims from health influencers, unverified side effect horror stories), while Reddit and YouTube host the debunking (doctors correcting misinformation, users sharing evidence-based perspectives).",
-      "insight": "The Indian weight loss information ecosystem is polarised between two competing content factories: Instagram's influencer-driven miracle-claim economy and Reddit/YouTube's evidence-based correction community. The misinformation is not random - it follows a predictable pattern. Step 1: An influencer frames a drug as a miracle or a danger (both drive engagement). Step 2: A doctor or informed user posts a correction. Step 3: The correction reaches a fraction of the original audience. The net effect is that the Indian consumer is simultaneously over-exposed to sensational claims and under-exposed to calibrated medical information.",
-      "implication": "Misinformation is not just a public health concern - it is a direct commercial threat to GLP-1 brands. Fear-based misinformation (muscle wasting, permanent damage, venom-based) deters potential users. Miracle-framing (quick fix, no effort needed) attracts the wrong users who will be disappointed and generate negative word-of-mouth. Both distort the market conversation away from the drugs' actual clinical profile.",
-      "recommendation": "Fund an independent, doctor-led content initiative in Hindi and English that proactively addresses the top 10 misinformation themes. Create a 'myth vs fact' content series specifically for Instagram (where the misinformation is concentrated) using the same short-form, high-engagement format that spreads the misinformation. Partner with medical professionals who already have trust on YouTube (Dr. Pal, Dr. Balamurugan) to create corrective content that ranks alongside misleading videos.",
-      "further_validation": "Map the specific misinformation claims by volume and platform to prioritise debunking efforts. Track whether corrective content reduces fear-based objections in subsequent consumer conversations.",
-      "supporting_theme_ids": [
-        "THM_014"
-      ],
-      "supporting_item_count": 203,
-      "source_urls": [
-        "https://reddit.com/r/askscience/comments/1dm7ly4/how_are_ozempic_and_wegovy_the_same_drug/#comment_l9u77v5",
-        "https://www.instagram.com/p/DO0KF2zk4cx",
-        "https://www.instagram.com/p/DPitZvNE7R4",
-        "https://www.youtube.com/watch?v=NQijQZcAKdE",
-        "https://reddit.com/r/Kochi/comments/1ftgz19/need_genuine_opinion_on_herbalife_product_and_its/#comment_lprt91b",
-        "https://reddit.com/r/loseit/comments/1li9j5y/requesting_tips_for_fat_loss_as_a_24f_indian/#comment_mzb21qh",
-        "https://www.instagram.com/p/C8oemWOx8tN",
-        "https://www.instagram.com/p/DRZ8IliEgSS",
-        "https://reddit.com/r/medicine/comments/1bohf8a/no_oprah_ozempic_alone_cant_fix_our_culture_of/#comment_kwp8u4i",
-        "https://reddit.com/r/WeightLossAdvice/comments/1i2bl15/ozempic_is_basically_a_starvation_diet_is_it_not/",
-        "https://www.instagram.com/p/DOjbjegD_Mb#comment_5767342690_e402a81f",
-        "https://www.instagram.com/p/DOjbjegD_Mb#comment_1004605144_5b76f6e0",
-        "https://reddit.com/r/WeightLossAdvice/comments/1i2bl15/ozempic_is_basically_a_starvation_diet_is_it_not/#comment_m7da8do",
-        "https://reddit.com/r/BollyBlindsNGossip/comments/1lztlzh/actors_not_owning_up_to_their_ozempic_journeys/",
-        "https://www.youtube.com/watch?v=xi-zHJL5bnI",
-        "https://www.instagram.com/p/DITdwtJyneR",
-        "https://reddit.com/r/Indians_StudyAbroad/comments/1jipknv/my_painful_experience_till_now_as_i_had_return_to/",
-        "https://reddit.com/r/mounjarouk/comments/1jd82cd/my_experience_stopping_and_restarting_mounjaro/",
-        "https://www.instagram.com/p/DUaD8EiEkt3",
-        "https://www.instagram.com/p/DRFamwfEnWl#comment_8974302416_227a32f5"
-      ],
-      "is_grounded": true,
-      "is_non_obvious": true,
-      "is_actionable": true,
-      "is_specific": true,
-      "is_falsifiable": true,
-      "passed_quality_gates": true
-    },
-    "confidence_score": 0.621,
-    "confidence_tier": "medium",
-    "confidence_breakdown": {
-      "sample_size_score": 0.41,
-      "source_diversity_score": 0.94,
-      "temporal_consistency_score": 0.84,
-      "internal_agreement_score": 0.19,
+      "sample_size_score": 0.54,
+      "source_diversity_score": 0.96,
+      "temporal_consistency_score": 0.76,
+      "internal_agreement_score": 0.3,
       "data_recency_score": 0.8
     },
-    "signal_strength_score": 0.627,
+    "signal_strength_score": 0.647,
     "signal_strength_tier": "moderate",
     "signal_strength_breakdown": {
-      "prevalence_score": 0.63,
-      "engagement_level_score": 0.7,
-      "sentiment_intensity_score": 0.8,
-      "conversation_depth_score": 0.24
+      "prevalence_score": 0.72,
+      "engagement_level_score": 0.75,
+      "sentiment_intensity_score": 0.71,
+      "conversation_depth_score": 0.19
     },
-    "matrix_quadrant": "Noise",
-    "sample_size": 203,
+    "sample_size": 266,
     "confidence_interval_95": [
-      0.0704,
-      0.0916
+      0.1313,
+      0.1638
     ]
   },
   {
     "insight": {
       "insight_id": "INS_005",
-      "observation": "Cost and access discussions comprise 12.6% of conversation (319 mentions) with cautious positive sentiment (+10.7%) - the lowest positive NSS among non-safety themes. Users compare drug prices between India and Western markets, discuss Natco Pharma's generic semaglutide potential, and note Mounjaro's India launch. Insurance coverage is a recurring concern. Compounding pharmacies and off-label prescriptions are discussed as workarounds.",
-      "insight": "Cost is the silent gatekeeper of GLP-1 adoption in India. While consumers are aware that these drugs are cheaper in India than in the US, the monthly recurring cost (INR 5,000-15,000 for Mounjaro/Ozempic) is still prohibitive for most middle-income Indians. The active discussion of generics (Natco), compounding, and off-label use signals that demand exists but is price-constrained. The Indian consumer is not debating whether GLP-1 drugs work - they are calculating whether they can afford them long enough to get results.",
-      "implication": "The Indian GLP-1 market will be won by the player that cracks affordability. Unlike Western markets where insurance subsidises cost, Indian consumers pay out-of-pocket. Generic entry (Natco) will dramatically expand the addressable market but also commoditise the category. First-movers on affordable pricing or subscription models will capture the price-sensitive majority.",
-      "recommendation": "Develop tiered pricing or subscription models that reduce the monthly out-of-pocket burden. Create transparent total-cost-of-treatment calculators that show 6-month and 12-month projections. Monitor Natco Pharma's generic semaglutide timeline closely - its launch will reshape the competitive landscape. Consider EMI or health financing partnerships to spread costs.",
-      "further_validation": "Conduct willingness-to-pay research across income segments. Model the market expansion potential of generic GLP-1 entry at various price points.",
+      "observation": "Natural alternatives and anti-medication sentiment generate 287 mentions (15.99% prevalence). Content ranges from Ayurvedic weight loss solutions and natural GLP-1 boosters (yerba mate, apple cider vinegar, fiber-rich foods) to fitness influencers explicitly positioning themselves against medication ('Not Ozempic - just diet and exercise'). Natural GLP-1 activation through food is a growing sub-narrative.",
+      "insight": "The 'natural vs. medication' framing reveals a deep cultural conflict in India between traditional health systems (Ayurveda, naturopathy) and pharmaceutical interventions. Consumers do not view these as complementary - they see them as opposing worldviews. The 'natural GLP-1 booster' content bridges this gap by using pharmaceutical language (GLP-1, receptor, hormone) to validate traditional food choices, suggesting consumers want the science without the medication.",
+      "implication": "The natural alternatives narrative is both a competitor and an opportunity. It competes by framing medication as unnecessary, but it also educates consumers about GLP-1 mechanisms, creating a funnel from natural interest to pharmaceutical adoption for those who find natural methods insufficient.",
+      "recommendation": "Do not fight the natural alternatives narrative - co-opt it. Position GLP-1 medications as 'when natural approaches are not enough' rather than 'instead of natural approaches.' Create content that acknowledges the value of dietary GLP-1 support while explaining when medical intervention becomes necessary. This respects the Ayurvedic health tradition while establishing medication as a valid escalation path.",
+      "further_validation": "Track consumer journeys from natural GLP-1 interest to medication adoption to quantify the funnel conversion rate. Conduct qualitative research on how Ayurvedic beliefs influence GLP-1 medication acceptance.",
       "supporting_theme_ids": [
-        "THM_005"
+        "THM_05"
       ],
-      "supporting_item_count": 319,
-      "source_urls": [
-        "https://reddit.com/r/mumbai/comments/1hj71jt/looking_for_ozempic_experiences_before_i_finalise/#comment_n6hqx5d",
-        "https://reddit.com/r/BollyBlindsNGossip/comments/1hhumiq/new_patient_of_ozempic_in_frame_ram_kapoor/#comment_m2ubzqp",
-        "https://reddit.com/r/germany/comments/1gjg0is/can_i_travel_to_germany_with_ozempic_prescribed/#comment_lvculky",
-        "https://reddit.com/r/royalenfield/comments/1e7q9am/meteor_350_a_brutally_honest_review/#comment_le1zs47",
-        "https://reddit.com/r/medicine/comments/1hp448d/the_next_big_glp1_med_orforglipron_an_oral_once/",
-        "https://www.instagram.com/p/DIe1U8hOgnF#comment_181906492_fc4e0db3",
-        "https://reddit.com/r/askscience/comments/1dm7ly4/how_are_ozempic_and_wegovy_the_same_drug/",
-        "https://reddit.com/r/europe/comments/1eiw37x/ozempics_biggest_side_effect_turning_denmark_into/#comment_lg9ndja",
-        "https://reddit.com/r/BollyBlindsNGossip/comments/1nexm78/bollywood_couple_reportedly_demanded_11_vanity/#comment_nds65su",
-        "https://www.youtube.com/watch?v=_QRNDItGI9E",
-        "https://reddit.com/r/newzealand/comments/1dbjrog/weight_loss_surgery/",
-        "https://reddit.com/r/Chennai/comments/1kmc2xu/hypothecation_termination_for_car_rc/#comment_ndkj5nx",
-        "https://reddit.com/r/acting/comments/1dxindt/i_have_been_pursuing_a_career_as_an_actor_in/#comment_lc28noj",
-        "https://reddit.com/r/germany/comments/1gjg0is/can_i_travel_to_germany_with_ozempic_prescribed/#comment_lvctnaq",
-        "https://reddit.com/r/pharmacy/comments/1bla3rm/ozempic_lasting_longer_than_56_days/#comment_kw3u8y7",
-        "https://reddit.com/r/stringart/comments/1ihjeee/lets_string/#comment_mcq3ws1",
-        "https://reddit.com/r/medicine/comments/1ptfcfj/novo_nordisk_wegovy_pill_approved_in_the_us_as/#comment_nvgnlov",
-        "https://www.youtube.com/watch?v=1spTVygmroA",
-        "https://www.instagram.com/p/DHtPUpUIpsq",
-        "https://reddit.com/r/Scottsdale/comments/1kym97h/does_anyone_know_or_have_experience_using_ozempic/"
+      "supporting_item_count": 287,
+      "source_urls": [],
+      "is_grounded": true,
+      "is_non_obvious": true,
+      "is_actionable": true,
+      "is_specific": true,
+      "is_falsifiable": true,
+      "passed_quality_gates": true
+    },
+    "confidence_score": 0.651,
+    "confidence_tier": "medium",
+    "confidence_breakdown": {
+      "sample_size_score": 0.56,
+      "source_diversity_score": 0.93,
+      "temporal_consistency_score": 0.67,
+      "internal_agreement_score": 0.29,
+      "data_recency_score": 0.8
+    },
+    "signal_strength_score": 0.659,
+    "signal_strength_tier": "moderate",
+    "signal_strength_breakdown": {
+      "prevalence_score": 0.72,
+      "engagement_level_score": 0.8,
+      "sentiment_intensity_score": 0.71,
+      "conversation_depth_score": 0.17
+    },
+    "sample_size": 287,
+    "confidence_interval_95": [
+      0.1423,
+      0.1759
+    ]
+  },
+  {
+    "insight": {
+      "insight_id": "INS_012",
+      "observation": "PCOS, hormones, and women's health in the weight loss medication context generate 288 mentions (16.04% prevalence). Indian women with PCOS report particular frustration with weight management, citing hormonal barriers that make traditional diet and exercise insufficient. Mounjaro users with PCOS report secondary benefits including regular periods, reduced inflammation, and improved insulin sensitivity. Postpartum weight loss is another significant sub-narrative.",
+      "insight": "Indian women with PCOS represent a high-value segment for GLP-1 medications because they experience the dual benefit of weight loss and hormonal normalization. The data shows emotional testimonials from women who regained menstrual regularity after starting Mounjaro - a secondary benefit that is more meaningful to them than the weight loss itself. This segment faces compounded stigma: weight stigma plus reproductive health stigma, making them particularly underserved.",
+      "implication": "The PCOS segment offers a differentiated value proposition for GLP-1 medications in India that goes beyond cosmetic weight loss to genuine health improvement. Marketing to this segment on the basis of hormonal health rather than weight loss could bypass the stigma barrier entirely and establish a medical legitimacy that benefits the broader market.",
+      "recommendation": "Develop PCOS-specific clinical evidence and marketing for the Indian market. Position GLP-1 medications for PCOS patients as hormonal health tools first, weight management second. Partner with Indian gynecologists and endocrinologists who treat PCOS to create a referral pathway. The data suggests Indian women are already seeking this - make it easy to find.",
+      "further_validation": "Clinical study on GLP-1 outcomes specifically in Indian women with PCOS, measuring hormonal markers alongside weight loss. Qualitative research on how PCOS-related weight stigma differs from general weight stigma in Indian culture.",
+      "supporting_theme_ids": [
+        "THM_12"
       ],
+      "supporting_item_count": 288,
+      "source_urls": [],
       "is_grounded": true,
       "is_non_obvious": true,
       "is_actionable": true,
@@ -693,256 +323,39 @@
     "confidence_score": 0.646,
     "confidence_tier": "medium",
     "confidence_breakdown": {
-      "sample_size_score": 0.51,
-      "source_diversity_score": 0.84,
-      "temporal_consistency_score": 0.94,
-      "internal_agreement_score": 0.23,
-      "data_recency_score": 0.81
-    },
-    "signal_strength_score": 0.566,
-    "signal_strength_tier": "moderate",
-    "signal_strength_breakdown": {
-      "prevalence_score": 0.68,
-      "engagement_level_score": 0.43,
-      "sentiment_intensity_score": 0.73,
-      "conversation_depth_score": 0.35
-    },
-    "matrix_quadrant": "Noise",
-    "sample_size": 319,
-    "confidence_interval_95": [
-      0.1139,
-      0.1398
-    ]
-  },
-  {
-    "insight": {
-      "insight_id": "INS_011",
-      "observation": "Intermittent fasting appears in 2.2% of conversation (56 mentions) with the highest positive sentiment of any method (+39.3%). 16:8 and OMAD are the most discussed protocols. Users describe IF as 'free' and 'simple' - requiring no products, no subscriptions, and no medical supervision. It is frequently combined with calorie deficit as a dual strategy.",
-      "insight": "Intermittent fasting has captured the Indian cost-conscious, self-reliant weight loss consumer - the segment that wants results without spending money or depending on professionals. Its appeal is rooted in cultural familiarity (religious fasting practices like Navratri, Ramadan, Ekadashi are already normalised) and the practical reality that many Indian working professionals already skip breakfast or eat late. IF is not perceived as a 'diet' but as an 'eating schedule' - a framing that reduces psychological resistance.",
-      "implication": "IF represents both a competitor and a complement to pharmaceutical weight loss solutions. It captures consumers who might otherwise consider GLP-1 drugs but cannot afford them. However, it also serves as an on-ramp - users who plateau on IF alone may graduate to medication. The cultural alignment with fasting traditions gives IF a unique advantage in India that it does not have in Western markets.",
-      "recommendation": "Do not position against intermittent fasting - it has strong cultural resonance. Instead, create content showing how IF can be combined with other approaches (GLP-1 medication, structured exercise) for enhanced results. For nutrition brands: develop IF-friendly products (breaking-fast meals, electrolyte supplements for fasting windows). Acknowledge the religious fasting connection explicitly in marketing.",
-      "further_validation": "Measure the overlap between IF practitioners and GLP-1-interested consumers. Survey whether IF users who plateau are open to pharmaceutical augmentation.",
-      "supporting_theme_ids": [
-        "THM_011"
-      ],
-      "supporting_item_count": 56,
-      "source_urls": [
-        "https://reddit.com/r/xxfitness/comments/1r7060r/weekly_thread_talk_it_out_tuesday_advice_and/",
-        "https://www.youtube.com/watch?v=SoNiCsX9jW8",
-        "https://www.youtube.com/watch?v=K94yJq_3uqU",
-        "https://www.instagram.com/p/DN5XCO2jHo8#comment_308573673_2e7c690e",
-        "https://reddit.com/r/IndiaInvestments/comments/1hznk8w/does_any_health_insurance_policy_in_india_covers/#comment_m6qwuzd",
-        "https://reddit.com/r/india/comments/1kskowa/losing_weight_with_pcos_feels_impossible_now/#comment_mtn92c2",
-        "https://www.instagram.com/p/DE4x-vnTQ9F",
-        "https://www.instagram.com/p/DJBxyIwt-3H",
-        "https://www.instagram.com/p/DQ3sIFeDMx7",
-        "https://reddit.com/r/medicine/comments/1hp448d/the_next_big_glp1_med_orforglipron_an_oral_once/",
-        "https://www.instagram.com/p/DLeeZBEyndV#comment_3527818782_e22e99d8",
-        "https://www.instagram.com/p/DTouW2DgXiz",
-        "https://www.youtube.com/watch?v=55yF5V2NxeU",
-        "https://reddit.com/r/india/comments/1kskowa/losing_weight_with_pcos_feels_impossible_now/#comment_mtmlxhs",
-        "https://www.instagram.com/p/DM-jDA_ucfh#comment_7625728169_24c0724e",
-        "https://www.instagram.com/p/DHYMVN-xoSj",
-        "https://www.instagram.com/p/DNM2lsYTMW7",
-        "https://www.youtube.com/watch?v=WFutpbe5k2w",
-        "https://www.instagram.com/p/DEYY3kqyUio#comment_2124999250_a12da9e0",
-        "https://www.youtube.com/watch?v=oXp5wATcsqM"
-      ],
-      "is_grounded": true,
-      "is_non_obvious": true,
-      "is_actionable": true,
-      "is_specific": true,
-      "is_falsifiable": true,
-      "passed_quality_gates": true
-    },
-    "confidence_score": 0.586,
-    "confidence_tier": "medium",
-    "confidence_breakdown": {
-      "sample_size_score": 0.19,
-      "source_diversity_score": 0.93,
-      "temporal_consistency_score": 0.78,
-      "internal_agreement_score": 0.35,
-      "data_recency_score": 0.79
-    },
-    "signal_strength_score": 0.618,
-    "signal_strength_tier": "moderate",
-    "signal_strength_breakdown": {
-      "prevalence_score": 0.38,
-      "engagement_level_score": 0.88,
-      "sentiment_intensity_score": 0.9,
-      "conversation_depth_score": 0.27
-    },
-    "matrix_quadrant": "Noise",
-    "sample_size": 56,
-    "confidence_interval_95": [
-      0.0171,
-      0.0287
-    ]
-  },
-  {
-    "insight": {
-      "insight_id": "INS_015",
-      "observation": "The 'shortcut' debate appears in 98 items (3.9% of corpus) with deeply mixed sentiment. Consumers are divided between those who view GLP-1 drugs as a legitimate medical tool ('is taking an antibiotic a shortcut for infection?') and those who frame it as moral failure ('lazy people who can not discipline themselves'). Body shaming and weight stigma permeate both sides. The debate intensifies when celebrities are involved - their perceived 'easy access' to drugs fuels resentment from consumers who struggle to afford or access the same medication.",
-      "insight": "Indian consumers are caught between two cultural narratives about weight loss: the traditional 'discipline and willpower' narrative (reinforced by yoga culture, Ayurvedic traditions, and family pressure) and the emerging 'medical intervention is valid' narrative (supported by global medical consensus and GLP-1 clinical evidence). The shortcut debate is not really about drugs - it is about whether the Indian consumer gives themselves permission to seek help rather than suffer through willpower alone.",
-      "implication": "The shortcut stigma is the invisible ceiling on GLP-1 adoption in India. Even consumers who want these drugs hesitate because of internalised shame - they have been told their entire lives that weight loss should come from discipline and willpower. The medical reframing (obesity as a metabolic condition, not a character flaw) has not yet reached mainstream Indian consciousness. Until this cultural barrier is addressed, a significant segment of potential users will suffer in silence rather than seek pharmaceutical help.",
-      "recommendation": "Reframe GLP-1 communication from 'weight loss drug' to 'metabolic health treatment' - this shifts the conversation from vanity to health. Create patient testimonial content that explicitly addresses the shame: 'I felt guilty about taking medication until my doctor explained that obesity is a disease, not a choice.' Partner with mental health professionals to address the psychological barriers to seeking treatment, not just the physical ones.",
-      "further_validation": "Conduct qualitative research (in-depth interviews) with Indian consumers who considered but did not start GLP-1 medication to understand the specific shame and stigma barriers. Measure whether medical reframing ('metabolic treatment' vs 'weight loss drug') changes willingness to adopt.",
-      "supporting_theme_ids": [
-        "THM_015"
-      ],
-      "supporting_item_count": 143,
-      "source_urls": [
-        "https://reddit.com/r/BollyBlindsNGossip/comments/1lvyxa0/i_didnt_think_id_ever_say_this_but_im_worried/#comment_n2awie7",
-        "https://www.instagram.com/p/DPitZvNE7R4",
-        "https://www.instagram.com/p/DMxoTjQz-Q_",
-        "https://reddit.com/r/medicine/comments/1bohf8a/no_oprah_ozempic_alone_cant_fix_our_culture_of/#comment_kwp8u4i",
-        "https://reddit.com/r/WeightLossAdvice/comments/1i2bl15/ozempic_is_basically_a_starvation_diet_is_it_not/",
-        "https://www.instagram.com/p/DFxp7DAN7Io#comment_1448587143_094c5de3",
-        "https://www.instagram.com/p/DOjbjegD_Mb#comment_1004605144_5b76f6e0",
-        "https://reddit.com/r/psychology/comments/1kjruch/ozempic_and_similar_drugs_are_safe_and_effective/#comment_mrp8kj9",
-        "https://reddit.com/r/BollyBlindsNGossip/comments/1lztlzh/actors_not_owning_up_to_their_ozempic_journeys/",
-        "https://reddit.com/r/pregnant/comments/1i8koza/for_obese_moms_did_you_experience_weight_loss/#comment_m8uem61",
-        "https://www.instagram.com/p/DVD7tMyk9zK",
-        "https://www.instagram.com/p/DVCLMLWEjT4",
-        "https://reddit.com/r/Cricket/comments/1m5nxvo/kevin_pietersen_urges_prithvi_shaw_to_follow/#comment_n4dgdyy",
-        "https://www.instagram.com/p/DIcUmMAORDn#comment_12057555_65262002",
-        "https://www.instagram.com/p/DJenj5OPwOd",
-        "https://reddit.com/r/BollyBlindsNGossip/comments/1l8a222/is_kapil_sharma_also_on_ozempic/#comment_mx4te8n",
-        "https://www.instagram.com/p/DUaD8EiEkt3",
-        "https://reddit.com/r/psychology/comments/1kjruch/ozempic_and_similar_drugs_are_safe_and_effective/#comment_mrrne2w",
-        "https://reddit.com/r/adhdwomen/comments/1k518pz/i_experience_unwanted_weight_loss_from/#comment_moft1u3",
-        "https://www.instagram.com/p/DQYp3r6E8ci"
-      ],
-      "is_grounded": true,
-      "is_non_obvious": true,
-      "is_actionable": true,
-      "is_specific": true,
-      "is_falsifiable": true,
-      "passed_quality_gates": true
-    },
-    "confidence_score": 0.58,
-    "confidence_tier": "medium",
-    "confidence_breakdown": {
-      "sample_size_score": 0.34,
+      "sample_size_score": 0.56,
       "source_diversity_score": 0.91,
-      "temporal_consistency_score": 0.64,
-      "internal_agreement_score": 0.25,
-      "data_recency_score": 0.81
-    },
-    "signal_strength_score": 0.596,
-    "signal_strength_tier": "moderate",
-    "signal_strength_breakdown": {
-      "prevalence_score": 0.56,
-      "engagement_level_score": 0.67,
-      "sentiment_intensity_score": 0.8,
-      "conversation_depth_score": 0.26
-    },
-    "matrix_quadrant": "Noise",
-    "sample_size": 143,
-    "confidence_interval_95": [
-      0.0483,
-      0.0663
-    ]
-  },
-  {
-    "insight": {
-      "insight_id": "INS_012",
-      "observation": "Food industry and ultra-processed food discussions account for 6.5% of conversation (164 mentions) with moderate positive sentiment (+22.6%). The narrative centres on GLP-1 drugs disrupting junk food demand, food addiction as a root cause of obesity, and growing awareness of ultra-processed food harms. Swiggy and Zomato delivery culture is implicated as an enabler of unhealthy eating. The phrase 'food noise' (a GLP-1 term for reduced food obsession) appears as a revelatory concept.",
-      "insight": "Indian consumers are beginning to reframe obesity from a willpower failure to a systemic problem created by food industry design and delivery-app convenience. The concept of 'food noise' - which GLP-1 users describe as the constant mental chatter about food that medication silences - is a breakthrough framing that resonates deeply with consumers who have tried and failed at willpower-based dieting. This represents a paradigm shift: the enemy is not the consumer's weakness but the food environment's strength.",
-      "implication": "The 'food noise' concept is a powerful marketing and educational tool for GLP-1 brands because it shifts the weight loss conversation from blame to biology. Simultaneously, the growing anti-ultra-processed-food sentiment creates headwinds for packaged food companies and tailwinds for clean-label, whole-food brands. Delivery platforms (Swiggy, Zomato) face reputational pressure to offer healthier options.",
-      "recommendation": "For GLP-1 brands: lead with the 'food noise' concept in consumer education - it destigmatises medication use by framing weight gain as neurological rather than behavioural. For food companies: accelerate healthy product development before the regulatory and cultural pressure intensifies. For delivery platforms: create prominent 'healthy choice' categories and calorie-labelled menus to stay ahead of the backlash.",
-      "further_validation": "Measure consumer awareness and resonance of the 'food noise' concept in India. Track whether anti-ultra-processed-food sentiment is translating into actual purchasing behaviour shifts on delivery platforms.",
-      "supporting_theme_ids": [
-        "THM_012"
-      ],
-      "supporting_item_count": 164,
-      "source_urls": [
-        "https://reddit.com/r/Fitness_India/comments/1moj9l7/indians_whove_lost_weight_what_actually_worked/#comment_n8cwva9",
-        "https://www.instagram.com/p/DUd4P6NiZRX",
-        "https://reddit.com/r/delhi/comments/1coiaqe/people_who_reduced_fat_how/#comment_l3ebal5",
-        "https://reddit.com/r/royalenfield/comments/1e7q9am/meteor_350_a_brutally_honest_review/#comment_le1zs47",
-        "https://www.youtube.com/watch?v=7-UQbo5qpJU",
-        "https://reddit.com/r/dataisbeautiful/comments/1d4648z/wegovy_and_ozempic_are_associated_with_a_5056/#comment_l6cgb7t",
-        "https://www.instagram.com/p/DJOWgTLsBu4",
-        "https://reddit.com/r/IndianFood/comments/1gif220/healthy_options_when_eating_out_at_restaurants/#comment_lv5yned",
-        "https://www.instagram.com/p/DLKbOvRSI2p",
-        "https://www.youtube.com/watch?v=xi-zHJL5bnI",
-        "https://reddit.com/r/BollyBlindsNGossip/comments/1d3kimu/how_to_actors_lose_weight_so_fast/#comment_l68jvxn",
-        "https://www.instagram.com/p/DTrd5UJj02z",
-        "https://www.instagram.com/p/DI1lWaMN7JY",
-        "https://reddit.com/r/india/comments/1cz9u9e/concerned_about_food_ingredients_being_used_in/#comment_l5ez4vn",
-        "https://www.instagram.com/p/DUkV2rLEmxy#comment_563373874_e07a401f",
-        "https://www.instagram.com/p/DL75Df1zmCv",
-        "https://reddit.com/r/adhdwomen/comments/1d38s1u/overweightobese_with_recently_diagnosed_adhd_here/#comment_l665rrr",
-        "https://www.instagram.com/p/DIFOwRyRMTW#comment_68646066404_bd084173",
-        "https://www.youtube.com/watch?v=b9qVECwTPoc",
-        "https://reddit.com/r/newzealand/comments/1dbjrog/weight_loss_surgery/"
-      ],
-      "is_grounded": true,
-      "is_non_obvious": true,
-      "is_actionable": true,
-      "is_specific": true,
-      "is_falsifiable": true,
-      "passed_quality_gates": true
-    },
-    "confidence_score": 0.626,
-    "confidence_tier": "medium",
-    "confidence_breakdown": {
-      "sample_size_score": 0.37,
-      "source_diversity_score": 0.89,
-      "temporal_consistency_score": 0.94,
-      "internal_agreement_score": 0.25,
+      "temporal_consistency_score": 0.63,
+      "internal_agreement_score": 0.32,
       "data_recency_score": 0.8
     },
-    "signal_strength_score": 0.547,
+    "signal_strength_score": 0.648,
     "signal_strength_tier": "moderate",
     "signal_strength_breakdown": {
-      "prevalence_score": 0.57,
-      "engagement_level_score": 0.47,
-      "sentiment_intensity_score": 0.8,
-      "conversation_depth_score": 0.31
+      "prevalence_score": 0.73,
+      "engagement_level_score": 0.71,
+      "sentiment_intensity_score": 0.74,
+      "conversation_depth_score": 0.21
     },
-    "matrix_quadrant": "Noise",
-    "sample_size": 164,
+    "sample_size": 288,
     "confidence_interval_95": [
-      0.056,
-      0.0752
+      0.1428,
+      0.1765
     ]
   },
   {
     "insight": {
       "insight_id": "INS_010",
-      "observation": "Bariatric surgery accounts for 2.9% of conversation (73 mentions) with cautiously positive sentiment (+19.2%). The discussion centres on surgery as a last resort for severe obesity (BMI >35-40). Doctors (Dr. Balamurugan, bariatric surgeons from South India) feature prominently on YouTube explaining procedures. Comparisons between bariatric surgery and GLP-1 medication are emerging, with consumers weighing permanent surgical intervention against long-term medication.",
-      "insight": "Bariatric surgery occupies the 'nuclear option' position in the Indian weight loss hierarchy - consumers view it as effective but irreversible, and the decision process is lengthy and fear-laden. The emergence of GLP-1 drugs is creating a new decision fork: consumers who might have considered surgery are now evaluating medication as a less invasive alternative. This is reshaping the patient journey from 'fail at dieting then consider surgery' to 'fail at dieting then try medication then consider surgery'.",
-      "implication": "The bariatric surgery market in India will be disrupted by GLP-1 adoption, but not eliminated. Surgery remains the superior option for severe obesity and has the advantage of being a one-time intervention vs. perpetual medication. The market will bifurcate: GLP-1 for moderate obesity, surgery for severe cases, with an overlapping contested middle ground.",
-      "recommendation": "For bariatric centres: develop clear patient decision frameworks that help consumers choose between medication and surgery based on BMI, comorbidities, and lifestyle factors. Do not position against GLP-1 drugs - offer them as part of a continuum of care. For GLP-1 brands: be transparent about the population for whom medication alone is insufficient and surgery may be more appropriate.",
-      "further_validation": "Track whether GLP-1 availability is reducing bariatric surgery consultation rates in Indian metros. Survey bariatric surgeons on how GLP-1 drugs are changing their patient pipeline.",
+      "observation": "Medical science and GLP-1 education content comprises 460 mentions (25.63% prevalence). Content includes doctor-led explanations of GLP-1 mechanisms, clinical trial citations (SELECT trial, cardiovascular benefits), insulin resistance education, and distinctions between diabetes treatment vs. weight loss indication. Indian doctors on Instagram are actively educating about Mounjaro's dual GIP/GLP-1 mechanism.",
+      "insight": "There is a significant consumer appetite for medical education about GLP-1 mechanisms, but the information landscape is bifurcated: clinical content that is too technical for lay consumers, and influencer content that oversimplifies or misinforms. The gap between these creates confusion - consumers cannot evaluate whether claims like 'Ozempic is basically a starvation diet' or 'GLP-1 medications lose 50% muscle mass' are accurate. Indian medical professionals are stepping into this gap on social media but lack the reach of lifestyle influencers.",
+      "implication": "The medical education gap is a credibility battleground. Whoever controls the narrative about how GLP-1 medications actually work - their mechanisms, their limitations, their proper use - will shape market adoption. Currently, misinformation has a reach advantage over accurate medical content.",
+      "recommendation": "Fund and amplify Indian endocrinologist and obesity medicine specialist content creators. Create a standardized medical education framework in multiple Indian languages that addresses the top 10 consumer misconceptions visible in the data (starvation diet myth, 50% muscle loss claim, lifelong dependency assumption). Distribute through existing healthcare platforms, not just social media.",
+      "further_validation": "Conduct a knowledge assessment survey among Indian consumers considering GLP-1 medications to identify the most prevalent misconceptions and their impact on adoption decisions.",
       "supporting_theme_ids": [
-        "THM_010"
+        "THM_10"
       ],
-      "supporting_item_count": 73,
-      "source_urls": [
-        "https://www.youtube.com/watch?v=NJqAy0CWjd8",
-        "https://www.instagram.com/p/DOgV-Omk5H0",
-        "https://reddit.com/r/Edmonton/comments/1emt4xv/alberta_obesity_centre/#comment_lh254qa",
-        "https://reddit.com/r/BollyBlindsNGossip/comments/1hhumiq/new_patient_of_ozempic_in_frame_ram_kapoor/#comment_m2ubzqp",
-        "https://reddit.com/r/houston/comments/1fdsjig/weight_loss_clinic/#comment_lmigrio",
-        "https://www.instagram.com/p/DIFuKlOz8RX",
-        "https://www.instagram.com/p/DSx1lbxETiP#comment_229590111_630acee0",
-        "https://reddit.com/r/GLP1India/comments/1lotonz/why_is_india_still_so_weird_about_glp1_meds/#comment_n0u1azg",
-        "https://www.instagram.com/p/DUsjPKrkW6f",
-        "https://reddit.com/r/BollyBlindsNGossip/comments/1lztlzh/actors_not_owning_up_to_their_ozempic_journeys/",
-        "https://www.instagram.com/p/DIFu6UtzY7X",
-        "https://www.youtube.com/watch?v=qeC0bc75acU",
-        "https://reddit.com/r/Edmonton/comments/1emt4xv/alberta_obesity_centre/#comment_lh271bk",
-        "https://reddit.com/r/BollyBlindsNGossip/comments/1bcsgx1/bhumi_has_become_unrecognizable/#comment_kuhzm1j",
-        "https://reddit.com/r/newzealand/comments/1dbjrog/weight_loss_surgery/#comment_l7rlten",
-        "https://reddit.com/r/mumbai/comments/1d0yyhz/weight_loss_doctors_in_mumbai_wholl_prescribe_meds/#comment_l5uu64m",
-        "https://reddit.com/r/selfimprovementday/comments/1labtxl/i_followed_ayurveda_for_30_days_lifestyle_food/#comment_mxka5z2",
-        "https://reddit.com/r/BollyBlindsNGossip/comments/1jbuosx/ozempic_popularity/#comment_mhx1t5s",
-        "https://www.youtube.com/watch?v=9yv0bZuvwV8",
-        "https://reddit.com/r/newzealand/comments/1dbjrog/weight_loss_surgery/"
-      ],
+      "supporting_item_count": 460,
+      "source_urls": [],
       "is_grounded": true,
       "is_non_obvious": true,
       "is_actionable": true,
@@ -950,28 +363,156 @@
       "is_falsifiable": true,
       "passed_quality_gates": true
     },
-    "confidence_score": 0.564,
+    "confidence_score": 0.695,
     "confidence_tier": "medium",
     "confidence_breakdown": {
-      "sample_size_score": 0.23,
-      "source_diversity_score": 0.93,
+      "sample_size_score": 0.67,
+      "source_diversity_score": 0.95,
       "temporal_consistency_score": 0.73,
-      "internal_agreement_score": 0.22,
+      "internal_agreement_score": 0.3,
       "data_recency_score": 0.8
     },
-    "signal_strength_score": 0.46,
+    "signal_strength_score": 0.585,
+    "signal_strength_tier": "moderate",
+    "signal_strength_breakdown": {
+      "prevalence_score": 0.81,
+      "engagement_level_score": 0.43,
+      "sentiment_intensity_score": 0.69,
+      "conversation_depth_score": 0.23
+    },
+    "sample_size": 460,
+    "confidence_interval_95": [
+      0.2344,
+      0.2744
+    ]
+  },
+  {
+    "insight": {
+      "insight_id": "INS_002",
+      "observation": "Side effects and health risks generate 271 mentions (15.1% prevalence) with strongly negative sentiment (NSS -0.17). The most discussed side effects are gastrointestinal (nausea, vomiting, sulphur burps, diarrhea), followed by cosmetic concerns (Ozempic face, hair loss) and serious risks (muscle loss, pancreatitis, gastroparesis). A subset of consumers report severe adverse experiences including stomach paralysis and inability to eat for months.",
+      "insight": "Side effect anxiety operates on two distinct levels: manageable GI effects that users accept as a trade-off, and catastrophic risks (muscle wasting, organ damage) that trigger genuine fear. The gap between these two levels is where consumer trust breaks down - users cannot easily distinguish between temporary discomfort and warning signs of serious harm, creating an information vacuum that fear-mongering content exploits.",
+      "implication": "The side effect narrative is the single biggest barrier to GLP-1 adoption in India, amplified by viral horror stories and lack of local clinical data. Without proactive side effect education tailored to Indian consumers, word-of-mouth will continue to be dominated by worst-case scenarios.",
+      "recommendation": "Develop a tiered side effect communication framework that clearly distinguishes between common-and-temporary effects (nausea, sulphur burps - weeks 1-4) versus warning signs requiring medical attention (persistent vomiting, severe abdominal pain). Partner with Indian endocrinologists to create vernacular-language content addressing the specific fears seen in the data.",
+      "further_validation": "Commission a post-market surveillance study with Indian GLP-1 users to establish India-specific side effect incidence rates and duration, as current data is predominantly from Western populations.",
+      "supporting_theme_ids": [
+        "THM_02"
+      ],
+      "supporting_item_count": 271,
+      "source_urls": [],
+      "is_grounded": true,
+      "is_non_obvious": true,
+      "is_actionable": true,
+      "is_specific": true,
+      "is_falsifiable": true,
+      "passed_quality_gates": true
+    },
+    "confidence_score": 0.649,
+    "confidence_tier": "medium",
+    "confidence_breakdown": {
+      "sample_size_score": 0.54,
+      "source_diversity_score": 0.95,
+      "temporal_consistency_score": 0.67,
+      "internal_agreement_score": 0.28,
+      "data_recency_score": 0.8
+    },
+    "signal_strength_score": 0.586,
+    "signal_strength_tier": "moderate",
+    "signal_strength_breakdown": {
+      "prevalence_score": 0.72,
+      "engagement_level_score": 0.48,
+      "sentiment_intensity_score": 0.79,
+      "conversation_depth_score": 0.21
+    },
+    "sample_size": 271,
+    "confidence_interval_95": [
+      0.1339,
+      0.1667
+    ]
+  },
+  {
+    "insight": {
+      "insight_id": "INS_004",
+      "observation": "Celebrity and Bollywood Ozempic speculation generates 115 mentions (6.41% prevalence). Consumers actively speculate about whether celebrities including Kapil Sharma, Karan Johar, Kusha Kapila, Sara Ali Khan, Bhumi Pednekar, and others used Ozempic for their weight loss transformations. The conversation is marked by frustration that celebrities do not acknowledge medication use.",
+      "insight": "Bollywood serves as the primary cultural amplifier for GLP-1 awareness in India, but through a lens of suspicion rather than endorsement. Indian consumers interpret celebrity weight loss through an Ozempic-first lens - any rapid transformation is assumed to be medication-assisted. The refusal of celebrities to acknowledge this creates a credibility gap that fuels the stigma narrative and positions medication use as something to hide.",
+      "implication": "The celebrity silence strategy is backfiring - it reinforces medication stigma and creates an adversarial relationship between consumers and public figures. A single high-profile Indian celebrity openly discussing their GLP-1 journey could shift the conversation from shame to acceptance, similar to Oprah Winfrey's impact in the US market.",
+      "recommendation": "Identify and engage with Indian public figures who have been transparent about their health journeys (the data shows Kusha Kapila's weight loss video resonated positively). Develop a celebrity partnership strategy focused on destigmatization rather than endorsement - the goal is normalization, not promotion.",
+      "further_validation": "Sentiment analysis of consumer responses to celebrity weight loss disclosures vs. denials to quantify the trust impact of transparency. Compare Indian vs. US consumer attitudes toward celebrity GLP-1 use.",
+      "supporting_theme_ids": [
+        "THM_04"
+      ],
+      "supporting_item_count": 115,
+      "source_urls": [],
+      "is_grounded": true,
+      "is_non_obvious": true,
+      "is_actionable": true,
+      "is_specific": true,
+      "is_falsifiable": true,
+      "passed_quality_gates": true
+    },
+    "confidence_score": 0.605,
+    "confidence_tier": "medium",
+    "confidence_breakdown": {
+      "sample_size_score": 0.36,
+      "source_diversity_score": 0.92,
+      "temporal_consistency_score": 0.79,
+      "internal_agreement_score": 0.24,
+      "data_recency_score": 0.79
+    },
+    "signal_strength_score": 0.606,
+    "signal_strength_tier": "moderate",
+    "signal_strength_breakdown": {
+      "prevalence_score": 0.54,
+      "engagement_level_score": 0.87,
+      "sentiment_intensity_score": 0.65,
+      "conversation_depth_score": 0.17
+    },
+    "sample_size": 115,
+    "confidence_interval_95": [
+      0.0531,
+      0.0756
+    ]
+  },
+  {
+    "insight": {
+      "insight_id": "INS_011",
+      "observation": "Systemic obesity and food industry discussion generates 103 mentions (5.74% prevalence). Narratives include ultra-processed food as the root cause of obesity, pharmaceutical companies profiting from the disease they indirectly created, and geopolitical framing (comparison of global obesity rates). A notable sub-narrative positions GLP-1 drugs as 'necessary tools against diseases inflicted upon us' by the food industry.",
+      "insight": "A growing consumer segment views the obesity-medication relationship through a systemic lens: the food industry creates the problem, the pharmaceutical industry sells the solution, and individuals are caught in between. This framing, while politically charged, reflects genuine consumer frustration with feeling unable to manage weight through willpower alone in a food environment designed to override satiety signals. The narrative legitimizes medication use by removing individual blame.",
+      "implication": "The systemic framing can be leveraged to destigmatize medication use - if obesity is caused by environmental factors rather than personal failure, then medication is a rational response rather than a moral shortcut. However, this narrative also carries anti-pharma sentiment that could backfire if consumers perceive drug companies as profiteering from a problem they benefit from perpetuating.",
+      "recommendation": "Align messaging with the systemic framing where appropriate - acknowledge that modern food environments make weight management genuinely difficult for many people, and position medication as one of several legitimate tools for health. Avoid any messaging that implies weight is purely a matter of personal responsibility, as this directly contradicts the consumer narrative and will generate backlash.",
+      "further_validation": "Track the systemic obesity narrative over time to determine if it is growing or stable. Assess whether this framing differentially impacts medication acceptance across socioeconomic segments in India.",
+      "supporting_theme_ids": [
+        "THM_11"
+      ],
+      "supporting_item_count": 103,
+      "source_urls": [],
+      "is_grounded": true,
+      "is_non_obvious": true,
+      "is_actionable": true,
+      "is_specific": true,
+      "is_falsifiable": true,
+      "passed_quality_gates": true
+    },
+    "confidence_score": 0.607,
+    "confidence_tier": "medium",
+    "confidence_breakdown": {
+      "sample_size_score": 0.34,
+      "source_diversity_score": 0.89,
+      "temporal_consistency_score": 0.84,
+      "internal_agreement_score": 0.27,
+      "data_recency_score": 0.8
+    },
+    "signal_strength_score": 0.446,
     "signal_strength_tier": "weak",
     "signal_strength_breakdown": {
-      "prevalence_score": 0.43,
-      "engagement_level_score": 0.38,
-      "sentiment_intensity_score": 0.73,
-      "conversation_depth_score": 0.33
+      "prevalence_score": 0.51,
+      "engagement_level_score": 0.31,
+      "sentiment_intensity_score": 0.68,
+      "conversation_depth_score": 0.26
     },
-    "matrix_quadrant": "Noise",
-    "sample_size": 73,
+    "sample_size": 103,
     "confidence_interval_95": [
-      0.023,
-      0.0362
+      0.0471,
+      0.0685
     ]
   }
 ]

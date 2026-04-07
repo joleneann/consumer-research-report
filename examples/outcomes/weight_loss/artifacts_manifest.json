@@ -1,7 +1,7 @@
 {
   "study": "Weight Loss Medication in India \u2014 Consumer Sentiment Study",
-  "run_id": "20260401_164702_43c1ea",
-  "pipeline_version": "consumer_research v1.0",
+  "run_id": "20260407_173532_06e43d",
+  "pipeline_version": "consumer_research v2.0",
   "artifacts": {
     "report": "weight_loss_report.docx",
     "brief": "../../briefs/weight_loss_brief.json",
@@ -9,16 +9,16 @@
     "scored_insights": "scored_insights.json (in examples/outcomes/weight_loss/ for weight_loss)"
   },
   "corpus_stats": {
-    "items_analysed": 2526,
+    "items_analysed": 1761,
     "platforms": {
-      "instagram": 975,
-      "reddit": 1397,
-      "youtube": 154
+      "reddit": 928,
+      "instagram": 737,
+      "youtube": 147
     },
-    "themes_extracted": 15,
-    "insights_generated": 15,
-    "net_sentiment_score": "+22.9%",
-    "brand_health_score": "80.8/100"
+    "themes_extracted": 12,
+    "insights_generated": 12,
+    "net_sentiment_score": "+19.5%",
+    "brand_health_score": "68.7/100"
   },
   "pipeline_stages_run": [
     "normalize",

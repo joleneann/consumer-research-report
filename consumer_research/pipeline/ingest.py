@@ -307,7 +307,7 @@ def _ingest_platform_scraped(
                 item_id=_generate_item_id(c_url, c_text),
                 source_platform=platform_enum,
                 source_url=c_url,
-                source_author=c_author,
+                source_author=c_author or "Unknown",
                 source_timestamp=c_ts,
                 collected_at=now,
                 content_text=c_text,
