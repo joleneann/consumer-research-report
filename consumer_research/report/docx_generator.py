@@ -393,7 +393,7 @@ def _section_data_universe(doc: Document, items: list[NormalizedItem],
     _heading(doc, "Collection Funnel", 2)
     _body(doc, (
         f"Of {raw_total:,} raw data points collected across all sources, {norm_total:,} remained after "
-        f"deduplication and engagement filtering, and {filtered_total:,} passed LLM relevance classification "
+        f"deduplication and quality filtering, and {filtered_total:,} passed LLM relevance classification "
         f"({pct_of_raw:.1f}% of total collected). These {filtered_total:,} items form the analysis corpus."
     ))
 
@@ -402,7 +402,7 @@ def _section_data_universe(doc: Document, items: list[NormalizedItem],
     _add_table_header_row(funnel_table, ["Stage", "Items", "Notes"])
     funnel_rows = [
         ("Raw collected", f"{raw_total:,}", "All posts, comments, articles and videos gathered across all platforms"),
-        ("After deduplication & engagement filter", f"{norm_total:,}", f"Thread dedup (max 5 comments/thread), min engagement filters applied per platform"),
+        ("After deduplication & quality filter", f"{norm_total:,}", f"Thread dedup (max 5 comments/thread, random selection), empty/short text removed"),
         ("After relevance classification", f"{filtered_total:,}", f"LLM relevance filter — {pct_of_raw:.1f}% of raw collected. Analysis corpus."),
     ]
     for stage, count, note in funnel_rows:

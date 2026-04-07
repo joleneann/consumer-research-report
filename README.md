@@ -203,7 +203,7 @@ The study scripts (`run_weight_loss.py`, `stage4_analysis.py`, `stage5_synthesis
 
 ```
 consumer_research/              Core package: collectors, pipeline, report generation
-tests/                          Unit + smoke + integration tests (128 tests, no API calls)
+tests/                          Unit + smoke + integration tests (126 tests, no API calls)
 docs/                           Methodology, product docs, running guide
 ```
 
@@ -227,7 +227,7 @@ Social listening methodology has structural limitations that cannot be fully eli
 | 1 | **Query framing bias** - You find what you search for. No adversarial queries. | CRITICAL | Partially | Not implemented |
 | 2 | **Platform demographic bias** - No weighting for platform skew. | MEDIUM | Partially | Not implemented |
 | 3 | **No sampling frame** - Prevalence is within-corpus only, never projectable. | HIGH | No | Inherent limitation |
-| 4 | **Engagement filter excludes silent majority** - Over-indexes on extreme sentiment. | MEDIUM | Yes | Not implemented |
+| 4 | **~~Engagement filter excludes silent majority~~** - Resolved. No engagement thresholds. Every voice enters the corpus. | MEDIUM | Yes | **RESOLVED** |
 | 5 | **No bot/astroturf detection** - Zero coordinated campaign detection. | MEDIUM | Yes | Not implemented |
 | 6 | **Sarcasm/irony misclassification** - Keyword mode reads sarcasm as literal. | MEDIUM | Partially | Not implemented |
 | 7 | **Influencer vs authentic voice conflated** - No sponsored content detection. | MEDIUM | Yes | Not implemented |

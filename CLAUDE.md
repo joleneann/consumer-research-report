@@ -76,7 +76,20 @@ data/                          — make_in_india.json, weight_loss.json, working
 ```
 
 ## Collection Defaults (MINIMUMS — do not reduce)
-Reddit: 500 posts, 20 comments/post, min 2 upvotes | YouTube: 50 videos, 100 comments/video, min 2 likes | Twitter: min 2 likes | Instagram: min 2 likes | Amazon/Flipkart: min 1 helpful vote | News: 200 articles (no threshold) | Academic: 50 papers (no threshold) | Serper: 100 results | Trends: full 12-month history (separate quantitative layer)
+Reddit: 500 posts, 20 comments/post | YouTube: 50 videos, 100 comments/video | News: 200 articles | Academic: 50 papers | Serper: 100 results | Trends: full 12-month history (separate quantitative layer)
+
+## Engagement Philosophy (Critical — Do Not Revert)
+**Engagement is a visibility signal, not a truth, quality, or representativeness signal.** Likes, upvotes, and shares are driven by platform algorithms, timing, language, and audience demographics - none of which correlate cleanly with how representative an opinion is of real consumers.
+
+**No engagement thresholds.** Every item that passes quality controls (non-empty text, minimum length, deduplication) enters the corpus. A zero-likes YouTube comment counts the same as a 50-upvote Reddit post in sentiment, prevalence, and NSS.
+
+**Engagement as scoring metadata, not admission gate.** Engagement metrics are preserved on every item (`platform_metadata.score`, `like_count`) and used in Stage 6 scoring to compute Signal Strength - how visible and resonant the conversation is. But they never determine what enters the corpus.
+
+**Thread cap is random, not engagement-sorted.** The 5-comments-per-thread cap in `normalize.py` selects randomly (seed 42) rather than keeping the highest-engagement comments. This prevents viral voices from dominating within threads.
+
+**What this means for reports:** The corpus reflects what everyone thinks. The scoring reflects how visible and validated those opinions are. A theme could have moderate NSS (because quiet voices pull it down) but strong signal (because the engaged voices are very engaged). This tells the client "this theme has broad but lukewarm support, with a vocal minority driving the conversation."
+
+**Why this matters:** In the hair colour study, 59.9% of the corpus fell below engagement thresholds. That is the majority of consumers, not a noise fringe. Filtering them out was hiding meaningful signal - the silent majority's sentiment diverged by 11% overall and by 20-33% on specific themes.
 
 ## Data Quality Architecture (3-layer defence)
 **Layer 1 — Brand-anchored keywords** (`keywords.py`): Every search query MUST include the brand name. Category-only queries ("best [category]", "[category] review") return generic noise. `_generate_category_terms()` now prepends brand name to all terms. Never revert this.
@@ -97,7 +110,7 @@ These are structural limitations of social listening methodology. They cannot be
 | 1 | **Query framing bias** - Keywords presuppose contexts. You find what you search for. Keyword expansion follows the brief's framing, no adversarial or blank-slate queries. | CRITICAL | Partially | (a) Mandatory blank-slate queries (brand name only, no context), (b) query attribution reporting showing which queries drove which themes, (c) adversarial query generation for contexts the brief did NOT mention. | Not implemented |
 | 2 | **Platform demographic bias** - Reddit skews male/urban/18-34, Twitter politically engaged, YouTube extreme reactions, Instagram female/influencer-driven. No weighting applied. | MEDIUM | Partially | Per-platform demographic weighting using known platform demographics as priors. Requires external demographic benchmarks. | Not implemented |
 | 3 | **Unknown universe / no sampling frame** - No denominator. Prevalence is within-corpus only, never projectable to the general population. | HIGH | No | Structural limitation of social listening. Can only be addressed by pairing with a structured survey. | Inherent limitation |
-| 4 | **Engagement filter excludes silent majority** - Minimum upvote/like thresholds systematically exclude moderate consumers. Over-indexes on extreme sentiment. | MEDIUM | Yes | Include a random sample of below-threshold items alongside filtered ones. | Not implemented |
+| 4 | **Engagement filter excludes silent majority** - Engagement thresholds systematically excluded moderate consumers and over-indexed on extreme sentiment. | MEDIUM | Yes | Removed all engagement thresholds. Every item enters the corpus. Engagement preserved as scoring metadata only. Thread cap uses random selection instead of engagement sort. | **RESOLVED** |
 | 5 | **No bot/astroturf detection** - Zero detection of coordinated campaigns, paid reviews, brand-planted content, or bot networks. | MEDIUM | Yes | (a) Account age/karma checks on Reddit, (b) posting pattern analysis for coordinated timing, (c) text similarity clustering for copy-paste campaigns. | Not implemented |
 | 6 | **Sarcasm/irony misclassification** - Keyword mode reads sarcasm as literal. Narrative review helps for unthemed items but doesn't audit already-themed items. | MEDIUM | Partially | (a) LLM-based sarcasm detection pass on themed items, (b) flag items with sentiment-text mismatch for manual review. | Not implemented |
 | 7 | **Influencer vs authentic voice conflated** - A 1M-subscriber sponsored review and a genuine Reddit complaint weighted identically. No sponsored content detection. | MEDIUM | Yes | (a) Follower/subscriber count weighting, (b) sponsored content keyword detection ("ad", "collab", "#sponsored"), (c) separate influencer vs organic voice layers. | Not implemented |
@@ -195,7 +208,7 @@ Reports use serial numbering: `report_v001.docx`, `report_v002.docx`, etc. Each 
 
 ## Design Decisions
 - **Thread-level dedup**: Max 5 comments per Reddit thread, highest engagement kept
-- **Engagement filter**: Social platforms (Reddit, YouTube, Twitter, Instagram) ≥2 likes/upvotes. Review platforms (Amazon, Flipkart) ≥1 helpful vote. No threshold for news, academic, trends, web search.
+- **No engagement filter**: All items enter the corpus regardless of likes/upvotes. Engagement is preserved as metadata for Signal Strength scoring but never gates corpus admission. Quality controls (empty text, minimum length, dedup) handle actual noise.
 - **Multilingual**: Hindi/Hinglish supported for Indian market studies. Filter prompt explicitly handles mixed-language content
 - **Trends separated**: Google Trends = quantitative validation layer. NOT sent through opinion relevance filter
 - **Keyword expansion**: Brief → brand variants, misspellings, Hindi, competitor comparisons, occasions, complaints

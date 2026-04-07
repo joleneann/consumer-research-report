@@ -100,10 +100,8 @@ class YouTubeCollector(BaseCollector):
                     if not text or len(text) < 10:
                         continue
 
-                    # Engagement filter
                     like_count = comment_snippet.get("likeCount", 0) or 0
-                    if like_count < self.min_likes:
-                        continue
+                    # Engagement metadata preserved for scoring but not used as gate
 
                     comment_id = comment.get("snippet", {}).get(
                         "topLevelComment", {}

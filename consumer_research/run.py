@@ -73,10 +73,8 @@ def cmd_ingest(args):
     run_dir = RUNS_DIR / run_id
     run_dir.mkdir(parents=True, exist_ok=True)
 
-    # Ingest with engagement thresholds
-    from consumer_research.config import CollectionConfig
-    collection_config = CollectionConfig(brand_name=args.brand, category=args.category)
-    items = ingest_external_data(data_path, collection_query=f"{args.brand} study", config=collection_config)
+    # Ingest (no engagement thresholds - every voice enters the corpus equally)
+    items = ingest_external_data(data_path, collection_query=f"{args.brand} study")
     logger.info(f"Ingested {len(items)} items from {data_path.name}")
 
     # Save raw data for provenance (Collection Funnel in report reads from raw/)

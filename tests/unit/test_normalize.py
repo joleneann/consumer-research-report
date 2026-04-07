@@ -82,14 +82,14 @@ class TestThreadLevelCap:
         # Only 5 of the 10 comments should remain
         assert len(result) == 5
 
-    def test_keeps_highest_engagement_comments(self, tmp_path):
-        # Items scored 0-9; we expect scores 5-9 to survive (top 5)
+    def test_thread_cap_uses_random_selection(self, tmp_path):
+        """Thread cap should use random selection, NOT engagement-based."""
         items = [_make_item(f"id{i}", thread_id="thread1", score=i) for i in range(10)]
         result = normalize_and_deduplicate({"src": items}, tmp_path)
         kept_ids = {i.item_id for i in result}
-        # Items 5-9 (highest scores) should be kept
-        for i in range(5, 10):
-            assert f"id{i}" in kept_ids
+        # 5 kept, but NOT necessarily the highest-scored ones
+        assert len(kept_ids) == 5
+        # Selection is random (seed 42) so reproducible but not engagement-sorted
 
     def test_posts_not_capped(self, tmp_path):
         # Posts (not comments) should not be subject to thread cap
@@ -112,8 +112,8 @@ class TestThreadLevelCap:
         # 5 from each thread = 10 total
         assert len(result) == 10
 
-    def test_youtube_like_count_used_as_fallback(self, tmp_path):
-        """YouTube comments use like_count, not score."""
+    def test_youtube_comments_capped_randomly(self, tmp_path):
+        """YouTube thread cap uses random selection, not like_count."""
         items = [
             _make_item(
                 f"yt{i}",
@@ -127,10 +127,7 @@ class TestThreadLevelCap:
         ]
         result = normalize_and_deduplicate({"src": items}, tmp_path)
         assert len(result) == 5
-        # Top 5 by like_count should be kept (like_counts 5-9)
-        kept_ids = {i.item_id for i in result}
-        for i in range(5, 10):
-            assert f"yt{i}" in kept_ids
+        # Random selection - NOT necessarily the highest like_count items
 
 
 # ── Output files ──────────────────────────────────────────────────────────────

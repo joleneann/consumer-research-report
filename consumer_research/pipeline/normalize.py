@@ -47,16 +47,15 @@ def normalize_and_deduplicate(
     deduped = list(seen.values())
 
     # Thread-level cap: max 5 comments per thread to prevent single threads dominating
+    # Selection is random (not engagement-sorted) to avoid privileging viral voices
     MAX_COMMENTS_PER_THREAD = 5
+    import random
+    random.seed(42)  # Reproducibility
+    random.shuffle(deduped)
+
     thread_counts: dict[str, int] = {}
     thread_capped: list[NormalizedItem] = []
     thread_dropped = 0
-
-    # Sort by engagement (highest first) so we keep the best comments per thread
-    deduped.sort(
-        key=lambda x: x.platform_metadata.score or x.platform_metadata.like_count or 0,
-        reverse=True,
-    )
 
     for item in deduped:
         tid = item.platform_metadata.thread_id

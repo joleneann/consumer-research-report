@@ -130,83 +130,12 @@ def _detect_format(data: list[dict]) -> str:
     return "unknown"
 
 
-def _apply_engagement_thresholds(
-    items: list[NormalizedItem],
-    config=None,
-) -> list[NormalizedItem]:
-    """Apply platform-specific engagement thresholds to filter low-engagement items.
-
-    Thresholds by platform type:
-    - Social (Reddit, YouTube, Twitter, Instagram): min likes/upvotes (default 2)
-    - Review (Amazon, Flipkart): min helpful votes (default 1)
-    - Editorial (News, Academic, Web, Trends): no threshold
-
-    Posts are never filtered - only comments/replies. This preserves discussion
-    context while filtering noise from low-engagement responses.
-    """
-    if config is None:
-        from consumer_research.config import CollectionConfig
-        config = CollectionConfig(brand_name="", category="")
-
-    # Platform -> (engagement field, threshold)
-    thresholds = {
-        SourcePlatform.REDDIT: config.reddit_min_score,
-        SourcePlatform.YOUTUBE: config.youtube_min_likes,
-        SourcePlatform.TWITTER: config.twitter_min_likes,
-        SourcePlatform.INSTAGRAM: config.instagram_min_likes,
-    }
-    review_threshold = config.review_min_helpful_votes
-    # No threshold for: NEWS, ACADEMIC, TRENDS, WEB
-
-    filtered = []
-    dropped_counts: dict[str, int] = {}
-
-    for item in items:
-        platform = item.source_platform
-
-        # Posts are never engagement-filtered (they frame discussions)
-        if item.content_type == ContentType.POST:
-            # But review posts (Amazon/Flipkart) ARE filtered since every item is a review
-            if platform.value in ("amazon", "flipkart"):
-                score = item.platform_metadata.score or 0
-                if score < review_threshold:
-                    dropped_counts[platform.value] = dropped_counts.get(platform.value, 0) + 1
-                    continue
-            filtered.append(item)
-            continue
-
-        # Comments: apply social platform thresholds
-        if platform in thresholds:
-            engagement = item.platform_metadata.score or item.platform_metadata.like_count or 0
-            if engagement < thresholds[platform]:
-                dropped_counts[platform.value] = dropped_counts.get(platform.value, 0) + 1
-                continue
-
-        # Review platform comments (if any)
-        if platform.value in ("amazon", "flipkart"):
-            score = item.platform_metadata.score or 0
-            if score < review_threshold:
-                dropped_counts[platform.value] = dropped_counts.get(platform.value, 0) + 1
-                continue
-
-        filtered.append(item)
-
-    if dropped_counts:
-        total_dropped = sum(dropped_counts.values())
-        logger.info(
-            f"Engagement filter: dropped {total_dropped} low-engagement items "
-            f"({', '.join(f'{p}: {n}' for p, n in sorted(dropped_counts.items()))})"
-        )
-
-    return filtered
-
 
 def ingest_external_data(
     data_path: Path,
     collection_query: str = "external",
     min_content_length: int = 10,
     min_comment_length: int = 5,
-    config=None,
 ) -> list[NormalizedItem]:
     """Ingest external JSON data into NormalizedItems.
 
@@ -215,14 +144,15 @@ def ingest_external_data(
     - Simple format (flat list of text + source + url + date)
     - Pre-normalized format (already NormalizedItem dicts)
 
-    Applies platform-specific engagement thresholds after ingestion.
+    Quality controls: empty text, ultra-short noise, and duplicates are filtered.
+    Engagement metrics are preserved as metadata for scoring but NOT used as
+    admission gates. Every consumer voice enters the corpus equally.
 
     Args:
         data_path: Path to JSON file
         collection_query: Query string to record in items
         min_content_length: Skip posts shorter than this
         min_comment_length: Skip comments shorter than this
-        config: Optional CollectionConfig with engagement thresholds
 
     Returns:
         List of NormalizedItem objects ready for normalization pipeline
@@ -257,8 +187,7 @@ def ingest_external_data(
         logger.warning(f"Unknown format, attempting simple ingestion")
         items = _ingest_simple(raw_data, collection_query, min_content_length)
 
-    # Apply engagement thresholds (social >= 2 likes/upvotes, review >= 1 helpful vote)
-    return _apply_engagement_thresholds(items, config)
+    return items
 
 
 def _ingest_platform_scraped(

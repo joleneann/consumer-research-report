@@ -220,11 +220,8 @@ class RedditCollector(BaseCollector):
                     if not comment_text or len(comment_text) < 10:
                         continue
 
-                    # Engagement filter: skip low-score comments
                     comment_score = comment.get("score", 0) or 0
-                    if comment_score < self.min_score:
-                        low_engagement_dropped += 1
-                        continue
+                    # Engagement metadata preserved for scoring but not used as gate
 
                     comment_permalink = comment.get("permalink", "")
                     comment_url = f"https://www.reddit.com{comment_permalink}" if comment_permalink else post_url

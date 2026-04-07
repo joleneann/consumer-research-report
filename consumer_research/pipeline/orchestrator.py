@@ -288,7 +288,6 @@ def _collect_data(
         subreddits=cc.subreddits,
         max_posts=cc.reddit_max_posts,
         max_comments_per_post=cc.reddit_max_comments_per_post,
-        min_score=cc.reddit_min_score,
     ), cc.brand_name, keywords, raw_dir / "reddit.json", opinion_items, "reddit")
 
     # YouTube (OPINION — max limits)
@@ -296,7 +295,6 @@ def _collect_data(
     _safe_collect("YouTube", YouTubeCollector(
         max_videos=cc.youtube_max_videos,
         max_comments_per_video=cc.youtube_max_comments_per_video,
-        min_likes=cc.youtube_min_likes,
         region_code=cc.trends_geo,
     ), cc.brand_name, keywords, raw_dir / "youtube.json", opinion_items, "youtube")
 

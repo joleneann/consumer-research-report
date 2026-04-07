@@ -198,13 +198,15 @@ class TestIngestExternalData:
         assert "BOM test" in items[0].content_text
 
 
-class TestEngagementThresholds:
-    """Verify platform-specific engagement filtering on externally ingested data."""
+class TestNoEngagementGating:
+    """Verify that engagement is NOT used as a corpus admission gate.
+
+    All items enter regardless of likes/upvotes. Engagement is metadata only.
+    """
 
     def _make_platform_scraped(self, platform, likes=0, comments_data=None):
-        """Build a single platform-scraped item."""
         item = {
-            "metadata_content": {"content": f"This is a sufficiently long {platform} post for testing engagement thresholds"},
+            "metadata_content": {"content": f"This is a sufficiently long {platform} post for testing"},
             "engagements": {"likes": likes},
             "source": platform,
             "url": f"https://{platform}.com/post/123",
@@ -216,61 +218,43 @@ class TestEngagementThresholds:
     def _make_comment(self, text="This is a sufficiently long comment for testing", likes=0):
         return {"content": text, "text": text, "username": "user1", "score": likes, "likes": likes}
 
-    def test_twitter_comment_below_threshold_dropped(self, tmp_path):
-        """Twitter comments with < 2 likes should be filtered out."""
+    def test_zero_engagement_comment_included(self, tmp_path):
+        """Zero-engagement comments must NOT be filtered out."""
         data = [self._make_platform_scraped("twitter", likes=10, comments_data=[
-            self._make_comment("High engagement comment for testing threshold", likes=5),
-            self._make_comment("Low engagement comment for testing threshold", likes=1),
+            self._make_comment("High engagement comment for testing", likes=50),
+            self._make_comment("Zero engagement comment for testing", likes=0),
         ])]
         f = tmp_path / "test.json"
         f.write_text(json.dumps(data))
         items = ingest_external_data(f)
         comments = [i for i in items if i.content_type.value == "comment"]
-        # Only the high-engagement comment should survive
-        assert len(comments) == 1
+        assert len(comments) == 2  # Both kept - no threshold
 
-    def test_twitter_comment_at_threshold_kept(self, tmp_path):
-        """Twitter comments with exactly 2 likes should be kept."""
-        data = [self._make_platform_scraped("twitter", likes=10, comments_data=[
-            self._make_comment("Exactly at threshold comment for testing", likes=2),
-        ])]
-        f = tmp_path / "test.json"
-        f.write_text(json.dumps(data))
-        items = ingest_external_data(f)
-        comments = [i for i in items if i.content_type.value == "comment"]
-        assert len(comments) == 1
-
-    def test_instagram_comment_below_threshold_dropped(self, tmp_path):
-        """Instagram comments with < 2 likes should be filtered out."""
-        data = [self._make_platform_scraped("instagram", likes=10, comments_data=[
-            self._make_comment("High engagement IG comment for testing", likes=3),
-            self._make_comment("Zero engagement IG comment for testing", likes=0),
-        ])]
-        f = tmp_path / "test.json"
-        f.write_text(json.dumps(data))
-        items = ingest_external_data(f)
-        comments = [i for i in items if i.content_type.value == "comment"]
-        assert len(comments) == 1
-
-    def test_posts_never_filtered_for_social(self, tmp_path):
-        """Social media posts should never be engagement-filtered (they frame discussions)."""
-        data = [self._make_platform_scraped("twitter", likes=0)]
-        f = tmp_path / "test.json"
-        f.write_text(json.dumps(data))
-        items = ingest_external_data(f)
-        posts = [i for i in items if i.content_type.value == "post"]
-        assert len(posts) == 1
-
-    def test_news_not_filtered(self, tmp_path):
-        """News items should never be engagement-filtered."""
-        data = [{"text": "News article about hair colour trends in India", "source": "news", "url": "https://news.com/1"}]
+    def test_zero_likes_post_included(self, tmp_path):
+        """Posts with zero likes must be included."""
+        data = [self._make_platform_scraped("instagram", likes=0)]
         f = tmp_path / "test.json"
         f.write_text(json.dumps(data))
         items = ingest_external_data(f)
         assert len(items) == 1
 
-    def test_reddit_threshold_now_2(self, tmp_path):
-        """Reddit threshold changed from 3 to 2. Comments with score=2 should pass."""
+    def test_engagement_metadata_preserved(self, tmp_path):
+        """Engagement values must be preserved on items for scoring."""
+        data = [self._make_platform_scraped("reddit", likes=42, comments_data=[
+            self._make_comment("A comment with known engagement", likes=7),
+        ])]
+        f = tmp_path / "test.json"
+        f.write_text(json.dumps(data))
+        items = ingest_external_data(f)
+        post = [i for i in items if i.content_type.value == "post"][0]
+        assert post.platform_metadata.score == 42 or post.platform_metadata.like_count == 42
+
+    def test_no_engagement_config_fields(self):
+        """CollectionConfig should NOT have engagement threshold fields."""
         from consumer_research.config import CollectionConfig
         cfg = CollectionConfig(brand_name="test", category="test")
-        assert cfg.reddit_min_score == 2
+        assert not hasattr(cfg, "reddit_min_score")
+        assert not hasattr(cfg, "youtube_min_likes")
+        assert not hasattr(cfg, "twitter_min_likes")
+        assert not hasattr(cfg, "instagram_min_likes")
+        assert not hasattr(cfg, "review_min_helpful_votes")
