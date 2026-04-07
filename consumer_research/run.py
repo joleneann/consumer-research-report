@@ -47,11 +47,11 @@ def _load_run_config(run_dir: Path) -> dict:
 
 
 def cmd_ingest(args):
-    """Ingest external JSON data into a run directory (Stages 0-2).
+    """Ingest external JSON data into a run directory.
 
-    Creates a new run with normalized data, ready for in-context analysis
-    in a Claude Code session (Stages 3-5), then scoring and report generation
-    via consumer-research score-report.
+    Creates brief.json, raw/, normalized/, and config.json - ready for
+    in-context analysis in a Claude Code session, then scoring and report
+    generation via consumer-research score-report.
     """
     from datetime import datetime, timezone
     from uuid import uuid4
@@ -113,6 +113,20 @@ def cmd_ingest(args):
     )
     (run_dir / "config.json").write_text(
         run_config.model_dump_json(indent=2), encoding="utf-8"
+    )
+
+    # Save brief for provenance parity with collected runs
+    brief = {
+        "brand_name": args.brand,
+        "category": args.category,
+        "business_objectives": args.objectives or [],
+        "geographic_focus": args.geo or "",
+        "data_source": str(data_path),
+        "ingested_items": len(items),
+        "normalized_items": len(corpus),
+    }
+    (run_dir / "brief.json").write_text(
+        json.dumps(brief, indent=2), encoding="utf-8"
     )
 
     print(f"\nRun created: {run_id}")

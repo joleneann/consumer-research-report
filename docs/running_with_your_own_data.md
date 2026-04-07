@@ -72,14 +72,18 @@ All analysis runs inside your Claude Code session. The model running the session
 
 The workflow:
 
-1. **Ingest and normalize** your data (code-based, free)
-2. **Filter for relevance** - Claude Code reads items and classifies them (in-context)
-3. **Analyze** - Claude Code classifies sentiment, emotion, aspects, and extracts themes (in-context)
-4. **Synthesize insights** - Claude Code reads theme data and writes structured insights (in-context)
-5. **Score** - data-driven confidence and signal strength math (code-based, free)
-6. **Generate report** - charts and DOCX generation (code-based, free)
+```bash
+# Step 1: Ingest your data (creates brief.json, raw/, normalized/, config.json)
+consumer-research ingest --data data/my_data.json --brand "Brand" --category "Category"
 
-See [`examples/studies/weight_loss/run_weight_loss.py`](../examples/studies/weight_loss/run_weight_loss.py) for a complete working example, and the in-context analysis scripts in the same directory (`stage4_analysis.py`, `stage5_synthesis.py`).
+# Step 2: Open the project in Claude Code and analyse the corpus in-context
+#         (filter, sentiment, themes, synthesis - all in your session)
+
+# Step 3: Score and generate the report
+consumer-research score-report <run_id>
+```
+
+All analysis (Steps 2) runs inside your Claude Code session. Scoring and report generation (Step 3) are code-based and free.
 
 ## What Each Stage Costs
 

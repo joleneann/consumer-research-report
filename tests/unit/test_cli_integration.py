@@ -203,9 +203,15 @@ class TestIngestCLI:
         assert result.returncode == 0, f"ingest failed:\n{result.stderr[-500:]}"
         assert "items normalized" in result.stdout
 
-        # Should have created a run directory with normalized corpus
+        # Should have created a run directory with all provenance artifacts
         run_dirs = list(runs_dir.iterdir())
         assert len(run_dirs) == 1
         run_dir = run_dirs[0]
-        assert (run_dir / "normalized" / "corpus.json").exists()
-        assert (run_dir / "config.json").exists()
+        assert (run_dir / "normalized" / "corpus.json").exists(), "missing normalized corpus"
+        assert (run_dir / "config.json").exists(), "missing config"
+        assert (run_dir / "brief.json").exists(), "missing brief (provenance)"
+        assert (run_dir / "raw" / "external_ingested.json").exists(), "missing raw provenance"
+
+        # Verify raw item count matches input
+        raw_items = json.loads((run_dir / "raw" / "external_ingested.json").read_text(encoding="utf-8"))
+        assert len(raw_items) == 2
