@@ -229,7 +229,7 @@ Social listening methodology has structural limitations that cannot be fully eli
 - **No demographic data**: No platform provides verified age, gender, or location. Any demographic inference is speculative.
 - **Language gaps**: English and Hindi/Hinglish supported. Tamil, Telugu, Bengali, Marathi, Kannada are not.
 
-For the full list of 12 documented limitations with mitigation strategies, see the Methodology section in any generated report.
+All 12 limitations are documented in [`CLAUDE.md`](CLAUDE.md) and disclosed in the Methodology section of every generated report.
 
 ---
 
