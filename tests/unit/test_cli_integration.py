@@ -151,10 +151,14 @@ class TestScoreReportIntegration:
             },
         )
 
-        # Should not crash
-        assert "Error" not in result.stderr or "NameError" not in result.stderr, (
-            f"score-report crashed:\n{result.stderr[-500:]}"
+        # Should exit cleanly
+        assert result.returncode == 0, (
+            f"score-report exited with code {result.returncode}:\n{result.stderr[-500:]}"
         )
+        for error_type in ["NameError", "ImportError", "TypeError", "AttributeError"]:
+            assert error_type not in result.stderr, (
+                f"score-report crashed with {error_type}:\n{result.stderr[-500:]}"
+            )
 
         # Should produce scored insights
         scored_path = run_dir / "scored" / "scored_insights.json"

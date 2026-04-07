@@ -167,7 +167,8 @@ There are three layers. Each has a different purpose.
 **Product interface** - the packaged CLI:
 
 ```
-consumer-research run           Full pipeline (Stages 0-7)
+consumer-research ingest        Ingest external JSON data (Stages 0-2)
+consumer-research run           Full automated pipeline (Stages 0-7, requires API key)
 consumer-research score-report  Re-score + regenerate report (no API)
 consumer-research regenerate    Regenerate DOCX only (no API)
 ```
