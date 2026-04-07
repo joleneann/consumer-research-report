@@ -1,7 +1,8 @@
 """CLI entry point for the consumer research pipeline.
 
 Usage:
-    consumer-research run --brand "Thums Up" --category "Carbonated Beverages" --geo IN
+    consumer-research ingest --data data/my_data.json --brand "Thums Up" --category "Beverages"
+    consumer-research run --brand "Thums Up" --category "Beverages" --geo IN
     consumer-research score-report [run_id]
     consumer-research regenerate [run_id]
 """
@@ -43,6 +44,76 @@ def _load_run_config(run_dir: Path) -> dict:
         print(f"ERROR: No config.json found in {run_dir}")
         sys.exit(1)
     return json.loads(config_path.read_text(encoding="utf-8"))
+
+
+def cmd_ingest(args):
+    """Ingest external JSON data into a run directory (Stages 0-2).
+
+    Creates a new run with normalized data, ready for in-context analysis
+    in a Claude Code session (Stages 3-5), then scoring and report generation
+    via consumer-research score-report.
+    """
+    from datetime import datetime, timezone
+    from uuid import uuid4
+
+    from consumer_research.config import CollectionConfig, PipelineConfig
+    from consumer_research.models.schemas import RunConfig
+    from consumer_research.pipeline.ingest import ingest_external_data
+    from consumer_research.pipeline.normalize import normalize_and_deduplicate
+
+    logger = logging.getLogger("ingest")
+
+    data_path = Path(args.data)
+    if not data_path.exists():
+        print(f"ERROR: Data file not found: {data_path}")
+        sys.exit(1)
+
+    # Create run directory
+    run_id = f"{datetime.now().strftime('%Y%m%d_%H%M%S')}_{uuid4().hex[:6]}"
+    run_dir = RUNS_DIR / run_id
+    run_dir.mkdir(parents=True, exist_ok=True)
+
+    # Ingest
+    items = ingest_external_data(data_path, collection_query=f"{args.brand} study")
+    logger.info(f"Ingested {len(items)} items from {data_path.name}")
+
+    # Normalize and deduplicate
+    corpus = normalize_and_deduplicate({"external": items}, run_dir)
+    logger.info(f"Normalized: {len(corpus)} items after dedup")
+
+    # Save config
+    config = PipelineConfig(collection=CollectionConfig(
+        brand_name=args.brand,
+        category=args.category,
+        business_objectives=args.objectives or [],
+        trends_geo=args.geo or "",
+        news_country=(args.geo or "").lower(),
+    ))
+    run_config = RunConfig(
+        run_id=run_id,
+        created_at=datetime.now(timezone.utc),
+        brand_name=args.brand,
+        category=args.category,
+        time_period_days=180,
+        keywords=[],
+        business_objectives=args.objectives or [],
+        subreddits=[],
+        trends_geo=args.geo or "",
+        news_country=(args.geo or "").lower(),
+        claude_model="in-context",
+        claude_temperature=0.0,
+    )
+    (run_dir / "config.json").write_text(
+        run_config.model_dump_json(indent=2), encoding="utf-8"
+    )
+
+    print(f"\nRun created: {run_id}")
+    print(f"  {len(corpus)} items normalized and ready for analysis")
+    print(f"  Output: {run_dir}")
+    print(f"\nNext steps:")
+    print(f"  1. Open this project in Claude Code")
+    print(f"  2. Analyze the corpus in-context (Stages 3-5)")
+    print(f"  3. Run: consumer-research score-report {run_id}")
 
 
 def cmd_run(args):
@@ -167,8 +238,17 @@ def main():
     )
     subparsers = parser.add_subparsers(dest="command", help="Available commands")
 
+    # ── ingest ──
+    p_ingest = subparsers.add_parser("ingest", help="Ingest external JSON data (Stages 0-2)")
+    p_ingest.add_argument("--data", required=True, help="Path to JSON data file")
+    p_ingest.add_argument("--brand", required=True, help="Brand or topic name")
+    p_ingest.add_argument("--category", required=True, help="Product/topic category")
+    p_ingest.add_argument("--objectives", nargs="*", help="Business objectives / research questions")
+    p_ingest.add_argument("--geo", default="", help="Geographic region (e.g., IN)")
+    p_ingest.set_defaults(func=cmd_ingest)
+
     # ── run ──
-    p_run = subparsers.add_parser("run", help="Run full pipeline (Stages 0-7)")
+    p_run = subparsers.add_parser("run", help="Run full automated pipeline (Stages 0-7, requires ANTHROPIC_API_KEY)")
     p_run.add_argument("--brand", required=True, help="Brand name to analyze")
     p_run.add_argument("--category", required=True, help="Product category")
     p_run.add_argument("--keywords", nargs="*", help="Additional search keywords")

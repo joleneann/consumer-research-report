@@ -52,11 +52,21 @@ Themes emerge from the data. If consumers are discussing something the brief nev
 
 | Requirement | What it's for |
 |-------------|---------------|
-| Claude Code (or Claude Max) | Analysis engine. All sentiment, themes, and synthesis run in-context - no API cost beyond your subscription. |
 | Python 3.11+ | Runtime |
-| Data | Either your own pre-collected JSON, or API keys for the built-in collectors |
+| Data | Your own pre-collected JSON, or API keys for the built-in collectors |
 
-**Optional collectors (all fail gracefully if absent):**
+**How analysis runs - two workflows:**
+
+The codebase supports two workflows for Stages 3-5 (filter, analyze, synthesize). Both produce the same output.
+
+| Workflow | What does the LLM work | Cost | When to use |
+|----------|----------------------|------|-------------|
+| **In-context** (Claude Code session) | The Claude Code session itself reads items and writes classifications directly to disk | Included in your Claude Code / Claude Max subscription | Primary workflow. All four sample studies were produced this way. |
+| **Automated pipeline** (`consumer-research run`) | External API calls via `ANTHROPIC_API_KEY` through `utils/llm_client.py` | ~$1-2 per run | Unattended batch runs without a Claude Code session open. |
+
+Stages 0-2 (brief, collect, normalize) and 6-7 (score, report) are code-based and free in both workflows.
+
+**Optional collector API keys (all fail gracefully if absent):**
 
 | Key | Source | Free tier |
 |-----|--------|-----------|
@@ -66,7 +76,7 @@ Themes emerge from the data. If consumers are discussing something the brief nev
 
 Reddit, OpenAlex, and Google Trends are free with no key.
 
-**Bring your own data:** If you have pre-collected data in any JSON format (Twitter exports, Instagram scrapes, vendor feeds), the pipeline ingests it directly. See [`docs/running_with_your_own_data.md`](docs/running_with_your_own_data.md).
+**Bring your own data:** If you have pre-collected data in any JSON format (Twitter exports, Instagram scrapes, vendor feeds), the pipeline ingests it directly via `consumer-research ingest`. See [`docs/running_with_your_own_data.md`](docs/running_with_your_own_data.md).
 
 ---
 
@@ -78,18 +88,25 @@ cd consumer-research-report
 pip install -r requirements.txt
 ```
 
-**Option 1: Run with pre-collected data**
-
-```bash
-# See examples/studies/weight_loss/run_weight_loss.py as a template
-python examples/studies/weight_loss/run_weight_loss.py
-```
-
-**Option 2: Run the full pipeline with built-in collectors**
+**Option 1: Bring your own data (no API keys needed)**
 
 ```bash
 pip install -e .
 
+# Ingest your JSON into a run directory (Stages 0-2)
+consumer-research ingest \
+  --data data/my_collected_data.json \
+  --brand "Brand Name" \
+  --category "Product Category"
+
+# Stages 3-5 run in your Claude Code session (in-context analysis)
+# Stage 6-7: score and generate the DOCX report
+consumer-research score-report [run_id]
+```
+
+**Option 2: Run the full automated pipeline (requires ANTHROPIC_API_KEY)**
+
+```bash
 consumer-research run \
   --brand "Brand Name" \
   --category "Product Category" \
@@ -97,10 +114,9 @@ consumer-research run \
   --objectives "What do consumers think about quality?"
 ```
 
-**Re-score and regenerate from an existing run (no API calls needed)**
+**Regenerate a report from an existing run**
 
 ```bash
-consumer-research score-report [run_id]
 consumer-research regenerate [run_id]
 ```
 
@@ -108,18 +124,16 @@ consumer-research regenerate [run_id]
 
 ## Pipeline
 
-Brief, Collect, Normalize, Filter, Analyze, Synthesize, Score, Report - eight stages, each writing artifacts to `runs/<run_id>/`. If the pipeline fails, resume from the last completed stage.
+Eight stages, each writing artifacts to `runs/<run_id>/`. If the pipeline fails, resume from the last completed stage.
 
-| Stage | What it does | Output |
-|-------|-------------|--------|
-| 0. Brief | Structure the research question | `brief.json` |
-| 1. Collect | Pull from 6+ sources at max limits | `raw/*.json` |
-| 2. Normalize | Deduplicate, engagement filter, common format | `normalized/corpus.json` |
-| 3. Filter | LLM relevance classification (multilingual) | `filtered/corpus.json` |
-| 4. Analyze | Sentiment, Plutchik emotion, ABSA, two-pass theme extraction | `analysis/results.json` |
-| 5. Synthesize | One insight per theme | `insights/insights.json` |
-| 6. Score | Confidence (5 factors) + Signal Strength (4 factors) + Brand Health | `scored/scored_insights.json` |
-| 7. Report | Charts + DOCX report | `report/report_v###.docx` |
+0. **Brief** - structure the research question
+1. **Collect** - pull from 6+ sources at max limits (or ingest your own JSON)
+2. **Normalize** - deduplicate, engagement filter, common schema
+3. **Filter** - LLM relevance classification (multilingual)
+4. **Analyze** - sentiment, Plutchik emotion, ABSA, two-pass theme extraction
+5. **Synthesize** - one structured insight per theme
+6. **Score** - confidence (5 factors) + signal strength (4 factors) + brand health
+7. **Report** - charts + versioned DOCX
 
 ---
 

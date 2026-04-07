@@ -117,6 +117,7 @@ class TestCLIEntrypoint:
             timeout=10,
         )
         assert result.returncode == 0
+        assert "ingest" in result.stdout
         assert "run" in result.stdout
         assert "score-report" in result.stdout
         assert "regenerate" in result.stdout
