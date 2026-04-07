@@ -108,12 +108,7 @@ consumer-research regenerate [run_id]
 
 ## Pipeline
 
-```
-Brief -> Collect -> Normalize -> Filter -> Analyze -> Synthesize -> Score -> Report
-  [0]      [1]        [2]         [3]       [4]         [5]          [6]      [7]
-```
-
-Every stage writes artifacts to `runs/<run_id>/`. If the pipeline fails, resume from the last completed stage - no re-collection, no re-analysis.
+Brief, Collect, Normalize, Filter, Analyze, Synthesize, Score, Report - eight stages, each writing artifacts to `runs/<run_id>/`. If the pipeline fails, resume from the last completed stage.
 
 | Stage | What it does | Output |
 |-------|-------------|--------|
