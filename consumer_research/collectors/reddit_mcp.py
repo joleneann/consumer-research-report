@@ -46,14 +46,13 @@ class RedditCollector(BaseCollector):
         subreddits: list[str] | None = None,
         max_posts: int = 500,
         max_comments_per_post: int = 20,
-        min_score: int = 2,
         sort: str = "relevance",
         time_filter: str = "year",
     ):
         self.subreddits = subreddits or []
         self.max_posts = max_posts
         self.max_comments_per_post = max_comments_per_post
-        self.min_score = min_score  # Minimum upvotes to include
+        # No engagement threshold - every comment enters the corpus
         self.sort = sort
         self.time_filter = time_filter
 
@@ -154,7 +153,6 @@ class RedditCollector(BaseCollector):
     ) -> list[NormalizedItem]:
         """Convert raw Reddit posts to NormalizedItems and fetch their comments."""
         items: list[NormalizedItem] = []
-        low_engagement_dropped = 0
 
         for post in posts:
             post_url = f"https://www.reddit.com{post.get('permalink', '')}"
@@ -254,9 +252,6 @@ class RedditCollector(BaseCollector):
                         collection_method="reddit_json_comments",
                     )
                     items.append(comment_item)
-
-        if low_engagement_dropped:
-            logger.info(f"  Dropped {low_engagement_dropped} comments below min score {self.min_score}")
 
         return items
 

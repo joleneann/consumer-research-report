@@ -86,10 +86,16 @@ class TestThreadLevelCap:
         """Thread cap should use random selection, NOT engagement-based."""
         items = [_make_item(f"id{i}", thread_id="thread1", score=i) for i in range(10)]
         result = normalize_and_deduplicate({"src": items}, tmp_path)
-        kept_ids = {i.item_id for i in result}
-        # 5 kept, but NOT necessarily the highest-scored ones
+        kept_ids = sorted([i.item_id for i in result])
+        # 5 kept
         assert len(kept_ids) == 5
-        # Selection is random (seed 42) so reproducible but not engagement-sorted
+        # Must NOT be the top-5-by-engagement set (id5-id9)
+        engagement_sorted_top5 = sorted([f"id{i}" for i in range(5, 10)])
+        assert kept_ids != engagement_sorted_top5, (
+            "Thread cap kept the highest-engagement items - random selection is broken"
+        )
+        # Seeded (42) random selection produces this exact set
+        assert kept_ids == ["id2", "id3", "id5", "id7", "id8"]
 
     def test_posts_not_capped(self, tmp_path):
         # Posts (not comments) should not be subject to thread cap
@@ -127,7 +133,12 @@ class TestThreadLevelCap:
         ]
         result = normalize_and_deduplicate({"src": items}, tmp_path)
         assert len(result) == 5
-        # Random selection - NOT necessarily the highest like_count items
+        kept_ids = sorted([i.item_id for i in result])
+        # Must NOT be the top-5-by-like_count set (yt5-yt9)
+        engagement_top5 = sorted([f"yt{i}" for i in range(5, 10)])
+        assert kept_ids != engagement_top5, (
+            "YouTube thread cap kept highest-engagement items - random selection is broken"
+        )
 
 
 # ── Output files ──────────────────────────────────────────────────────────────

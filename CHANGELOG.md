@@ -21,7 +21,7 @@ Engagement (likes, upvotes, helpful votes) is no longer used as a corpus admissi
 
 **The new philosophy:** The corpus reflects what everyone thinks. The scoring reflects how visible and validated those opinions are.
 
-**Limitation #4 (Silent Majority) is now RESOLVED.**
+**Limitation #4 (Silent Majority) is now MITIGATED.** Hard engagement gates are gone, but built-in collectors still fetch visibility-ranked content from platforms (Reddit sort="top", YouTube order="relevance"). Fully resolving this would require randomized collection strategies.
 
 ### New features
 - `consumer-research ingest` CLI command for bring-your-own-data workflow

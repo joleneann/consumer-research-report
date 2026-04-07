@@ -41,13 +41,11 @@ class YouTubeCollector(BaseCollector):
         api_key: str | None = None,
         max_videos: int = 50,
         max_comments_per_video: int = 100,
-        min_likes: int = 2,
         region_code: str = "",
     ):
         self.api_key = api_key or os.environ.get("YOUTUBE_API_KEY", "")
         self.max_videos = max_videos
         self.max_comments_per_video = max_comments_per_video
-        self.min_likes = min_likes
         self.region_code = region_code
 
     def collect(self, brand_name: str, keywords: list[str], **kwargs) -> list[NormalizedItem]:
