@@ -1,9 +1,10 @@
-"""Stage 6: Confidence and signal strength scoring — fully data-driven.
+"""Stage 6: Confidence and signal strength scoring - fully data-driven.
 
-Both axes of the Insights Matrix are computed entirely from data:
+Every insight receives two independent scores, both computed entirely from data:
 - Confidence Score: How sure are we? (sample size, source diversity, temporal, agreement, recency)
 - Signal Strength: How loudly are consumers saying it? (prevalence, engagement, intensity, depth)
 
+Insights ranked by confidence (primary) then signal strength (tiebreaker).
 No LLM judgment involved in scoring.
 """
 
