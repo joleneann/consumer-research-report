@@ -13,7 +13,9 @@ import logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)-8s %(message)s", datefmt="%H:%M:%S")
 logger = logging.getLogger("stage6_7")
 
-# Accept run ID as CLI argument, default to latest weight loss run
+from consumer_research.config import RUNS_DIR
+
+# Accept run ID as CLI argument, default to latest run
 if len(sys.argv) > 1:
     RUN_DIR = RUNS_DIR / sys.argv[1]
 else:
@@ -26,7 +28,6 @@ else:
 logger.info(f"Run directory: {RUN_DIR.name}")
 
 # Load all data
-from consumer_research.config import RUNS_DIR
 from consumer_research.models.schemas import (
     AnalysisResults, Insight, NormalizedItem, ScoredInsight,
 )

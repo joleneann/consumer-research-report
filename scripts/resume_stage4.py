@@ -24,6 +24,8 @@ logger = logging.getLogger("resume_stage4")
 
 
 def main():
+    from consumer_research.config import RUNS_DIR
+
     api_key = os.environ.get("ANTHROPIC_API_KEY", "").strip()
     if not api_key:
         # Try .env
@@ -75,7 +77,7 @@ def main():
 
     # Config
     from consumer_research.config import (
-        AnalysisConfig, CollectionConfig, PipelineConfig, RUNS_DIR, ScoringConfig
+        AnalysisConfig, CollectionConfig, PipelineConfig, ScoringConfig
     )
     # Load config from source run's config.json
     _config_path = source_run / "config.json"

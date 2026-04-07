@@ -30,6 +30,8 @@ logger = logging.getLogger("resume_stage3")
 
 
 def main():
+    from consumer_research.config import RUNS_DIR
+
     # ── Check API key ──
     api_key = os.environ.get("ANTHROPIC_API_KEY", "").strip()
     if not api_key:
@@ -81,7 +83,6 @@ def main():
         AnalysisConfig,
         CollectionConfig,
         PipelineConfig,
-        RUNS_DIR,
         ScoringConfig,
     )
 
