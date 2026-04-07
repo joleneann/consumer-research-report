@@ -129,6 +129,8 @@ The pipeline accepts data from any source via `pipeline/ingest.py`:
 
 **External JSON** (pre-collected data): `ingest_external_data(path)` auto-detects format:
 - **Platform-scraped format**: `{metadata_content, engagements, comments, source}` - handles Twitter, YouTube, Reddit, Instagram with nested comments
+- **E-commerce review format**: `{asin, reviews[], product_details, source}` - handles Amazon/Flipkart product reviews with star ratings, review dates, and product metadata
+- **Mixed format**: Files containing both platform-scraped and e-commerce records are auto-detected and each item routed to the correct sub-ingester
 - **Simple format**: `[{text, source, url, date}]` - any flat list with a text field
 - **Pre-normalized format**: Already-normalized NormalizedItem dicts (pass-through)
 
@@ -177,15 +179,15 @@ Field names are auto-detected (text/content/body/message, source/platform/channe
   4. Divider rule
   5. `Research Objectives` (H2) — bullet list from `config.collection.business_objectives`
   6. Divider rule
-  7. `Summary of Data and Findings` (H2) — 2-column table with 5 rows: Items Analysed | {n}, Insights Identified | {n}, Net Sentiment Score | {+X.X%} (green/red), Brand Health Score | {X}/100 (green/amber/red), Data Sources | {n} platforms (computed from distinct `source_platform` values in `items`)
+  7. `Summary of Data and Findings` (H2) — 2-column table with 6 rows: Items Analysed | {n}, Data Collection Period | {Mon YYYY - Mon YYYY} (computed from min/max `source_timestamp` in corpus), Insights Identified | {n}, Net Sentiment Score | {+X.X%} (green/red), Brand Health Score | {X}/100 (green/amber/red), Data Sources | {n} platforms (computed from distinct `source_platform` values in `items`)
   8. Page break
 - **Brand Health section**: Components table followed by a conditional Note paragraph — if `conversation_component < 50`, adds a callout explaining what the low score means (thin organic conversation, reactive not spontaneous). This surfaces the "transactional brand" finding explicitly rather than burying it in a table row.
-- **Data Universe section**: Starts with a **Collection Funnel** table (3 rows: Raw collected → After dedup & engagement filter → After relevance classification) showing item counts and notes. Raw counts read from `run_dir/raw/*.json`, normalized from `run_dir/normalized/corpus.json`. Percentage of raw shown inline. Then Platform Breakdown table + platforms chart. Then Collection Methodology paragraph.
+- **Data Universe section**: Starts with a **Collection Funnel** table (3 rows: Raw collected → After dedup & engagement filter → After relevance classification) showing item counts and notes. Raw counts read from `run_dir/raw/*.json`, normalized from `run_dir/normalized/corpus.json`. Percentage of raw shown inline. Then Platform Breakdown table + platforms chart. Then **Temporal Distribution** chart (`chart_temporal.png`) showing item count by year — makes data recency and concentration immediately visible. Then Collection Methodology paragraph.
 - **Insight Landscape table**: 6 columns — Insight, Items, Prevalence in Dataset, Signal Strength, Confidence Score, NSS. Signal and Confidence joined from `scored_insights` by `theme_id`. No Insights Matrix chart.
 - **Insight Deep Dive structure** (exact order, do not change): (1) H2 heading with number + theme name, (2) single data line [n= | Confidence | Signal | % of Dataset | NSS], (3) radar chart PNG, (4) What the Data Shows, (5) What it Means, (6) Business Implication & Rationale, (7) Recommendation, (8) Further Validation — no data stats here, (9) Representative Voices 2-3 quotes
 - **Executive Summary**: Opens with total items, NSS, insight count + theme count. Names top 3 insights by confidence. "Top Insights at a Glance" table shows top 5 by confidence with Confidence% and Signal% columns. No quadrant labels anywhere.
 - **Recommendations section**: Sorted by confidence (primary) then signal (tiebreaker). Headings are "Recommendation 01", "Recommendation 02", etc. — no quadrant bracket labels.
-- **Radar charts**: Named `chart_radar_{insight_id}.png` — never positional. Title = theme label only (no INS_xxx). Looked up by `ins.insight_id` in deep dives. One radar per insight (count varies per run). Total chart count = 6 standard + N radar charts.
+- **Radar charts**: Named `chart_radar_{insight_id}.png` — never positional. Title = theme label only (no INS_xxx). Looked up by `ins.insight_id` in deep dives. One radar per insight (count varies per run). Total chart count = 7 standard (sentiment, platforms, temporal, themes, matrix, emotions, aspect_heatmap) + N radar charts.
 - **Regeneration**: `scripts/regenerate_report.py [run_id]` calls `generate_all_charts()` then `generate_docx_report()`. Defaults to latest run if no run_id given. Loads config from `config.json`. Always regenerate charts before DOCX to pick up any changes.
 
 ## Report Naming Convention

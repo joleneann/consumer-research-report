@@ -259,8 +259,32 @@ def _section_cover(doc: Document, brand_name: str, config: PipelineConfig,
     bh_color = GREEN if bh_score >= 70 else (AMBER if bh_score >= 50 else RED)
     nss_color = GREEN if nss > 0 else (RED if nss < 0 else GREY_MED)
 
+    # Compute data collection period from items
+    data_period_str = "N/A"
+    if items:
+        from datetime import timezone as _tz
+        def _to_dt(t):
+            if isinstance(t, datetime):
+                return t.replace(tzinfo=_tz.utc) if t.tzinfo is None else t
+            try:
+                parsed = datetime.fromisoformat(str(t).replace("Z", "+00:00"))
+                return parsed.replace(tzinfo=_tz.utc) if parsed.tzinfo is None else parsed
+            except (ValueError, TypeError):
+                return None
+        valid_ts = []
+        for i in items:
+            ts = i.source_timestamp if hasattr(i, "source_timestamp") else i.get("source_timestamp")
+            if ts:
+                dt = _to_dt(ts)
+                if dt:
+                    valid_ts.append(dt)
+        if valid_ts:
+            dt_min, dt_max = min(valid_ts), max(valid_ts)
+            data_period_str = f"{dt_min.strftime('%b %Y')} - {dt_max.strftime('%b %Y')}"
+
     summary_rows = [
         ("Items Analysed", f"{total:,}", NAVY),
+        ("Data Collection Period", data_period_str, NAVY),
         ("Insights Identified", str(n_insights), NAVY),
         ("Net Sentiment Score", f"{nss:+.1%}", nss_color),
         ("Brand Health Score", f"{bh_score:.0f}/100", bh_color),
@@ -406,6 +430,17 @@ def _section_data_universe(doc: Document, items: list[NormalizedItem],
 
     _add_chart(doc, run_dir / "report" / "chart_platforms.png",
                "Figure 1: Item distribution by source platform", width_in=4.5)
+
+    # ── Temporal distribution ───────────────────────────────────────────────
+    temporal_chart = run_dir / "report" / "chart_temporal.png"
+    if temporal_chart.exists():
+        _heading(doc, "Temporal Distribution", 2)
+        _body(doc, (
+            "The chart below shows how the analysed data is distributed across years. "
+            "This illustrates the recency and concentration of the evidence base."
+        ))
+        _add_chart(doc, temporal_chart,
+                   "Figure 2: Data distribution by year", width_in=5.0)
 
     _heading(doc, "Collection Methodology", 2)
     _body(doc, (

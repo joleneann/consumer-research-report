@@ -26,6 +26,7 @@ class SourcePlatform(str, Enum):
     AMAZON = "amazon"
     INSTAGRAM = "instagram"
     TWITTER = "twitter"
+    FLIPKART = "flipkart"
 
 
 class ContentType(str, Enum):

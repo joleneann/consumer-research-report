@@ -385,6 +385,72 @@ def generate_aspect_heatmap(aspect_summary: dict, output_dir: Path) -> Path | No
         return None
 
 
+def generate_temporal_chart(items, output_dir: Path) -> Path | None:
+    """Vertical bar chart showing item count by year."""
+    try:
+        from collections import Counter
+        from datetime import datetime as _dt, timezone as _tz
+
+        plt = _setup_chart_style()
+
+        # Extract years from timestamps
+        year_counts = Counter()
+        no_date = 0
+        for item in items:
+            ts = item.source_timestamp if hasattr(item, "source_timestamp") else item.get("source_timestamp")
+            if not ts:
+                no_date += 1
+                continue
+            if isinstance(ts, _dt):
+                year_counts[ts.year] += 1
+            else:
+                try:
+                    parsed = _dt.fromisoformat(str(ts).replace("Z", "+00:00"))
+                    year_counts[parsed.year] += 1
+                except (ValueError, TypeError):
+                    no_date += 1
+
+        if not year_counts:
+            return None
+
+        # Sort by year
+        years = sorted(year_counts.keys())
+        counts = [year_counts[y] for y in years]
+        total = sum(counts)
+        labels = [str(y) for y in years]
+
+        fig, ax = plt.subplots(figsize=(8, 3.5))
+
+        bars = ax.bar(labels, counts, color=BLUE, width=0.6, edgecolor="white", linewidth=0.5)
+
+        # Add count + percentage labels on top of each bar
+        for bar, val in zip(bars, counts):
+            pct = val / total * 100
+            label = f"{val:,}\n({pct:.0f}%)" if pct >= 2 else f"{val:,}"
+            ax.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + max(counts) * 0.02,
+                    label, ha="center", va="bottom", fontsize=9, color=SLATE, fontweight="500")
+
+        ax.set_title("Data Distribution by Year", color=NAVY, pad=12)
+        ax.set_ylabel("Items", color=SLATE)
+        ax.set_ylim(0, max(counts) * 1.25)
+        ax.spines["bottom"].set_color(BORDER)
+        ax.spines["bottom"].set_linewidth(0.5)
+        ax.tick_params(bottom=False)
+
+        # Switch grid to y-axis for vertical bar chart
+        ax.yaxis.grid(True, color=LIGHT_GREY, linewidth=0.5)
+        ax.xaxis.grid(False)
+
+        plt.tight_layout()
+        path = output_dir / "chart_temporal.png"
+        plt.savefig(str(path), dpi=200, bbox_inches="tight", facecolor="white")
+        plt.close()
+        return path
+    except Exception as e:
+        logger.warning(f"Temporal chart failed: {e}")
+        return None
+
+
 def generate_all_charts(analysis, scored_insights, items, output_dir: Path) -> dict:
     """Generate all charts and return paths dict."""
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -407,6 +473,7 @@ def generate_all_charts(analysis, scored_insights, items, output_dir: Path) -> d
         "aspect_heatmap": generate_aspect_heatmap(
             getattr(analysis, "aspect_sentiment_summary", {}), output_dir
         ),
+        "temporal": generate_temporal_chart(items, output_dir),
     }
 
     # Build theme_id → label lookup

@@ -44,6 +44,7 @@ PLATFORM_PATTERNS = {
     "news": SourcePlatform.NEWS,
     "academic": SourcePlatform.ACADEMIC,
     "amazon": SourcePlatform.AMAZON,
+    "flipkart": SourcePlatform.FLIPKART,
 }
 
 
@@ -82,24 +83,50 @@ def _parse_timestamp(ts_str: str | None) -> datetime | None:
 
 
 def _detect_format(data: list[dict]) -> str:
-    """Auto-detect the JSON format."""
+    """Auto-detect the JSON format by scanning a sample of records."""
     if not data:
         return "empty"
-    sample = data[0]
-    keys = set(sample.keys())
 
-    # Platform-scraped format (our standard external data format)
-    if "metadata_content" in keys and "engagements" in keys:
+    # Scan first 20 items to detect mixed formats
+    sample_size = min(20, len(data))
+    has_platform_scraped = False
+    has_ecommerce = False
+    has_simple = False
+    has_normalized = False
+
+    for item in data[:sample_size]:
+        keys = set(item.keys())
+        if "metadata_content" in keys and "engagements" in keys:
+            has_platform_scraped = True
+        elif "reviews" in keys and "product_details" in keys:
+            has_ecommerce = True
+        elif "item_id" in keys and "source_platform" in keys and "content_text" in keys:
+            has_normalized = True
+        elif "text" in keys or "content" in keys:
+            has_simple = True
+
+    # If first sample didn't catch all formats, do a broader check
+    if sample_size < len(data) and not (has_platform_scraped and has_ecommerce):
+        for item in data[sample_size::max(1, len(data) // 100)]:
+            keys = set(item.keys())
+            if not has_platform_scraped and "metadata_content" in keys:
+                has_platform_scraped = True
+            if not has_ecommerce and "reviews" in keys and "product_details" in keys:
+                has_ecommerce = True
+            if has_platform_scraped and has_ecommerce:
+                break
+
+    format_count = sum([has_platform_scraped, has_ecommerce, has_simple, has_normalized])
+    if format_count > 1:
+        return "mixed"
+    if has_platform_scraped:
         return "platform_scraped"
-
-    # Simple format
-    if "text" in keys or "content" in keys:
-        return "simple"
-
-    # NormalizedItem format (already normalized)
-    if "item_id" in keys and "source_platform" in keys and "content_text" in keys:
+    if has_ecommerce:
+        return "ecommerce"
+    if has_normalized:
         return "normalized"
-
+    if has_simple:
+        return "simple"
     return "unknown"
 
 
@@ -145,6 +172,10 @@ def ingest_external_data(
         return [NormalizedItem(**d) for d in raw_data]
     elif fmt == "platform_scraped":
         return _ingest_platform_scraped(raw_data, collection_query, min_content_length, min_comment_length)
+    elif fmt == "ecommerce":
+        return _ingest_ecommerce_reviews(raw_data, collection_query, min_content_length)
+    elif fmt == "mixed":
+        return _ingest_mixed(raw_data, collection_query, min_content_length, min_comment_length)
     elif fmt == "simple":
         return _ingest_simple(raw_data, collection_query, min_content_length)
     else:
@@ -320,6 +351,134 @@ def _extract_comment(comment: dict, platform: str, parent_url: str, post_id: str
         return "", "", "", None, None
 
     return "", "Unknown", "", None, None
+
+
+def _ingest_ecommerce_reviews(
+    raw_data: list[dict],
+    collection_query: str,
+    min_content_length: int,
+) -> list[NormalizedItem]:
+    """Ingest e-commerce review format: products with asin, reviews[], product_details."""
+    import re
+
+    now = datetime.now(timezone.utc)
+    items = []
+    skipped = 0
+
+    for product in raw_data:
+        reviews = product.get("reviews", [])
+        if not reviews:
+            continue
+        pd = product.get("product_details", {})
+        title = pd.get("title", "")
+        if not title or title == "Unknown Product":
+            continue
+
+        platform_enum = _detect_platform(product.get("source", ""))
+        if not platform_enum:
+            platform_enum = SourcePlatform.AMAZON
+
+        product_url = pd.get("url", "")
+        asin = product.get("asin", "")
+
+        for review in reviews:
+            text = (review.get("content") or "").strip()
+            review_title = (review.get("review_title") or "").strip()
+            if review_title and text:
+                text = f"{review_title}: {text}"
+            elif review_title:
+                text = review_title
+
+            if not text or len(text) < min_content_length:
+                skipped += 1
+                continue
+
+            # Parse star rating
+            star_str = review.get("review_star_rating", "")
+            try:
+                star_rating = int(float(star_str)) if star_str else None
+            except (ValueError, TypeError):
+                star_rating = None
+
+            # Parse review date: "Reviewed in India on 28 December 2025"
+            review_ts = None
+            date_str = review.get("review_date", "")
+            if date_str:
+                m = re.search(r"(\d{1,2})\s+(\w+)\s+(\d{4})", date_str)
+                if m:
+                    try:
+                        review_ts = datetime.strptime(
+                            f"{m.group(1)} {m.group(2)} {m.group(3)}", "%d %B %Y"
+                        ).replace(tzinfo=timezone.utc)
+                    except ValueError:
+                        pass
+
+            author = review.get("review_author", "Unknown")
+            review_url = f"{product_url}#review_{hashlib.sha256(text.encode('utf-8')).hexdigest()[:8]}"
+
+            meta = PlatformMetadata(
+                score=star_rating,
+                thread_id=asin,
+            )
+
+            item = NormalizedItem(
+                item_id=_generate_item_id(review_url, text),
+                source_platform=platform_enum,
+                source_url=review_url,
+                source_author=author,
+                source_timestamp=review_ts,
+                collected_at=now,
+                content_text=text,
+                content_type=ContentType.REVIEW,
+                platform_metadata=meta,
+                collection_query=collection_query,
+                collection_method="external_data_import",
+            )
+            items.append(item)
+
+    logger.info(f"Ingested {len(items)} e-commerce reviews (skipped {skipped} short)")
+    plat_counts = Counter(i.source_platform.value for i in items)
+    logger.info(f"By platform: {dict(plat_counts)}")
+    return items
+
+
+def _ingest_mixed(
+    raw_data: list[dict],
+    collection_query: str,
+    min_content_length: int,
+    min_comment_length: int,
+) -> list[NormalizedItem]:
+    """Ingest mixed-format data by routing each item to the right sub-ingester."""
+    platform_scraped = []
+    ecommerce = []
+    simple = []
+
+    for item in raw_data:
+        keys = set(item.keys())
+        if "metadata_content" in keys and "engagements" in keys:
+            platform_scraped.append(item)
+        elif "reviews" in keys and "product_details" in keys:
+            ecommerce.append(item)
+        else:
+            simple.append(item)
+
+    items = []
+    if platform_scraped:
+        logger.info(f"Mixed format: {len(platform_scraped)} platform-scraped records")
+        items.extend(_ingest_platform_scraped(platform_scraped, collection_query, min_content_length, min_comment_length))
+    if ecommerce:
+        logger.info(f"Mixed format: {len(ecommerce)} e-commerce records")
+        items.extend(_ingest_ecommerce_reviews(ecommerce, collection_query, min_content_length))
+    if simple:
+        logger.info(f"Mixed format: {len(simple)} simple records")
+        items.extend(_ingest_simple(simple, collection_query, min_content_length))
+
+    logger.info(f"Mixed format total: {len(items)} items")
+    plat_counts = Counter(i.source_platform.value for i in items)
+    type_counts = Counter(i.content_type.value for i in items)
+    logger.info(f"By platform: {dict(plat_counts)}")
+    logger.info(f"By type: {dict(type_counts)}")
+    return items
 
 
 def _ingest_simple(
