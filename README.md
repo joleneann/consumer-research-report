@@ -83,8 +83,8 @@ Reddit, OpenAlex, and Google Trends are free with no key.
 ## Quick Start
 
 ```bash
-git clone https://github.com/joleneann/consumer-research-report.git
-cd consumer-research-report
+git clone https://github.com/joleneann/sentiment-research-report.git
+cd sentiment-research-report
 pip install -r requirements.txt
 ```
 
