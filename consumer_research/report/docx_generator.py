@@ -259,7 +259,8 @@ def _section_cover(doc: Document, brand_name: str, config: PipelineConfig,
     bh_color = GREEN if bh_score >= 70 else (AMBER if bh_score >= 50 else RED)
     nss_color = GREEN if nss > 0 else (RED if nss < 0 else GREY_MED)
 
-    # Compute data collection period from items
+    # Compute content date range from source timestamps
+    # Note: this is the span of the original content, not when collection ran
     data_period_str = "N/A"
     if items:
         from datetime import timezone as _tz
@@ -284,7 +285,7 @@ def _section_cover(doc: Document, brand_name: str, config: PipelineConfig,
 
     summary_rows = [
         ("Items Analysed", f"{total:,}", NAVY),
-        ("Data Collection Period", data_period_str, NAVY),
+        ("Content Date Range", data_period_str, NAVY),
         ("Insights Identified", str(n_insights), NAVY),
         ("Net Sentiment Score", f"{nss:+.1%}", nss_color),
         ("Brand Health Score", f"{bh_score:.0f}/100", bh_color),
@@ -436,11 +437,12 @@ def _section_data_universe(doc: Document, items: list[NormalizedItem],
     if temporal_chart.exists():
         _heading(doc, "Temporal Distribution", 2)
         _body(doc, (
-            "The chart below shows how the analysed data is distributed across years. "
-            "This illustrates the recency and concentration of the evidence base."
+            "The chart below shows when the analysed content was originally published, "
+            "based on source timestamps. Percentages are of the full corpus. "
+            "Items without a source timestamp are shown separately as 'Undated'."
         ))
         _add_chart(doc, temporal_chart,
-                   "Figure 2: Data distribution by year", width_in=5.0)
+                   "Figure 2: Content publication date by year (full corpus denominator)", width_in=5.0)
 
     _heading(doc, "Collection Methodology", 2)
     _body(doc, (

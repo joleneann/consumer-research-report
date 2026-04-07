@@ -170,6 +170,25 @@ class TestScoreReportIntegration:
         report_files = list((run_dir / "report").glob("report_v*.docx"))
         assert len(report_files) == 1, f"Expected 1 DOCX, found {len(report_files)}"
 
+        # Should produce temporal chart
+        temporal_chart = run_dir / "report" / "chart_temporal.png"
+        assert temporal_chart.exists(), "chart_temporal.png not generated"
+
+        # DOCX should contain "Content Date Range" (not "Data Collection Period")
+        from docx import Document as DocxDocument
+        doc = DocxDocument(str(report_files[0]))
+        all_text = "\n".join(p.text for p in doc.paragraphs)
+        table_text = "\n".join(
+            cell.text for table in doc.tables for row in table.rows for cell in row.cells
+        )
+        combined = all_text + "\n" + table_text
+        assert "Content Date Range" in combined, (
+            "Cover page should show 'Content Date Range', not 'Data Collection Period'"
+        )
+        assert "Data Collection Period" not in combined, (
+            "Report still contains old 'Data Collection Period' label"
+        )
+
 
 class TestIngestCLI:
     """Test consumer-research ingest creates a valid run directory."""

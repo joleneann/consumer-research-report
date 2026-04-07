@@ -413,24 +413,39 @@ def generate_temporal_chart(items, output_dir: Path) -> Path | None:
         if not year_counts:
             return None
 
+        # Use full corpus as denominator (not just dated subset)
+        corpus_total = len(items)
+
         # Sort by year
         years = sorted(year_counts.keys())
         counts = [year_counts[y] for y in years]
-        total = sum(counts)
         labels = [str(y) for y in years]
+
+        # Append undated bar if any items lack timestamps
+        if no_date > 0:
+            years.append("Undated")
+            counts.append(no_date)
+            labels.append("Undated")
 
         fig, ax = plt.subplots(figsize=(8, 3.5))
 
-        bars = ax.bar(labels, counts, color=BLUE, width=0.6, edgecolor="white", linewidth=0.5)
+        # Use grey for the undated bar
+        bar_colors = [BLUE] * (len(counts) - (1 if no_date > 0 else 0))
+        if no_date > 0:
+            bar_colors.append(GREY)
+
+        bars = ax.bar(labels, counts, color=bar_colors, width=0.6, edgecolor="white", linewidth=0.5)
 
         # Add count + percentage labels on top of each bar
+        # Percentages are of full corpus, not just dated subset
         for bar, val in zip(bars, counts):
-            pct = val / total * 100
+            pct = val / corpus_total * 100
             label = f"{val:,}\n({pct:.0f}%)" if pct >= 2 else f"{val:,}"
             ax.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + max(counts) * 0.02,
                     label, ha="center", va="bottom", fontsize=9, color=SLATE, fontweight="500")
 
-        ax.set_title("Data Distribution by Year", color=NAVY, pad=12)
+        title = "Data Distribution by Year"
+        ax.set_title(title, color=NAVY, pad=12)
         ax.set_ylabel("Items", color=SLATE)
         ax.set_ylim(0, max(counts) * 1.25)
         ax.spines["bottom"].set_color(BORDER)
