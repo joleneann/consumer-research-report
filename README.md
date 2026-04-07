@@ -60,7 +60,7 @@ The codebase supports two workflows for Stages 3-5 (filter, analyze, synthesize)
 
 | Workflow | What does the LLM work | Cost | When to use |
 |----------|----------------------|------|-------------|
-| **In-context** (Claude Code session) | The Claude Code session itself reads items and writes classifications directly to disk | Included in your Claude Code / Claude Max subscription | Primary workflow. All four sample studies were produced this way. |
+| **In-context** (Claude Code session) | The Claude Code session itself reads items and writes classifications directly to disk | Included in your Claude Code / Claude Max subscription | Primary workflow. All three sample studies were produced this way. |
 | **Automated pipeline** (`consumer-research run`) | External API calls via `ANTHROPIC_API_KEY` through `utils/llm_client.py` | ~$1-2 per run | Unattended batch runs without a Claude Code session open. |
 
 Stages 0-2 (brief, collect, normalize) and 6-7 (score, report) are code-based and free in both workflows.
