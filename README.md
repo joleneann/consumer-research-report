@@ -222,14 +222,22 @@ docs/                           Methodology, product docs, running guide
 
 Social listening methodology has structural limitations that cannot be fully eliminated:
 
-- **Query framing bias**: Keywords presuppose contexts. You find what you search for.
-- **Platform demographic bias**: Reddit skews male/urban. YouTube skews extreme reactions. No demographic weighting applied.
-- **No sampling frame**: Prevalence is meaningful within the corpus only - never projectable to the general population.
-- **Engagement filter**: Minimum upvote/like thresholds exclude moderate consumers and over-index on extreme sentiment.
-- **No demographic data**: No platform provides verified age, gender, or location. Any demographic inference is speculative.
-- **Language gaps**: English and Hindi/Hinglish supported. Tamil, Telugu, Bengali, Marathi, Kannada are not.
+| # | Limitation | Severity | Fixable? | Status |
+|---|-----------|----------|----------|--------|
+| 1 | **Query framing bias** - You find what you search for. No adversarial queries. | CRITICAL | Partially | Not implemented |
+| 2 | **Platform demographic bias** - No weighting for platform skew. | MEDIUM | Partially | Not implemented |
+| 3 | **No sampling frame** - Prevalence is within-corpus only, never projectable. | HIGH | No | Inherent limitation |
+| 4 | **Engagement filter excludes silent majority** - Over-indexes on extreme sentiment. | MEDIUM | Yes | Not implemented |
+| 5 | **No bot/astroturf detection** - Zero coordinated campaign detection. | MEDIUM | Yes | Not implemented |
+| 6 | **Sarcasm/irony misclassification** - Keyword mode reads sarcasm as literal. | MEDIUM | Partially | Not implemented |
+| 7 | **Influencer vs authentic voice conflated** - No sponsored content detection. | MEDIUM | Yes | Not implemented |
+| 8 | **Near-duplicate inflation** - Paraphrases not caught by SHA-256 dedup. | LOW | Yes | Not implemented |
+| 9 | **Language coverage gaps** - English and Hindi/Hinglish only. | MEDIUM | Yes | Not implemented |
+| 10 | **No temporal weighting in theme extraction** - Old viral threads count equally. | LOW | Yes | Not implemented |
+| 11 | **Cross-theme interactions not surfaced** - Multi-coded items split, never analysed jointly. | MEDIUM | Yes | Not implemented |
+| 12 | **No reliable demographic data** - No verified age, gender, or location from any platform. | CRITICAL | No | Inherent limitation |
 
-All 12 limitations are documented in [`CLAUDE.md`](CLAUDE.md) and disclosed in the Methodology section of every generated report.
+Full details with "How to Fix" column in [`CLAUDE.md`](CLAUDE.md). All limitations disclosed in the Methodology section of every generated report.
 
 ---
 

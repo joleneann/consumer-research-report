@@ -90,34 +90,22 @@ Reddit: 500 posts, 20 comments/post, min 3 upvotes | YouTube: 50 videos, 100 com
 ## Known Analytical Limitations (document honestly, never hide)
 These are structural limitations of social listening methodology. They cannot be fully eliminated - only mitigated and disclosed. Every report should acknowledge the ones relevant to that study.
 
-**Bias chain** (6 layers, each compounds the previous):
-```
-Brief scope → Keyword framing → Platform algorithms → Relevance filter → Engagement filter → Language
-```
+**Bias chain** (6 layers, each compounds the previous): Brief scope, Keyword framing, Platform algorithms, Relevance filter, Engagement filter, Language.
 
-1. **Query framing bias** (CRITICAL): Keywords presuppose contexts. Searching "can't sleep mosquitoes" finds sleep disruption. Searching "dengue prevention" finds disease fear. You find what you search for. The keyword expansion engine (`keywords.py`) follows the brief's framing - it does not generate adversarial or blank-slate queries. This undermines the "discovery engine" claim for themes that the queries never touched. **Mitigation (not yet implemented)**: (a) mandatory blank-slate queries (brand name only, no context), (b) query attribution reporting showing which queries drove which themes, (c) adversarial query generation that deliberately searches for contexts the brief did NOT mention.
-
-2. **Platform demographic bias**: Reddit skews male/urban/18-34, Twitter skews politically engaged, YouTube comments skew toward extreme reactions, Instagram skews female/influencer-driven. We document this per-platform but do not weight items to correct for it. A corpus that is 60% Twitter will over-represent Twitter demographics regardless of what the actual consumer base looks like.
-
-3. **Unknown universe / no sampling frame**: Unlike surveys (n=1000 from population=10M), we have no denominator. Prevalence percentages are meaningful within the corpus only - never projectable. "33% of items mention sleep disruption" does NOT mean "33% of consumers experience sleep disruption." Always frame as "33% of online conversation."
-
-4. **Engagement filter excludes the silent majority**: Minimum upvotes/likes thresholds systematically exclude moderate, quiet consumers. The corpus over-indexes on extreme sentiment in both directions. The modal consumer opinion may never appear. **Mitigation (not yet implemented)**: include a random sample of below-threshold items alongside filtered ones.
-
-5. **No bot/astroturf detection**: Engagement thresholds filter some bots but zero detection of coordinated campaigns, paid reviews, brand-planted content, or bot networks. A brand could astroturf its own perception data.
-
-6. **Sarcasm/irony misclassification**: In keyword mode, "Oh great, another repellent that 'works'" registers as positive. The narrative review pass helps for unthemed items but does not audit already-themed items for sarcasm misclassification.
-
-7. **Influencer vs authentic voice conflated**: A 1M-subscriber sponsored review and a genuine Reddit complaint are weighted identically. No detection of sponsored content or follower-count weighting.
-
-8. **Near-duplicate inflation**: SHA-256 dedup catches exact copies but not paraphrases. Viral takes copy-pasted with slight modifications inflate theme prevalence.
-
-9. **Language coverage gaps**: English and Hindi/Hinglish supported. Tamil, Telugu, Bengali, Marathi, Kannada - representing hundreds of millions of consumers - are not. Non-English items often land in "unthemed" or get misclassified.
-
-10. **No temporal weighting in theme extraction**: A 6-month-old viral thread counts the same as last week's organic discussion in theme prevalence. Recency is scored at the insight level but not during theme extraction.
-
-11. **Cross-theme interactions invisible**: Items are multi-coded (can belong to multiple themes) but insights are one-per-theme. The most strategically valuable patterns - where 2+ themes intersect with >20% item overlap - are split across separate insights and never analysed as a distinct finding. The item-level multi-coding data already exists; the synthesis and reporting layers don't exploit it. **Mitigation (not yet implemented)**: (a) compute theme co-occurrence matrix after Stage 4, (b) identify theme pairs with >20% shared items, (c) generate cross-theme insights for significant intersections (cap at 3-5), (d) report co-occurrence matrix as a visual in the Insight Landscape section. Report prevalence as "exclusive" (only this theme) and "inclusive" (this theme + shared).
-
-12. **No reliable demographic data** (CRITICAL): No platform in this pipeline provides verified age, gender, or location for individual users. Reddit usernames are anonymous. Twitter/X does not expose demographics. YouTube comment authors have no verifiable profile data. Instagram provides follower counts but not demographics. Google Trends provides geographic data at state/city level but for search interest, not user identity. **What this means**: findings cannot be segmented by age, gender, income, or precise geography. Statements like "young consumers prefer natural remedies" or "women are more concerned about safety" are NOT supportable from this data. Any demographic inference (from subreddit type, language, cultural references) is speculative and must never be presented as fact. For demographic segmentation, commission a structured survey using this report's insights as stimulus.
+| # | Limitation | Severity | Fixable? | How to Fix | Status |
+|---|-----------|----------|----------|-----------|--------|
+| 1 | **Query framing bias** - Keywords presuppose contexts. You find what you search for. Keyword expansion follows the brief's framing, no adversarial or blank-slate queries. | CRITICAL | Partially | (a) Mandatory blank-slate queries (brand name only, no context), (b) query attribution reporting showing which queries drove which themes, (c) adversarial query generation for contexts the brief did NOT mention. | Not implemented |
+| 2 | **Platform demographic bias** - Reddit skews male/urban/18-34, Twitter politically engaged, YouTube extreme reactions, Instagram female/influencer-driven. No weighting applied. | MEDIUM | Partially | Per-platform demographic weighting using known platform demographics as priors. Requires external demographic benchmarks. | Not implemented |
+| 3 | **Unknown universe / no sampling frame** - No denominator. Prevalence is within-corpus only, never projectable to the general population. | HIGH | No | Structural limitation of social listening. Can only be addressed by pairing with a structured survey. | Inherent limitation |
+| 4 | **Engagement filter excludes silent majority** - Minimum upvote/like thresholds systematically exclude moderate consumers. Over-indexes on extreme sentiment. | MEDIUM | Yes | Include a random sample of below-threshold items alongside filtered ones. | Not implemented |
+| 5 | **No bot/astroturf detection** - Zero detection of coordinated campaigns, paid reviews, brand-planted content, or bot networks. | MEDIUM | Yes | (a) Account age/karma checks on Reddit, (b) posting pattern analysis for coordinated timing, (c) text similarity clustering for copy-paste campaigns. | Not implemented |
+| 6 | **Sarcasm/irony misclassification** - Keyword mode reads sarcasm as literal. Narrative review helps for unthemed items but doesn't audit already-themed items. | MEDIUM | Partially | (a) LLM-based sarcasm detection pass on themed items, (b) flag items with sentiment-text mismatch for manual review. | Not implemented |
+| 7 | **Influencer vs authentic voice conflated** - A 1M-subscriber sponsored review and a genuine Reddit complaint weighted identically. No sponsored content detection. | MEDIUM | Yes | (a) Follower/subscriber count weighting, (b) sponsored content keyword detection ("ad", "collab", "#sponsored"), (c) separate influencer vs organic voice layers. | Not implemented |
+| 8 | **Near-duplicate inflation** - SHA-256 dedup catches exact copies but not paraphrases. Viral takes with slight modifications inflate theme prevalence. | LOW | Yes | Semantic similarity clustering (embedding-based) to group near-duplicates and count them as one signal. | Not implemented |
+| 9 | **Language coverage gaps** - English and Hindi/Hinglish only. Tamil, Telugu, Bengali, Marathi, Kannada (hundreds of millions of consumers) not supported. | MEDIUM | Yes | Add language detection and multilingual LLM prompts for additional Indian languages. | Not implemented |
+| 10 | **No temporal weighting in theme extraction** - A 6-month-old viral thread counts the same as last week's organic discussion in theme prevalence. | LOW | Yes | Apply exponential decay weighting during theme extraction (not just at insight scoring). | Not implemented |
+| 11 | **Cross-theme interactions not surfaced** - Items are multi-coded but insights are one-per-theme. Theme pairs with >20% overlap split across separate insights, never analysed as distinct findings. | MEDIUM | Yes | (a) Compute theme co-occurrence matrix after Stage 4, (b) identify pairs with >20% shared items, (c) generate cross-theme insights (cap 3-5), (d) report co-occurrence matrix visual. Report prevalence as "exclusive" and "inclusive". | Not implemented |
+| 12 | **No reliable demographic data** - No platform provides verified age, gender, or location. Any demographic inference is speculative and must not be presented as fact. | CRITICAL | No | Structural limitation of social listening. For demographic segmentation, commission a structured survey using this report's insights as stimulus. | Inherent limitation |
 
 ## Zero-API Architecture
 **No external API calls.** All analysis is performed by the Claude Code session itself - the model running this conversation IS the analysis engine. The Anthropic API is never called for sentiment, themes, or synthesis. This means:
