@@ -16,7 +16,7 @@ Go to [`examples/outcomes/`](examples/outcomes/). Four complete studies are ther
 
 | Study | Type | Items | Insights | NSS |
 |-------|------|-------|----------|-----|
-| [Weight Loss Medication in India](examples/outcomes/weight_loss/) | Topic | 4,408 | 12 | +13.8% |
+| [Weight Loss Medication in India](examples/outcomes/weight_loss/) | Topic | 2,484 | 12 | +16.8% |
 | [Make in India](examples/outcomes/make_in_india/) | Brand | 5,814 | 16 | +15.9% |
 | [Thums Up](examples/outcomes/thums_up/) | Brand | 472 | 12 | +10.4% |
 | [Mosquito Repellent](examples/outcomes/mosquito_repellent/) | Topic | 5,391 | 18 | +29.5% |

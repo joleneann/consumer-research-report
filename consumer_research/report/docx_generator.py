@@ -55,6 +55,16 @@ def _rgb_hex(color: RGBColor) -> str:
     return f"{color[0]:02X}{color[1]:02X}{color[2]:02X}"
 
 
+def _set_cell_text(cell, text: str, font_name: str = BODY_FONT, size_pt: int = 10,
+                   bold: bool = False, color: RGBColor = SLATE):
+    """Set cell text with explicit font (prevents Cambria fallback)."""
+    cell.text = ""
+    p = cell.paragraphs[0]
+    _run(p, str(text), font_name, size_pt, bold=bold, color=color)
+    p.paragraph_format.space_before = Pt(3)
+    p.paragraph_format.space_after = Pt(3)
+
+
 def _set_cell_bg(cell, color: RGBColor):
     tc = cell._tc
     tcPr = tc.get_or_add_tcPr()
@@ -348,13 +358,10 @@ def _section_executive_summary(doc: Document, scored_insights: list[ScoredInsigh
         _add_table_header_row(table, ["#", "Finding", "Confidence", "Signal"])
         for i, s in enumerate(top_sorted[:show_n], 1):
             row = table.add_row()
-            row.cells[0].text = str(i)
-            row.cells[1].text = s.insight.observation
-            row.cells[2].text = f"{s.confidence_score:.0%}"
-            row.cells[3].text = f"{s.signal_strength_score:.0%}"
-            for ci in range(4):
-                row.cells[ci].paragraphs[0].paragraph_format.space_before = Pt(3)
-                row.cells[ci].paragraphs[0].paragraph_format.space_after = Pt(3)
+            _set_cell_text(row.cells[0], str(i))
+            _set_cell_text(row.cells[1], s.insight.observation)
+            _set_cell_text(row.cells[2], f"{s.confidence_score:.0%}")
+            _set_cell_text(row.cells[3], f"{s.signal_strength_score:.0%}")
         _body(doc, "", space_after_pt=12)
 
     doc.add_page_break()
@@ -407,9 +414,9 @@ def _section_data_universe(doc: Document, items: list[NormalizedItem],
     ]
     for stage, count, note in funnel_rows:
         row = funnel_table.add_row()
-        row.cells[0].text = stage
-        row.cells[1].text = count
-        row.cells[2].text = note
+        _set_cell_text(row.cells[0], stage)
+        _set_cell_text(row.cells[1], count)
+        _set_cell_text(row.cells[2], note)
 
     doc.add_paragraph()  # spacer
 
@@ -425,9 +432,9 @@ def _section_data_universe(doc: Document, items: list[NormalizedItem],
     _add_table_header_row(table, ["Platform", "Items", "Share of Corpus"])
     for platform, count in sorted(platforms.items(), key=lambda x: -x[1]):
         row = table.add_row()
-        row.cells[0].text = platform.title()
-        row.cells[1].text = str(count)
-        row.cells[2].text = f"{count / total:.1%}"
+        _set_cell_text(row.cells[0], platform.title())
+        _set_cell_text(row.cells[1], str(count))
+        _set_cell_text(row.cells[2], f"{count / total:.1%}")
 
     _add_chart(doc, run_dir / "report" / "chart_platforms.png",
                "Figure 1: Item distribution by source platform", width_in=4.5)
@@ -486,8 +493,8 @@ def _section_sentiment(doc: Document, analysis: AnalysisResults, run_dir: Path):
         _add_table_header_row(table, ["Emotion", "Count"])
         for emotion, count in sorted(emotions.items(), key=lambda x: -x[1]):
             row = table.add_row()
-            row.cells[0].text = emotion.title()
-            row.cells[1].text = str(count)
+            _set_cell_text(row.cells[0], emotion.title())
+            _set_cell_text(row.cells[1], str(count))
 
     _add_chart(doc, run_dir / "report" / "chart_emotions.png",
                "Figure 3: Plutchik emotion distribution", width_in=5.0)
@@ -511,11 +518,11 @@ def _section_sentiment(doc: Document, analysis: AnalysisResults, run_dir: Path):
             neg = d.get("negative", 0)
             nss_a = (pos - neg) / tot if tot else 0
             row = table.add_row()
-            row.cells[0].text = aspect.replace("_", " ").title()
-            row.cells[1].text = str(tot)
-            row.cells[2].text = str(pos)
-            row.cells[3].text = str(neg)
-            row.cells[4].text = f"{nss_a:+.0%}"
+            _set_cell_text(row.cells[0], aspect.replace("_", " ").title())
+            _set_cell_text(row.cells[1], str(tot))
+            _set_cell_text(row.cells[2], str(pos))
+            _set_cell_text(row.cells[3], str(neg))
+            _set_cell_text(row.cells[4], f"{nss_a:+.0%}")
         _body(doc, "", space_after_pt=6)
 
     _add_chart(doc, run_dir / "report" / "chart_aspect_heatmap.png",
@@ -545,21 +552,21 @@ def _section_themes(doc: Document, analysis: AnalysisResults, run_dir: Path,
     for t in sorted(analysis.themes, key=lambda x: -x.item_count):
         scored = scored_map.get(t.theme_id)
         row = table.add_row()
-        row.cells[0].text = t.theme_label
-        row.cells[1].text = str(t.item_count)
-        row.cells[2].text = f"{t.prevalence_pct:.1f}%"
+        _set_cell_text(row.cells[0], t.theme_label)
+        _set_cell_text(row.cells[1], str(t.item_count))
+        _set_cell_text(row.cells[2], f"{t.prevalence_pct:.1f}%")
         if scored:
             sig = scored.signal_strength_score
             sig_tier = scored.signal_strength_tier.value.title()
-            row.cells[3].text = f"{sig:.0%} ({sig_tier})"
+            _set_cell_text(row.cells[3], f"{sig:.0%} ({sig_tier})")
             conf = scored.confidence_score
             conf_tier = scored.confidence_tier.value.title()
-            row.cells[4].text = f"{conf:.0%} ({conf_tier})"
+            _set_cell_text(row.cells[4], f"{conf:.0%} ({conf_tier})")
         else:
-            row.cells[3].text = "-"
-            row.cells[4].text = "-"
+            _set_cell_text(row.cells[3], "-")
+            _set_cell_text(row.cells[4], "-")
         nss = t.net_sentiment_score or 0
-        row.cells[5].text = f"{nss:+.0%}"
+        _set_cell_text(row.cells[5], f"{nss:+.0%}")
 
     _add_chart(doc, run_dir / "report" / "chart_themes.png",
                "Figure 5: Insight prevalence (% of total corpus)", width_in=5.5)
@@ -692,11 +699,10 @@ def _section_brand_health(doc: Document, bh: dict):
     _add_table_header_row(table, ["Component", "Score", "Methodology"])
     for name, score, method in components:
         row = table.add_row()
-        row.cells[0].text = name
+        _set_cell_text(row.cells[0], name)
         col = GREEN if score >= 70 else (AMBER if score >= 50 else RED)
-        p = row.cells[1].paragraphs[0]
-        _run(p, f"{score:.1f}", BODY_FONT, 11, bold=True, color=col)
-        row.cells[2].text = method
+        _set_cell_text(row.cells[1], f"{score:.1f}", bold=True, color=col)
+        _set_cell_text(row.cells[2], method)
 
     # Callout for low Conversation Component — a meaningful finding, not just a low score
     conv_score = bh.get("conversation_component", 0)
@@ -922,10 +928,10 @@ def _section_data_provenance(doc: Document, config: PipelineConfig, items: list 
     for plat_key, count in platform_counts.most_common():
         info = PLATFORM_INFO.get(plat_key, (plat_key.title(), "Online content", "Various"))
         row = table.add_row()
-        row.cells[0].text = info[0]
-        row.cells[1].text = info[1]
-        row.cells[2].text = info[2]
-        row.cells[3].text = f"{count:,}"
+        _set_cell_text(row.cells[0], info[0])
+        _set_cell_text(row.cells[1], info[1])
+        _set_cell_text(row.cells[2], info[2])
+        _set_cell_text(row.cells[3], f"{count:,}")
 
     # Content type summary
     post_n = type_counts.get("post", 0)

@@ -2,7 +2,7 @@
 
 ## Report
 
-[`weight_loss_report.docx`](weight_loss_report.docx) — 4,408 items analysed, 12 insights, NSS +13.8%
+[`weight_loss_report.docx`](weight_loss_report.docx) — 2,484 items analysed, 12 insights, NSS +16.8%
 
 Open the DOCX file to see the full deliverable. It contains all charts, verbatims, methodology disclosure, and data provenance.
 
@@ -24,12 +24,12 @@ The research brief is at [`../../briefs/weight_loss_brief.json`](../../briefs/we
 
 | | |
 |---|---|
-| Items analysed | 4,408 |
+| Items analysed | 2,484 |
 | Themes identified | 12 |
 | Insights generated | 12 |
-| Net Sentiment Score | +13.8% |
-| Brand Health Score | 56.2/100 |
-| Data sources | reddit: 1,907, instagram: 2,340, youtube: 161 |
+| Net Sentiment Score | +16.8% |
+| Brand Health Score | 66.1/100 |
+| Data sources | reddit: 1,404, instagram: 923, youtube: 157 |
 
 ## Top Themes
 
