@@ -2,7 +2,7 @@
 
 Turn a research brief concerning a brand or a broad topic into a scored, client-ready consumer research report.
 
-Given a brand, category, geography, and business questions, the pipeline collects evidence from online sources, normalizes it into a shared schema, filters for relevance, analyzes sentiment and themes, scores confidence from data, and generates a versioned DOCX deliverable.
+Given a brand or topic, category, geography, and business questions, the pipeline collects evidence from online sources, normalizes it into a shared schema, filters for relevance, analyzes sentiment and themes, scores confidence from data, and generates a versioned DOCX deliverable.
 
 ## Evaluation
 
