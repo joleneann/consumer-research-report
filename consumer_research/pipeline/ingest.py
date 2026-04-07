@@ -126,7 +126,7 @@ def ingest_external_data(
         List of NormalizedItem objects ready for normalization pipeline
     """
     logger.info(f"Loading {data_path.name}...")
-    raw_data = json.loads(data_path.read_text(encoding="utf-8"))
+    raw_data = json.loads(data_path.read_text(encoding="utf-8-sig"))  # utf-8-sig handles BOM-encoded files
 
     if not isinstance(raw_data, list):
         if isinstance(raw_data, dict) and "items" in raw_data:

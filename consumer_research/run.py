@@ -115,19 +115,16 @@ def cmd_ingest(args):
         run_config.model_dump_json(indent=2), encoding="utf-8"
     )
 
-    # Save brief for provenance parity with collected runs
-    brief = {
-        "brand_name": args.brand,
-        "category": args.category,
-        "business_objectives": args.objectives or [],
-        "geographic_focus": args.geo or "",
-        "data_source": str(data_path),
-        "ingested_items": len(items),
-        "normalized_items": len(corpus),
-    }
-    (run_dir / "brief.json").write_text(
-        json.dumps(brief, indent=2), encoding="utf-8"
+    # Save brief using ResearchBrief schema for compatibility with brief.py load()
+    from consumer_research.pipeline.brief import ResearchBrief
+    brief = ResearchBrief(
+        brand_name=args.brand,
+        category=args.category,
+        business_questions=args.objectives or [],
+        geographic_focus=args.geo or "",
+        additional_context=f"Ingested from {data_path.name} ({len(items)} raw items, {len(corpus)} after normalization)",
     )
+    brief.save(run_dir)
 
     print(f"\nRun created: {run_id}")
     print(f"  {len(corpus)} items normalized and ready for analysis")

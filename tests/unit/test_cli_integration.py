@@ -215,3 +215,9 @@ class TestIngestCLI:
         # Verify raw item count matches input
         raw_items = json.loads((run_dir / "raw" / "external_ingested.json").read_text(encoding="utf-8"))
         assert len(raw_items) == 2
+
+        # Verify brief.json is schema-compatible with ResearchBrief.load()
+        from consumer_research.pipeline.brief import ResearchBrief
+        brief = ResearchBrief.load(run_dir)
+        assert brief.brand_name == "TestBrand"
+        assert brief.category == "TestCategory"

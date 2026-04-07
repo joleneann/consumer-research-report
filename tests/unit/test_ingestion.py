@@ -186,3 +186,12 @@ class TestIngestExternalData:
         f.write_text("[]")
         items = ingest_external_data(f)
         assert items == []
+
+    def test_bom_encoded_json(self, tmp_path):
+        """Windows apps (Excel, Notepad) often save JSON with a UTF-8 BOM."""
+        data = [{"text": "BOM test - this product is excellent quality", "source": "reddit", "url": "https://reddit.com/1"}]
+        f = tmp_path / "bom_test.json"
+        f.write_bytes(b"\xef\xbb\xbf" + json.dumps(data).encode("utf-8"))
+        items = ingest_external_data(f)
+        assert len(items) == 1
+        assert "BOM test" in items[0].content_text
