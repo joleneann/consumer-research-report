@@ -78,11 +78,8 @@ def cmd_ingest(args):
     logger.info(f"Ingested {len(items)} items from {data_path.name}")
 
     # Save raw data for provenance (Collection Funnel in report reads from raw/)
-    import shutil
     raw_dir = run_dir / "raw"
     raw_dir.mkdir(exist_ok=True)
-    shutil.copy(str(data_path), str(raw_dir / f"external_{data_path.name}"))
-    # Also save as structured JSON so docx_generator can count raw items
     (raw_dir / "external_ingested.json").write_text(
         json.dumps([item.model_dump(mode="json") for item in items], default=str),
         encoding="utf-8",
