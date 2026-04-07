@@ -46,7 +46,7 @@ class RedditCollector(BaseCollector):
         subreddits: list[str] | None = None,
         max_posts: int = 500,
         max_comments_per_post: int = 20,
-        min_score: int = 3,
+        min_score: int = 2,
         sort: str = "relevance",
         time_filter: str = "year",
     ):

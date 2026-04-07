@@ -203,7 +203,7 @@ The study scripts (`run_weight_loss.py`, `stage4_analysis.py`, `stage5_synthesis
 
 ```
 consumer_research/              Core package: collectors, pipeline, report generation
-tests/                          Unit + smoke + integration tests (115 tests, no API calls)
+tests/                          Unit + smoke + integration tests (128 tests, no API calls)
 docs/                           Methodology, product docs, running guide
 ```
 

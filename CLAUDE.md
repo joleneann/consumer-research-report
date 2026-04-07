@@ -76,7 +76,7 @@ data/                          — make_in_india.json, weight_loss.json, working
 ```
 
 ## Collection Defaults (MINIMUMS — do not reduce)
-Reddit: 500 posts, 20 comments/post, min 3 upvotes | YouTube: 50 videos, 100 comments/video, min 2 likes | News: 200 articles | Academic: 50 papers | Serper: 100 results | Trends: full 12-month history (separate quantitative layer)
+Reddit: 500 posts, 20 comments/post, min 2 upvotes | YouTube: 50 videos, 100 comments/video, min 2 likes | Twitter: min 2 likes | Instagram: min 2 likes | Amazon/Flipkart: min 1 helpful vote | News: 200 articles (no threshold) | Academic: 50 papers (no threshold) | Serper: 100 results | Trends: full 12-month history (separate quantitative layer)
 
 ## Data Quality Architecture (3-layer defence)
 **Layer 1 — Brand-anchored keywords** (`keywords.py`): Every search query MUST include the brand name. Category-only queries ("best [category]", "[category] review") return generic noise. `_generate_category_terms()` now prepends brand name to all terms. Never revert this.
@@ -195,7 +195,7 @@ Reports use serial numbering: `report_v001.docx`, `report_v002.docx`, etc. Each 
 
 ## Design Decisions
 - **Thread-level dedup**: Max 5 comments per Reddit thread, highest engagement kept
-- **Engagement filter**: Reddit ≥3 upvotes, YouTube ≥2 likes — below this is noise
+- **Engagement filter**: Social platforms (Reddit, YouTube, Twitter, Instagram) ≥2 likes/upvotes. Review platforms (Amazon, Flipkart) ≥1 helpful vote. No threshold for news, academic, trends, web search.
 - **Multilingual**: Hindi/Hinglish supported for Indian market studies. Filter prompt explicitly handles mixed-language content
 - **Trends separated**: Google Trends = quantitative validation layer. NOT sent through opinion relevance filter
 - **Keyword expansion**: Brief → brand variants, misspellings, Hindi, competitor comparisons, occasions, complaints

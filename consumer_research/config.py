@@ -21,11 +21,17 @@ class CollectionConfig:
     subreddits: list[str] = field(default_factory=list)
     reddit_max_posts: int = 500
     reddit_max_comments_per_post: int = 20
-    reddit_min_score: int = 3  # Minimum upvotes to include a comment
+    reddit_min_score: int = 2  # Minimum upvotes to include a comment
     # YouTube — THESE ARE MINIMUMS, NOT TARGETS
     youtube_max_videos: int = 50
     youtube_max_comments_per_video: int = 100
     youtube_min_likes: int = 2  # Minimum likes to include a comment
+    # Twitter/X — engagement threshold for external data
+    twitter_min_likes: int = 2  # Minimum likes to include a tweet/reply
+    # Instagram — engagement threshold for external data
+    instagram_min_likes: int = 2  # Minimum likes to include a post/comment
+    # Amazon / Flipkart — review platform threshold
+    review_min_helpful_votes: int = 1  # Minimum helpful votes for reviews
     # Google Trends
     trends_geo: str = ""  # e.g., "IN" for India
     # NewsData.io

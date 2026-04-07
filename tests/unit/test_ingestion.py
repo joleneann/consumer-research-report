@@ -149,14 +149,15 @@ class TestIngestExternalData:
                 "source": "instagram",
                 "url": "https://instagram.com/p/test123",
                 "comments": [
-                    {"text": "Great comment", "username": "user1"},
+                    {"text": "Great comment with enough length", "username": "user1", "likes": 5},
                 ],
             }
         ]
         f = tmp_path / "test.json"
         f.write_text(json.dumps(data))
         items = ingest_external_data(f)
-        assert len(items) == 2  # 1 post + 1 comment
+        # 1 post + 1 comment (comment has 5 likes, above threshold of 2)
+        assert len(items) == 2
         platforms = {i.source_platform for i in items}
         assert SourcePlatform.INSTAGRAM in platforms
 
@@ -195,3 +196,81 @@ class TestIngestExternalData:
         items = ingest_external_data(f)
         assert len(items) == 1
         assert "BOM test" in items[0].content_text
+
+
+class TestEngagementThresholds:
+    """Verify platform-specific engagement filtering on externally ingested data."""
+
+    def _make_platform_scraped(self, platform, likes=0, comments_data=None):
+        """Build a single platform-scraped item."""
+        item = {
+            "metadata_content": {"content": f"This is a sufficiently long {platform} post for testing engagement thresholds"},
+            "engagements": {"likes": likes},
+            "source": platform,
+            "url": f"https://{platform}.com/post/123",
+            "id": "post_123",
+            "comments": comments_data or [],
+        }
+        return item
+
+    def _make_comment(self, text="This is a sufficiently long comment for testing", likes=0):
+        return {"content": text, "text": text, "username": "user1", "score": likes, "likes": likes}
+
+    def test_twitter_comment_below_threshold_dropped(self, tmp_path):
+        """Twitter comments with < 2 likes should be filtered out."""
+        data = [self._make_platform_scraped("twitter", likes=10, comments_data=[
+            self._make_comment("High engagement comment for testing threshold", likes=5),
+            self._make_comment("Low engagement comment for testing threshold", likes=1),
+        ])]
+        f = tmp_path / "test.json"
+        f.write_text(json.dumps(data))
+        items = ingest_external_data(f)
+        comments = [i for i in items if i.content_type.value == "comment"]
+        # Only the high-engagement comment should survive
+        assert len(comments) == 1
+
+    def test_twitter_comment_at_threshold_kept(self, tmp_path):
+        """Twitter comments with exactly 2 likes should be kept."""
+        data = [self._make_platform_scraped("twitter", likes=10, comments_data=[
+            self._make_comment("Exactly at threshold comment for testing", likes=2),
+        ])]
+        f = tmp_path / "test.json"
+        f.write_text(json.dumps(data))
+        items = ingest_external_data(f)
+        comments = [i for i in items if i.content_type.value == "comment"]
+        assert len(comments) == 1
+
+    def test_instagram_comment_below_threshold_dropped(self, tmp_path):
+        """Instagram comments with < 2 likes should be filtered out."""
+        data = [self._make_platform_scraped("instagram", likes=10, comments_data=[
+            self._make_comment("High engagement IG comment for testing", likes=3),
+            self._make_comment("Zero engagement IG comment for testing", likes=0),
+        ])]
+        f = tmp_path / "test.json"
+        f.write_text(json.dumps(data))
+        items = ingest_external_data(f)
+        comments = [i for i in items if i.content_type.value == "comment"]
+        assert len(comments) == 1
+
+    def test_posts_never_filtered_for_social(self, tmp_path):
+        """Social media posts should never be engagement-filtered (they frame discussions)."""
+        data = [self._make_platform_scraped("twitter", likes=0)]
+        f = tmp_path / "test.json"
+        f.write_text(json.dumps(data))
+        items = ingest_external_data(f)
+        posts = [i for i in items if i.content_type.value == "post"]
+        assert len(posts) == 1
+
+    def test_news_not_filtered(self, tmp_path):
+        """News items should never be engagement-filtered."""
+        data = [{"text": "News article about hair colour trends in India", "source": "news", "url": "https://news.com/1"}]
+        f = tmp_path / "test.json"
+        f.write_text(json.dumps(data))
+        items = ingest_external_data(f)
+        assert len(items) == 1
+
+    def test_reddit_threshold_now_2(self, tmp_path):
+        """Reddit threshold changed from 3 to 2. Comments with score=2 should pass."""
+        from consumer_research.config import CollectionConfig
+        cfg = CollectionConfig(brand_name="test", category="test")
+        assert cfg.reddit_min_score == 2
