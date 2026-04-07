@@ -32,12 +32,19 @@ def _check_script_runs(script_path: Path):
     Scripts that need CLI args or missing data will exit with a clean error
     message. We just verify they don't crash with NameError/ImportError/TypeError.
     """
+    # Point RUNS_DIR at a nonexistent path so scripts that default to
+    # "latest run" exit immediately with "no runs found" instead of
+    # running a full report generation against real data.
+    env = {**__import__("os").environ, "CONSUMER_RESEARCH_RUNS_DIR": str(REPO_ROOT / "_empty_runs_")}
     result = subprocess.run(
         [sys.executable, str(script_path)],
         capture_output=True,
         text=True,
         timeout=15,
         cwd=str(REPO_ROOT),
+        encoding="utf-8",
+        errors="replace",
+        env=env,
     )
     stderr = result.stderr
     # These are fatal import/wiring bugs - the script is broken
