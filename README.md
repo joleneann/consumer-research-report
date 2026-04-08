@@ -235,7 +235,7 @@ Social listening methodology has structural limitations that cannot be fully eli
 | 10 | **No temporal weighting in theme extraction** - Old viral threads count equally. | LOW | Yes | Not implemented |
 | 11 | **Cross-theme interactions not surfaced** - Multi-coded items split, never analysed jointly. | MEDIUM | Yes | Not implemented |
 | 12 | **No reliable demographic data** - No verified age, gender, or location from any platform. | CRITICAL | No | Inherent limitation |
-| 13 | **LLM non-determinism in theme extraction** - Same corpus can produce slightly different themes across runs due to model inference variance. | LOW | Partially | **MITIGATED** |
+| 13 | **LLM non-determinism in theme extraction** - Same corpus can produce slightly different themes across runs due to model inference variance. | MEDIUM | Partially | **MITIGATED** |
 
 Full details with "How to Fix" column in [`CLAUDE.md`](CLAUDE.md). All limitations disclosed in the Methodology section of every generated report.
 
