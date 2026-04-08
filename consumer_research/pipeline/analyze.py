@@ -446,6 +446,10 @@ def _extract_themes(
         p = item.source_platform.value
         by_platform.setdefault(p, []).append(item)
 
+    # Sort each platform group by item_id for deterministic sampling
+    for platform in by_platform:
+        by_platform[platform].sort(key=lambda x: x.item_id)
+
     sample: list[NormalizedItem] = []
     sample_target = min(300, len(items))
     for platform_items in by_platform.values():
@@ -498,7 +502,10 @@ def _extract_themes(
 
     # ── Pass 2: Map ALL remaining items to themes in batches ──
     mapped_ids = {iid for ids in theme_item_map.values() for iid in ids}
-    unmapped_items = [i for i in items if i.item_id not in mapped_ids]
+    unmapped_items = sorted(
+        [i for i in items if i.item_id not in mapped_ids],
+        key=lambda x: x.item_id,
+    )
     logger.info(f"  Theme mapping: classifying {len(unmapped_items)} remaining items in batches...")
 
     themes_summary = json.dumps([

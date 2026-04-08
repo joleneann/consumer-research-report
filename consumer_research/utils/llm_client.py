@@ -68,7 +68,7 @@ class ClaudeClient(LLMClient):
 class GeminiClient(LLMClient):
     """Google Gemini API client (using google-genai SDK)."""
 
-    def __init__(self, model: str = "gemini-2.0-flash"):
+    def __init__(self, model: str = "gemini-2.0-flash-001"):
         from google import genai
         api_key = os.environ.get("GOOGLE_API_KEY", "")
         if not api_key:
@@ -106,10 +106,14 @@ def create_llm_client(preferred_provider: str = "auto", model: str | None = None
         An LLMClient instance.
     """
     if preferred_provider == "claude":
-        return ClaudeClient(model=model) if model else ClaudeClient()
+        client = ClaudeClient(model=model) if model else ClaudeClient()
+        logger.info(f"LLM provider: Claude ({client.model_name})")
+        return client
 
     if preferred_provider == "gemini":
-        return GeminiClient(model=model) if model else GeminiClient()
+        client = GeminiClient(model=model) if model else GeminiClient()
+        logger.info(f"LLM provider: Gemini ({client.model_name})")
+        return client
 
     # Auto-detect — Claude first (primary provider), Gemini as fallback
     anthropic_key = os.environ.get("ANTHROPIC_API_KEY", "")

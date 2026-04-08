@@ -255,7 +255,7 @@ Respond with JSON only:
 {{"additional_keywords": ["kw1", "kw2", ...]}}"""
 
     try:
-        text = llm_client.generate(prompt, max_tokens=1024, temperature=0.3)
+        text = llm_client.generate(prompt, max_tokens=1024, temperature=0.0)
         if text.startswith("```"):
             text = text.split("```")[1]
             if text.startswith("json"):
