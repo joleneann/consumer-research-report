@@ -101,8 +101,20 @@ theme_map: dict[str, dict] = {}
 for theme in analysis.get("themes", []):
     theme_map[theme["theme_id"]] = theme
 
-# Sort insights by confidence (descending)
-scored_insights.sort(key=lambda si: si.get("confidence_score", 0), reverse=True)
+# Build theme_id -> scored insight lookup (for confidence/signal metadata)
+# If multiple insights share a theme, keep the highest-confidence one
+insight_by_theme: dict[str, dict] = {}
+for si in sorted(scored_insights, key=lambda s: s.get("confidence_score", 0), reverse=True):
+    for tid in si["insight"].get("supporting_theme_ids", []):
+        if tid not in insight_by_theme:
+            insight_by_theme[tid] = si
+
+# Sort themes by confidence of their best insight (descending), then by item count
+themes = analysis.get("themes", [])
+themes.sort(key=lambda t: (
+    insight_by_theme.get(t["theme_id"], {}).get("confidence_score", 0),
+    t.get("item_count", 0),
+), reverse=True)
 
 
 # ── Helpers ─────────────────────────────────────────────────────────────────
@@ -197,29 +209,25 @@ def write_data_rows(ws, rows: list[dict], start_row: int) -> None:
         ws.column_dimensions[get_column_letter(col_idx)].width = COL_WIDTHS.get(hdr, 16)
 
 
-def write_insight_tab(wb, tab_num: int, scored_insight: dict, theme_items: list[dict]) -> None:
-    """Write one insight tab with metadata header + data rows."""
-    ins = scored_insight["insight"]
-    theme_ids = ins.get("supporting_theme_ids", [])
-    theme = theme_map.get(theme_ids[0], {}) if theme_ids else {}
-
-    label = theme.get("theme_label", ins.get("insight_id", "Unknown"))
+def write_theme_tab(wb, tab_num: int, theme: dict, theme_items: list[dict]) -> None:
+    """Write one theme tab with metadata header + data rows."""
+    label = theme.get("theme_label", theme.get("theme_id", "Unknown"))
     sheet_name = clean_sheet_name(f"{tab_num:02d} {label}")
     ws = wb.create_sheet(title=sheet_name)
 
     # Metadata header rows
-    conf = scored_insight.get("confidence_score", 0)
-    signal = scored_insight.get("signal_strength_score", 0)
     nss = theme.get("net_sentiment_score", 0)
     item_count = len(theme_items)
+    si = insight_by_theme.get(theme.get("theme_id", ""))
 
     meta_rows = [
         ("Theme", label),
         ("Items", str(item_count)),
         ("Net Sentiment Score", f"{nss:+.1%}"),
-        ("Confidence", f"{conf:.0%}"),
-        ("Signal Strength", f"{signal:.0%}"),
     ]
+    if si:
+        meta_rows.append(("Confidence", f"{si.get('confidence_score', 0):.0%}"))
+        meta_rows.append(("Signal Strength", f"{si.get('signal_strength_score', 0):.0%}"))
 
     for r_idx, (key, val) in enumerate(meta_rows, 1):
         cell_a = ws.cell(row=r_idx, column=1, value=key)
@@ -252,46 +260,12 @@ wb.remove(wb.active)
 # Track which items are themed (for unthemed tab)
 all_themed_ids: set[str] = set()
 
-# Deduplicate insights by theme — if multiple insights share the same theme,
-# keep only the highest-confidence one (list is already sorted by confidence)
-seen_themes: set[str] = set()
-deduped_insights: list[dict] = []
-for si in scored_insights:
-    ins = si["insight"]
-    theme_ids = tuple(sorted(ins.get("supporting_theme_ids", [])))
-    if theme_ids in seen_themes:
-        continue
-    seen_themes.add(theme_ids)
-    deduped_insights.append(si)
-
-if len(deduped_insights) < len(scored_insights):
-    print(f"  Deduplicated: {len(scored_insights)} insights -> {len(deduped_insights)} unique themes")
-
-# Insight tabs
-for idx, si in enumerate(deduped_insights, 1):
-    ins = si["insight"]
-    theme_ids = ins.get("supporting_theme_ids", [])
-
-    # Collect items from all supporting themes
-    tab_item_ids: list[str] = []
-    for tid in theme_ids:
-        theme = theme_map.get(tid, {})
-        tab_item_ids.extend(theme.get("supporting_item_ids", []))
-
-    # Deduplicate within this tab (item could be in multiple supporting themes)
-    seen = set()
-    unique_ids = []
-    for iid in tab_item_ids:
-        if iid not in seen:
-            seen.add(iid)
-            unique_ids.append(iid)
-
-    all_themed_ids.update(unique_ids)
-
-    # Resolve to actual items (skip any not in filtered corpus)
-    theme_items = [item_map[iid] for iid in unique_ids if iid in item_map]
-
-    write_insight_tab(wb, idx, si, theme_items)
+# Theme tabs
+for idx, theme in enumerate(themes, 1):
+    item_ids = theme.get("supporting_item_ids", [])
+    theme_items = [item_map[iid] for iid in item_ids if iid in item_map]
+    all_themed_ids.update(item_ids)
+    write_theme_tab(wb, idx, theme, theme_items)
 
 # Unthemed tab
 unthemed_items = [item for item in corpus if item["item_id"] not in all_themed_ids]
@@ -336,13 +310,13 @@ for r_idx, (label, value) in enumerate(summary_meta, 3):
         c.border = THIN_BORD
         c.alignment = Alignment(horizontal="left", vertical="center")
 
-# Insight overview table
+# Theme overview table
 table_start = len(summary_meta) + 5
-ws_sum.cell(row=table_start, column=1, value="Insight Overview").font = NAVY_FONT
+ws_sum.cell(row=table_start, column=1, value="Theme Overview").font = NAVY_FONT
 table_start += 1
 
-ins_headers = ["#", "Theme", "Items", "Confidence", "Signal Strength", "NSS"]
-for col_idx, hdr in enumerate(ins_headers, 1):
+theme_headers = ["#", "Theme", "Items", "Confidence", "Signal Strength", "NSS"]
+for col_idx, hdr in enumerate(theme_headers, 1):
     cell = ws_sum.cell(row=table_start, column=col_idx, value=hdr)
     cell.font = HDR_FONT
     cell.fill = HDR_FILL
@@ -350,19 +324,17 @@ for col_idx, hdr in enumerate(ins_headers, 1):
     cell.border = THIN_BORD
 ws_sum.row_dimensions[table_start].height = 22
 
-for r_idx, si in enumerate(deduped_insights, table_start + 1):
-    ins = si["insight"]
-    theme_ids = ins.get("supporting_theme_ids", [])
-    theme = theme_map.get(theme_ids[0], {}) if theme_ids else {}
-    label = theme.get("theme_label", ins.get("insight_id", ""))
+for r_idx, theme in enumerate(themes, table_start + 1):
+    label = theme.get("theme_label", theme.get("theme_id", ""))
     nss = theme.get("net_sentiment_score", 0)
+    si = insight_by_theme.get(theme.get("theme_id", ""))
 
     row_data = [
         r_idx - table_start,
         label,
-        ins.get("supporting_item_count", 0),
-        f"{si.get('confidence_score', 0):.0%}",
-        f"{si.get('signal_strength_score', 0):.0%}",
+        theme.get("item_count", 0),
+        f"{si.get('confidence_score', 0):.0%}" if si else "-",
+        f"{si.get('signal_strength_score', 0):.0%}" if si else "-",
         f"{nss:+.1%}",
     ]
     is_alt = ((r_idx - table_start) % 2 == 0)

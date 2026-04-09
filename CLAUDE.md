@@ -66,7 +66,8 @@ scripts/resume_stage3.py       — Resume from Stage 3. Usage: `python scripts/r
 scripts/resume_stage4.py       — Resume from Stage 4. Usage: `python scripts/resume_stage4.py <run_id>`
 scripts/rescore.py             — Re-score insights (data-driven, no API)
 scripts/resynthesize.py        — Re-synthesize insights via API
-scripts/export_to_excel.py     — Export run data to Excel
+scripts/export_to_excel.py     — Export run data to Excel (flat, by platform)
+scripts/export_insights_excel.py — Export insight-organised Excel: one tab per theme + unthemed items. Usage: `python scripts/export_insights_excel.py [run_id]`
 # examples/ — showcase artifacts and per-study scripts
 examples/studies/weight_loss/  — run_weight_loss.py, stage4_analysis.py, stage5_synthesis.py
 examples/outcomes/             — DOCX reports, manifests, READMEs for all completed studies
@@ -203,12 +204,13 @@ Field names are auto-detected (text/content/body/message, source/platform/channe
 - **Recommendations section**: Sorted by confidence (primary) then signal (tiebreaker). Headings are "Recommendation 01", "Recommendation 02", etc. — no quadrant bracket labels.
 - **Radar charts**: Named `chart_radar_{insight_id}.png` — never positional. Title = theme label only (no INS_xxx). Looked up by `ins.insight_id` in deep dives. One radar per insight (count varies per run). Total chart count = 7 standard (sentiment, platforms, temporal, themes, matrix, emotions, aspect_heatmap) + N radar charts.
 - **Regeneration**: `scripts/regenerate_report.py [run_id]` calls `generate_all_charts()` then `generate_docx_report()`. Defaults to latest run if no run_id given. Loads config from `config.json`. Always regenerate charts before DOCX to pick up any changes.
+- **Excel export**: `scripts/export_insights_excel.py [run_id]` generates a theme-organised Excel workbook. One tab per theme (sorted by confidence) containing all corpus items for that theme, plus an "Unthemed Items" tab and a Summary tab. Each theme tab has metadata (theme label, item count, NSS, confidence, signal strength). Items can appear in multiple tabs (multi-coded). Lato font throughout. Run after Stage 7 to produce the client-ready data export alongside the DOCX report.
 
 ## Report Naming Convention
 Reports use serial numbering: `report_v001.docx`, `report_v002.docx`, etc. Each regeneration auto-increments. Never overwrite previous versions. The generator scans for existing `report_v*.docx` files and picks the next number using numeric max (not alphabetical sort — mixed zero-padded versions break alphabetical).
 
 ## Design Decisions
-- **Thread-level dedup**: Max 5 comments per Reddit thread, highest engagement kept
+- **Thread-level dedup**: Max 5 comments per Reddit thread, selected randomly (seed 42) to prevent high-engagement voices from dominating
 - **No engagement filter**: All items enter the corpus regardless of likes/upvotes. Engagement is preserved as metadata for Signal Strength scoring but never gates corpus admission. Quality controls (empty text, minimum length, dedup) handle actual noise.
 - **Multilingual**: Hindi/Hinglish supported for Indian market studies. Filter prompt explicitly handles mixed-language content
 - **Trends separated**: Google Trends = quantitative validation layer. NOT sent through opinion relevance filter
