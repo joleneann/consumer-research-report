@@ -1,0 +1,44 @@
+[
+  {
+    "threshold": 5,
+    "removed": 49,
+    "pct_removed": 1.09,
+    "kept": 4426,
+    "high_engagement_lost": 6
+  },
+  {
+    "threshold": 10,
+    "removed": 488,
+    "pct_removed": 10.91,
+    "kept": 3987,
+    "high_engagement_lost": 8
+  },
+  {
+    "threshold": 15,
+    "removed": 717,
+    "pct_removed": 16.02,
+    "kept": 3758,
+    "high_engagement_lost": 12
+  },
+  {
+    "threshold": 20,
+    "removed": 907,
+    "pct_removed": 20.27,
+    "kept": 3568,
+    "high_engagement_lost": 13
+  },
+  {
+    "threshold": 30,
+    "removed": 1297,
+    "pct_removed": 28.98,
+    "kept": 3178,
+    "high_engagement_lost": 24
+  },
+  {
+    "threshold": 50,
+    "removed": 1790,
+    "pct_removed": 40.0,
+    "kept": 2685,
+    "high_engagement_lost": 49
+  }
+]

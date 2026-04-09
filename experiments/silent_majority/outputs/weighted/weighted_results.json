@@ -1,0 +1,346 @@
+{
+  "approach": "weighted_inclusion",
+  "corpus_size": 14436,
+  "weight_function": "max(0.1, log(1 + engagement))",
+  "floor_weight_items": 7878,
+  "weight_range": [
+    0.1,
+    14.75
+  ],
+  "overall_unweighted_nss": 0.388,
+  "overall_weighted_nss": 0.4761,
+  "overall_delta": 0.0881,
+  "avg_rank_change": 2.0,
+  "themes": [
+    {
+      "theme_id": "THM_01_GREY_COVERAGE",
+      "theme_label": "Grey Hair Coverage",
+      "unweighted_count": 787,
+      "unweighted_sentiment": {
+        "positive": 509,
+        "negative": 61,
+        "neutral": 156,
+        "mixed": 61
+      },
+      "unweighted_nss": 0.5693,
+      "weighted_count": 787,
+      "weighted_sentiment": {
+        "positive": 961.33,
+        "negative": 105.3,
+        "neutral": 166.58,
+        "mixed": 102.93
+      },
+      "weighted_nss": 0.6407,
+      "total_weight": 1336.14,
+      "delta": 0.0714
+    },
+    {
+      "theme_id": "THM_02_NATURAL_CHEMICAL_FREE",
+      "theme_label": "Natural & Chemical-Free Products",
+      "unweighted_count": 827,
+      "unweighted_sentiment": {
+        "positive": 612,
+        "negative": 44,
+        "neutral": 83,
+        "mixed": 88
+      },
+      "unweighted_nss": 0.6868,
+      "weighted_count": 827,
+      "weighted_sentiment": {
+        "positive": 1105.09,
+        "negative": 67.72,
+        "neutral": 133.3,
+        "mixed": 155.76
+      },
+      "weighted_nss": 0.7096,
+      "total_weight": 1461.87,
+      "delta": 0.0228
+    },
+    {
+      "theme_id": "THM_03_PRODUCT_EFFECTIVENESS",
+      "theme_label": "Product Effectiveness & Results",
+      "unweighted_count": 1635,
+      "unweighted_sentiment": {
+        "positive": 1061,
+        "negative": 327,
+        "neutral": 163,
+        "mixed": 84
+      },
+      "unweighted_nss": 0.4489,
+      "weighted_count": 1635,
+      "weighted_sentiment": {
+        "positive": 1915.05,
+        "negative": 302.36,
+        "neutral": 222.79,
+        "mixed": 153.63
+      },
+      "weighted_nss": 0.6217,
+      "total_weight": 2593.82,
+      "delta": 0.1728
+    },
+    {
+      "theme_id": "THM_04_EASE_CONVENIENCE",
+      "theme_label": "Ease of Use & Quick Application",
+      "unweighted_count": 1717,
+      "unweighted_sentiment": {
+        "positive": 968,
+        "negative": 186,
+        "neutral": 428,
+        "mixed": 135
+      },
+      "unweighted_nss": 0.4554,
+      "weighted_count": 1717,
+      "weighted_sentiment": {
+        "positive": 1632.48,
+        "negative": 265.59,
+        "neutral": 446.93,
+        "mixed": 215.0
+      },
+      "weighted_nss": 0.5339,
+      "total_weight": 2560.0,
+      "delta": 0.0785
+    },
+    {
+      "theme_id": "THM_05_DAMAGE_SAFETY",
+      "theme_label": "Hair Damage & Safety Concerns",
+      "unweighted_count": 1275,
+      "unweighted_sentiment": {
+        "positive": 718,
+        "negative": 218,
+        "neutral": 173,
+        "mixed": 166
+      },
+      "unweighted_nss": 0.3922,
+      "weighted_count": 1275,
+      "weighted_sentiment": {
+        "positive": 1343.07,
+        "negative": 310.9,
+        "neutral": 241.05,
+        "mixed": 330.39
+      },
+      "weighted_nss": 0.4638,
+      "total_weight": 2225.41,
+      "delta": 0.0716
+    },
+    {
+      "theme_id": "THM_06_PRICE_VALUE",
+      "theme_label": "Price & Value for Money",
+      "unweighted_count": 1564,
+      "unweighted_sentiment": {
+        "positive": 853,
+        "negative": 179,
+        "neutral": 423,
+        "mixed": 109
+      },
+      "unweighted_nss": 0.4309,
+      "weighted_count": 1564,
+      "weighted_sentiment": {
+        "positive": 1505.06,
+        "negative": 212.8,
+        "neutral": 569.77,
+        "mixed": 185.5
+      },
+      "weighted_nss": 0.5225,
+      "total_weight": 2473.13,
+      "delta": 0.0916
+    },
+    {
+      "theme_id": "THM_07_DIY_HOME_COLOUR",
+      "theme_label": "DIY & Home Hair Colouring",
+      "unweighted_count": 757,
+      "unweighted_sentiment": {
+        "positive": 419,
+        "negative": 65,
+        "neutral": 187,
+        "mixed": 86
+      },
+      "unweighted_nss": 0.4676,
+      "weighted_count": 757,
+      "weighted_sentiment": {
+        "positive": 844.7,
+        "negative": 116.32,
+        "neutral": 390.99,
+        "mixed": 176.77
+      },
+      "weighted_nss": 0.4764,
+      "total_weight": 1528.79,
+      "delta": 0.0088
+    },
+    {
+      "theme_id": "THM_08_LONGEVITY_FADING",
+      "theme_label": "Colour Longevity & Fading",
+      "unweighted_count": 979,
+      "unweighted_sentiment": {
+        "positive": 507,
+        "negative": 97,
+        "neutral": 262,
+        "mixed": 113
+      },
+      "unweighted_nss": 0.4188,
+      "weighted_count": 979,
+      "weighted_sentiment": {
+        "positive": 915.95,
+        "negative": 148.64,
+        "neutral": 317.75,
+        "mixed": 187.68
+      },
+      "weighted_nss": 0.4887,
+      "total_weight": 1570.02,
+      "delta": 0.0699
+    },
+    {
+      "theme_id": "THM_09_HENNA_TRADITIONAL",
+      "theme_label": "Henna & Traditional Hair Colouring",
+      "unweighted_count": 420,
+      "unweighted_sentiment": {
+        "positive": 292,
+        "negative": 29,
+        "neutral": 59,
+        "mixed": 40
+      },
+      "unweighted_nss": 0.6262,
+      "weighted_count": 420,
+      "weighted_sentiment": {
+        "positive": 512.5,
+        "negative": 38.14,
+        "neutral": 105.49,
+        "mixed": 104.0
+      },
+      "weighted_nss": 0.6241,
+      "total_weight": 760.13,
+      "delta": 0.0021
+    },
+    {
+      "theme_id": "THM_10_BEARD_MENS",
+      "theme_label": "Beard & Mens Grooming",
+      "unweighted_count": 499,
+      "unweighted_sentiment": {
+        "positive": 323,
+        "negative": 38,
+        "neutral": 96,
+        "mixed": 42
+      },
+      "unweighted_nss": 0.5711,
+      "weighted_count": 499,
+      "weighted_sentiment": {
+        "positive": 541.4,
+        "negative": 57.92,
+        "neutral": 72.37,
+        "mixed": 57.65
+      },
+      "weighted_nss": 0.6629,
+      "total_weight": 729.33,
+      "delta": 0.0918
+    },
+    {
+      "theme_id": "THM_11_BRAND_TRUST",
+      "theme_label": "Brand Experience & Trust",
+      "unweighted_count": 632,
+      "unweighted_sentiment": {
+        "positive": 328,
+        "negative": 72,
+        "neutral": 188,
+        "mixed": 44
+      },
+      "unweighted_nss": 0.4051,
+      "weighted_count": 632,
+      "weighted_sentiment": {
+        "positive": 637.86,
+        "negative": 109.44,
+        "neutral": 267.43,
+        "mixed": 93.81
+      },
+      "weighted_nss": 0.4767,
+      "total_weight": 1108.54,
+      "delta": 0.0716
+    },
+    {
+      "theme_id": "THM_12_TRENDS_EXPRESSION",
+      "theme_label": "Colour Trends & Self-Expression",
+      "unweighted_count": 1162,
+      "unweighted_sentiment": {
+        "positive": 601,
+        "negative": 80,
+        "neutral": 362,
+        "mixed": 119
+      },
+      "unweighted_nss": 0.4484,
+      "weighted_count": 1162,
+      "weighted_sentiment": {
+        "positive": 1225.21,
+        "negative": 181.04,
+        "neutral": 736.95,
+        "mixed": 212.65
+      },
+      "weighted_nss": 0.4432,
+      "total_weight": 2355.85,
+      "delta": 0.0052
+    },
+    {
+      "theme_id": "THM_013",
+      "theme_label": "Bollywood & Celebrity Weight Loss Speculation",
+      "unweighted_count": 80,
+      "unweighted_sentiment": {
+        "positive": 45,
+        "negative": 7,
+        "neutral": 23,
+        "mixed": 5
+      },
+      "unweighted_nss": 0.475,
+      "weighted_count": 80,
+      "weighted_sentiment": {
+        "positive": 71.18,
+        "negative": 6.74,
+        "neutral": 41.64,
+        "mixed": 7.68
+      },
+      "weighted_nss": 0.5064,
+      "total_weight": 127.24,
+      "delta": 0.0314
+    },
+    {
+      "theme_id": "THM_014",
+      "theme_label": "Misinformation, Miracle Claims & Debunking",
+      "unweighted_count": 213,
+      "unweighted_sentiment": {
+        "positive": 109,
+        "negative": 39,
+        "neutral": 34,
+        "mixed": 31
+      },
+      "unweighted_nss": 0.3286,
+      "weighted_count": 213,
+      "weighted_sentiment": {
+        "positive": 214.88,
+        "negative": 62.21,
+        "neutral": 60.94,
+        "mixed": 48.81
+      },
+      "weighted_nss": 0.3947,
+      "total_weight": 386.84,
+      "delta": 0.0661
+    },
+    {
+      "theme_id": "THM_015",
+      "theme_label": "Stigma, Shame & the 'Shortcut' Debate",
+      "unweighted_count": 64,
+      "unweighted_sentiment": {
+        "positive": 41,
+        "negative": 5,
+        "neutral": 8,
+        "mixed": 10
+      },
+      "unweighted_nss": 0.5625,
+      "weighted_count": 64,
+      "weighted_sentiment": {
+        "positive": 114.01,
+        "negative": 9.27,
+        "neutral": 6.66,
+        "mixed": 22.87
+      },
+      "weighted_nss": 0.6855,
+      "total_weight": 152.81,
+      "delta": 0.123
+    }
+  ]
+}

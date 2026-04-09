@@ -1,0 +1,34 @@
+[
+  {
+    "threshold": 0.8,
+    "clusters": 139,
+    "items_removed": 563,
+    "pct_removed": 12.58,
+    "corpus_after": 3912,
+    "largest_cluster": 121
+  },
+  {
+    "threshold": 0.85,
+    "clusters": 118,
+    "items_removed": 461,
+    "pct_removed": 10.3,
+    "corpus_after": 4014,
+    "largest_cluster": 121
+  },
+  {
+    "threshold": 0.9,
+    "clusters": 101,
+    "items_removed": 411,
+    "pct_removed": 9.18,
+    "corpus_after": 4064,
+    "largest_cluster": 120
+  },
+  {
+    "threshold": 0.95,
+    "clusters": 90,
+    "items_removed": 381,
+    "pct_removed": 8.51,
+    "corpus_after": 4094,
+    "largest_cluster": 114
+  }
+]

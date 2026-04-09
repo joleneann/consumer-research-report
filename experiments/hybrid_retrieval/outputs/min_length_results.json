@@ -1,0 +1,2547 @@
+{
+  "5": {
+    "min_chars": 5,
+    "original_count": 4475,
+    "kept_count": 4426,
+    "removed_count": 49,
+    "pct_removed": 1.09,
+    "removed_categories": {
+      "deleted/removed": 49
+    },
+    "removed_by_platform": {
+      "reddit": 49
+    },
+    "kept_by_platform": {
+      "instagram": 2348,
+      "reddit": 1916,
+      "youtube": 162
+    },
+    "removed_by_content_type": {
+      "comment": 49
+    },
+    "high_engagement_removed": [
+      {
+        "text": "[removed]",
+        "platform": "reddit",
+        "engagement": 30,
+        "length": 9,
+        "category": "deleted/removed"
+      },
+      {
+        "text": "[deleted]",
+        "platform": "reddit",
+        "engagement": 11,
+        "length": 9,
+        "category": "deleted/removed"
+      },
+      {
+        "text": "[removed]",
+        "platform": "reddit",
+        "engagement": 10,
+        "length": 9,
+        "category": "deleted/removed"
+      },
+      {
+        "text": "[deleted]",
+        "platform": "reddit",
+        "engagement": 568,
+        "length": 9,
+        "category": "deleted/removed"
+      },
+      {
+        "text": "[deleted]",
+        "platform": "reddit",
+        "engagement": 270,
+        "length": 9,
+        "category": "deleted/removed"
+      },
+      {
+        "text": "[removed]",
+        "platform": "reddit",
+        "engagement": 31,
+        "length": 9,
+        "category": "deleted/removed"
+      }
+    ],
+    "samples_by_category": {
+      "deleted/removed": [
+        {
+          "text": "[deleted]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 9
+        },
+        {
+          "text": "[removed]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 2,
+          "length": 9
+        },
+        {
+          "text": "[removed]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 2,
+          "length": 9
+        },
+        {
+          "text": "[deleted]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 9
+        },
+        {
+          "text": "[deleted]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 2,
+          "length": 9
+        },
+        {
+          "text": "[deleted]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 9
+        },
+        {
+          "text": "[removed]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 9
+        },
+        {
+          "text": "[deleted]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 9
+        },
+        {
+          "text": "[removed]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 9
+        },
+        {
+          "text": "[deleted]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": -1,
+          "length": 9
+        }
+      ]
+    }
+  },
+  "10": {
+    "min_chars": 10,
+    "original_count": 4475,
+    "kept_count": 3987,
+    "removed_count": 488,
+    "pct_removed": 10.91,
+    "removed_categories": {
+      "ultra_short": 360,
+      "deleted/removed": 49,
+      "emoji_only": 79
+    },
+    "removed_by_platform": {
+      "reddit": 79,
+      "instagram": 409
+    },
+    "kept_by_platform": {
+      "instagram": 1939,
+      "reddit": 1886,
+      "youtube": 162
+    },
+    "removed_by_content_type": {
+      "comment": 488
+    },
+    "high_engagement_removed": [
+      {
+        "text": "Diabetes",
+        "platform": "reddit",
+        "engagement": 14,
+        "length": 8,
+        "category": "ultra_short"
+      },
+      {
+        "text": "[removed]",
+        "platform": "reddit",
+        "engagement": 30,
+        "length": 9,
+        "category": "deleted/removed"
+      },
+      {
+        "text": "[deleted]",
+        "platform": "reddit",
+        "engagement": 11,
+        "length": 9,
+        "category": "deleted/removed"
+      },
+      {
+        "text": "[removed]",
+        "platform": "reddit",
+        "engagement": 10,
+        "length": 9,
+        "category": "deleted/removed"
+      },
+      {
+        "text": "[deleted]",
+        "platform": "reddit",
+        "engagement": 568,
+        "length": 9,
+        "category": "deleted/removed"
+      },
+      {
+        "text": "[deleted]",
+        "platform": "reddit",
+        "engagement": 270,
+        "length": 9,
+        "category": "deleted/removed"
+      },
+      {
+        "text": "[removed]",
+        "platform": "reddit",
+        "engagement": 31,
+        "length": 9,
+        "category": "deleted/removed"
+      },
+      {
+        "text": "Thanks!",
+        "platform": "reddit",
+        "engagement": 21,
+        "length": 7,
+        "category": "ultra_short"
+      }
+    ],
+    "samples_by_category": {
+      "ultra_short": [
+        {
+          "text": "Any tips?",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 9
+        },
+        {
+          "text": "Love it",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 7
+        },
+        {
+          "text": "Following",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 2,
+          "length": 9
+        },
+        {
+          "text": "Third!",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 3,
+          "length": 6
+        },
+        {
+          "text": "152 CM",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 6
+        },
+        {
+          "text": "Broth?",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 6
+        },
+        {
+          "text": "Exactly!",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 2,
+          "length": 8
+        },
+        {
+          "text": "Thanks!",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 7
+        },
+        {
+          "text": "Canara 🥲",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 8
+        },
+        {
+          "text": "Ozempic..",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 9
+        }
+      ],
+      "deleted/removed": [
+        {
+          "text": "[deleted]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 9
+        },
+        {
+          "text": "[removed]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 2,
+          "length": 9
+        },
+        {
+          "text": "[removed]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 2,
+          "length": 9
+        },
+        {
+          "text": "[deleted]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 9
+        },
+        {
+          "text": "[deleted]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 2,
+          "length": 9
+        },
+        {
+          "text": "[deleted]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 9
+        },
+        {
+          "text": "[removed]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 9
+        },
+        {
+          "text": "[deleted]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 9
+        },
+        {
+          "text": "[removed]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 9
+        },
+        {
+          "text": "[deleted]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": -1,
+          "length": 9
+        }
+      ],
+      "emoji_only": [
+        {
+          "text": "🔥🔥🔥🙌🔥👏",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 6
+        },
+        {
+          "text": "❤️❤️❤️",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 6
+        },
+        {
+          "text": "🙌🙌😍🙌😍",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 5
+        },
+        {
+          "text": "😂😂😂😂😂😂",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 6
+        },
+        {
+          "text": "😍😍😍😍😍😍",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 6
+        },
+        {
+          "text": "❤️❤️🙌👏🔥",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 7
+        },
+        {
+          "text": "❤️❤️❤️",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 6
+        },
+        {
+          "text": "❤️❤️🔥",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 5
+        },
+        {
+          "text": "🔥🔥🔥👏👏",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 5
+        },
+        {
+          "text": "❤️👏👏👏",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 5
+        }
+      ]
+    }
+  },
+  "15": {
+    "min_chars": 15,
+    "original_count": 4475,
+    "kept_count": 3758,
+    "removed_count": 717,
+    "pct_removed": 16.02,
+    "removed_categories": {
+      "ultra_short": 360,
+      "very_short": 219,
+      "deleted/removed": 49,
+      "emoji_only": 89
+    },
+    "removed_by_platform": {
+      "reddit": 119,
+      "instagram": 598
+    },
+    "kept_by_platform": {
+      "instagram": 1750,
+      "reddit": 1846,
+      "youtube": 162
+    },
+    "removed_by_content_type": {
+      "comment": 716,
+      "post": 1
+    },
+    "high_engagement_removed": [
+      {
+        "text": "Diabetes",
+        "platform": "reddit",
+        "engagement": 14,
+        "length": 8,
+        "category": "ultra_short"
+      },
+      {
+        "text": "Always Kabab.",
+        "platform": "reddit",
+        "engagement": 11,
+        "length": 13,
+        "category": "very_short"
+      },
+      {
+        "text": "2025-03-17",
+        "platform": "instagram",
+        "engagement": 10,
+        "length": 10,
+        "category": "very_short"
+      },
+      {
+        "text": "[removed]",
+        "platform": "reddit",
+        "engagement": 30,
+        "length": 9,
+        "category": "deleted/removed"
+      },
+      {
+        "text": "[deleted]",
+        "platform": "reddit",
+        "engagement": 11,
+        "length": 9,
+        "category": "deleted/removed"
+      },
+      {
+        "text": "[removed]",
+        "platform": "reddit",
+        "engagement": 10,
+        "length": 9,
+        "category": "deleted/removed"
+      },
+      {
+        "text": "[deleted]",
+        "platform": "reddit",
+        "engagement": 568,
+        "length": 9,
+        "category": "deleted/removed"
+      },
+      {
+        "text": "[deleted]",
+        "platform": "reddit",
+        "engagement": 270,
+        "length": 9,
+        "category": "deleted/removed"
+      },
+      {
+        "text": "MyFitnessPal!",
+        "platform": "reddit",
+        "engagement": 31,
+        "length": 13,
+        "category": "very_short"
+      },
+      {
+        "text": "[removed]",
+        "platform": "reddit",
+        "engagement": 31,
+        "length": 9,
+        "category": "deleted/removed"
+      },
+      {
+        "text": "Why is that?",
+        "platform": "reddit",
+        "engagement": 30,
+        "length": 12,
+        "category": "very_short"
+      },
+      {
+        "text": "Thanks!",
+        "platform": "reddit",
+        "engagement": 21,
+        "length": 7,
+        "category": "ultra_short"
+      }
+    ],
+    "samples_by_category": {
+      "ultra_short": [
+        {
+          "text": "Any tips?",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 9
+        },
+        {
+          "text": "Love it",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 7
+        },
+        {
+          "text": "Following",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 2,
+          "length": 9
+        },
+        {
+          "text": "Third!",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 3,
+          "length": 6
+        },
+        {
+          "text": "152 CM",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 6
+        },
+        {
+          "text": "Broth?",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 6
+        },
+        {
+          "text": "Exactly!",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 2,
+          "length": 8
+        },
+        {
+          "text": "Thanks!",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 7
+        },
+        {
+          "text": "Canara 🥲",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 8
+        },
+        {
+          "text": "Ozempic..",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 9
+        }
+      ],
+      "very_short": [
+        {
+          "text": "Nice choice 😊",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 13
+        },
+        {
+          "text": "Kapiva is good",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 14
+        },
+        {
+          "text": "Great news",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 8,
+          "length": 10
+        },
+        {
+          "text": "Sure DM me.",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 11
+        },
+        {
+          "text": "Any update? :)",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 2,
+          "length": 14
+        },
+        {
+          "text": "Pharmacology",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 12
+        },
+        {
+          "text": "Injection*",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 7,
+          "length": 10
+        },
+        {
+          "text": "Gotcha 🙂‍↔️",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 2,
+          "length": 11
+        },
+        {
+          "text": "Pls check DM",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 12
+        },
+        {
+          "text": "RanbAlia??",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 6,
+          "length": 10
+        }
+      ],
+      "deleted/removed": [
+        {
+          "text": "[deleted]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 9
+        },
+        {
+          "text": "[removed]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 2,
+          "length": 9
+        },
+        {
+          "text": "[removed]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 2,
+          "length": 9
+        },
+        {
+          "text": "[deleted]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 9
+        },
+        {
+          "text": "[deleted]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 2,
+          "length": 9
+        },
+        {
+          "text": "[deleted]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 9
+        },
+        {
+          "text": "[removed]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 9
+        },
+        {
+          "text": "[deleted]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 9
+        },
+        {
+          "text": "[removed]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 9
+        },
+        {
+          "text": "[deleted]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": -1,
+          "length": 9
+        }
+      ],
+      "emoji_only": [
+        {
+          "text": "🔥🔥🔥🙌🔥👏",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 6
+        },
+        {
+          "text": "❤️❤️❤️",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 6
+        },
+        {
+          "text": "🙌🙌😍🙌😍",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 5
+        },
+        {
+          "text": "😂😂😂😂😂😂",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 6
+        },
+        {
+          "text": "😍😍😍😍😍😍",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 6
+        },
+        {
+          "text": "❤️❤️🙌👏🔥",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 7
+        },
+        {
+          "text": "❤️❤️❤️",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 6
+        },
+        {
+          "text": "❤️❤️🔥",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 5
+        },
+        {
+          "text": "🔥🔥🔥👏👏",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 5
+        },
+        {
+          "text": "❤️👏👏👏",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 5
+        }
+      ]
+    }
+  },
+  "20": {
+    "min_chars": 20,
+    "original_count": 4475,
+    "kept_count": 3568,
+    "removed_count": 907,
+    "pct_removed": 20.27,
+    "removed_categories": {
+      "very_short": 408,
+      "ultra_short": 360,
+      "deleted/removed": 49,
+      "emoji_only": 90
+    },
+    "removed_by_platform": {
+      "reddit": 160,
+      "instagram": 747
+    },
+    "kept_by_platform": {
+      "instagram": 1601,
+      "reddit": 1805,
+      "youtube": 162
+    },
+    "removed_by_content_type": {
+      "comment": 905,
+      "post": 2
+    },
+    "high_engagement_removed": [
+      {
+        "text": "Ozempic\n\nOzempic",
+        "platform": "reddit",
+        "engagement": 226,
+        "length": 16,
+        "category": "very_short"
+      },
+      {
+        "text": "Diabetes",
+        "platform": "reddit",
+        "engagement": 14,
+        "length": 8,
+        "category": "ultra_short"
+      },
+      {
+        "text": "Always Kabab.",
+        "platform": "reddit",
+        "engagement": 11,
+        "length": 13,
+        "category": "very_short"
+      },
+      {
+        "text": "2025-03-17",
+        "platform": "instagram",
+        "engagement": 10,
+        "length": 10,
+        "category": "very_short"
+      },
+      {
+        "text": "[removed]",
+        "platform": "reddit",
+        "engagement": 30,
+        "length": 9,
+        "category": "deleted/removed"
+      },
+      {
+        "text": "[deleted]",
+        "platform": "reddit",
+        "engagement": 11,
+        "length": 9,
+        "category": "deleted/removed"
+      },
+      {
+        "text": "[removed]",
+        "platform": "reddit",
+        "engagement": 10,
+        "length": 9,
+        "category": "deleted/removed"
+      },
+      {
+        "text": "[deleted]",
+        "platform": "reddit",
+        "engagement": 568,
+        "length": 9,
+        "category": "deleted/removed"
+      },
+      {
+        "text": "[deleted]",
+        "platform": "reddit",
+        "engagement": 270,
+        "length": 9,
+        "category": "deleted/removed"
+      },
+      {
+        "text": "MyFitnessPal!",
+        "platform": "reddit",
+        "engagement": 31,
+        "length": 13,
+        "category": "very_short"
+      },
+      {
+        "text": "[removed]",
+        "platform": "reddit",
+        "engagement": 31,
+        "length": 9,
+        "category": "deleted/removed"
+      },
+      {
+        "text": "Why is that?",
+        "platform": "reddit",
+        "engagement": 30,
+        "length": 12,
+        "category": "very_short"
+      },
+      {
+        "text": "Thanks!",
+        "platform": "reddit",
+        "engagement": 21,
+        "length": 7,
+        "category": "ultra_short"
+      }
+    ],
+    "samples_by_category": {
+      "very_short": [
+        {
+          "text": "is it the smoking?",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 18
+        },
+        {
+          "text": "Nice choice 😊",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 13
+        },
+        {
+          "text": "Were bowl buddies",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 2,
+          "length": 17
+        },
+        {
+          "text": "How tall are you?",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 17
+        },
+        {
+          "text": "Kapiva is good",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 14
+        },
+        {
+          "text": "What about Kusha?",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 17
+        },
+        {
+          "text": "Can we connect?",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 15
+        },
+        {
+          "text": "Great news",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 8,
+          "length": 10
+        },
+        {
+          "text": "Sure DM me.",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 11
+        },
+        {
+          "text": "Any update? :)",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 2,
+          "length": 14
+        }
+      ],
+      "ultra_short": [
+        {
+          "text": "Any tips?",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 9
+        },
+        {
+          "text": "Love it",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 7
+        },
+        {
+          "text": "Following",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 2,
+          "length": 9
+        },
+        {
+          "text": "Third!",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 3,
+          "length": 6
+        },
+        {
+          "text": "152 CM",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 6
+        },
+        {
+          "text": "Broth?",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 6
+        },
+        {
+          "text": "Exactly!",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 2,
+          "length": 8
+        },
+        {
+          "text": "Thanks!",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 7
+        },
+        {
+          "text": "Canara 🥲",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 8
+        },
+        {
+          "text": "Ozempic..",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 9
+        }
+      ],
+      "deleted/removed": [
+        {
+          "text": "[deleted]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 9
+        },
+        {
+          "text": "[removed]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 2,
+          "length": 9
+        },
+        {
+          "text": "[removed]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 2,
+          "length": 9
+        },
+        {
+          "text": "[deleted]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 9
+        },
+        {
+          "text": "[deleted]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 2,
+          "length": 9
+        },
+        {
+          "text": "[deleted]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 9
+        },
+        {
+          "text": "[removed]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 9
+        },
+        {
+          "text": "[deleted]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 9
+        },
+        {
+          "text": "[removed]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 9
+        },
+        {
+          "text": "[deleted]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": -1,
+          "length": 9
+        }
+      ],
+      "emoji_only": [
+        {
+          "text": "🔥🔥🔥🙌🔥👏",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 6
+        },
+        {
+          "text": "❤️❤️❤️",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 6
+        },
+        {
+          "text": "🙌🙌😍🙌😍",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 5
+        },
+        {
+          "text": "😂😂😂😂😂😂",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 6
+        },
+        {
+          "text": "😍😍😍😍😍😍",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 6
+        },
+        {
+          "text": "❤️❤️🙌👏🔥",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 7
+        },
+        {
+          "text": "❤️❤️❤️",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 6
+        },
+        {
+          "text": "❤️❤️🔥",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 5
+        },
+        {
+          "text": "🔥🔥🔥👏👏",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 5
+        },
+        {
+          "text": "❤️👏👏👏",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 5
+        }
+      ]
+    }
+  },
+  "30": {
+    "min_chars": 30,
+    "original_count": 4475,
+    "kept_count": 3178,
+    "removed_count": 1297,
+    "pct_removed": 28.98,
+    "removed_categories": {
+      "very_short": 408,
+      "short": 386,
+      "ultra_short": 360,
+      "deleted/removed": 49,
+      "emoji_only": 94
+    },
+    "removed_by_platform": {
+      "reddit": 243,
+      "instagram": 1053,
+      "youtube": 1
+    },
+    "kept_by_platform": {
+      "instagram": 1295,
+      "reddit": 1722,
+      "youtube": 161
+    },
+    "removed_by_content_type": {
+      "comment": 1291,
+      "post": 6
+    },
+    "high_engagement_removed": [
+      {
+        "text": "zero civic sense bhai",
+        "platform": "instagram",
+        "engagement": 28680,
+        "length": 21,
+        "category": "short"
+      },
+      {
+        "text": "I kinda do want pasta now",
+        "platform": "reddit",
+        "engagement": 12,
+        "length": 25,
+        "category": "short"
+      },
+      {
+        "text": "Finally I did it 🥹🥹🥹",
+        "platform": "instagram",
+        "engagement": 100052,
+        "length": 20,
+        "category": "short"
+      },
+      {
+        "text": "Ozempic\n\nOzempic",
+        "platform": "reddit",
+        "engagement": 226,
+        "length": 16,
+        "category": "very_short"
+      },
+      {
+        "text": "Ozempic Side Effects",
+        "platform": "instagram",
+        "engagement": 2210,
+        "length": 20,
+        "category": "short"
+      },
+      {
+        "text": "Diabetes",
+        "platform": "reddit",
+        "engagement": 14,
+        "length": 8,
+        "category": "ultra_short"
+      },
+      {
+        "text": "Always Kabab.",
+        "platform": "reddit",
+        "engagement": 11,
+        "length": 13,
+        "category": "very_short"
+      },
+      {
+        "text": "Hugs prescribed??? Awww.",
+        "platform": "reddit",
+        "engagement": 13,
+        "length": 24,
+        "category": "short"
+      },
+      {
+        "text": "2025-03-17",
+        "platform": "instagram",
+        "engagement": 10,
+        "length": 10,
+        "category": "very_short"
+      },
+      {
+        "text": "[removed]",
+        "platform": "reddit",
+        "engagement": 30,
+        "length": 9,
+        "category": "deleted/removed"
+      },
+      {
+        "text": "i dont need to imagine",
+        "platform": "reddit",
+        "engagement": 10,
+        "length": 22,
+        "category": "short"
+      },
+      {
+        "text": "He stopped smoking years ago.",
+        "platform": "reddit",
+        "engagement": 17,
+        "length": 29,
+        "category": "short"
+      },
+      {
+        "text": "[deleted]",
+        "platform": "reddit",
+        "engagement": 11,
+        "length": 9,
+        "category": "deleted/removed"
+      },
+      {
+        "text": "[removed]",
+        "platform": "reddit",
+        "engagement": 10,
+        "length": 9,
+        "category": "deleted/removed"
+      },
+      {
+        "text": "Best Bread You Can Buy",
+        "platform": "youtube",
+        "engagement": 36437,
+        "length": 22,
+        "category": "short"
+      },
+      {
+        "text": "[deleted]",
+        "platform": "reddit",
+        "engagement": 568,
+        "length": 9,
+        "category": "deleted/removed"
+      },
+      {
+        "text": "This is mean and hilarious",
+        "platform": "reddit",
+        "engagement": 84,
+        "length": 26,
+        "category": "short"
+      },
+      {
+        "text": "[deleted]",
+        "platform": "reddit",
+        "engagement": 270,
+        "length": 9,
+        "category": "deleted/removed"
+      },
+      {
+        "text": "MyFitnessPal!",
+        "platform": "reddit",
+        "engagement": 31,
+        "length": 13,
+        "category": "very_short"
+      },
+      {
+        "text": "[removed]",
+        "platform": "reddit",
+        "engagement": 31,
+        "length": 9,
+        "category": "deleted/removed"
+      },
+      {
+        "text": "Fall into depression",
+        "platform": "reddit",
+        "engagement": 10,
+        "length": 20,
+        "category": "short"
+      },
+      {
+        "text": "Why is that?",
+        "platform": "reddit",
+        "engagement": 30,
+        "length": 12,
+        "category": "very_short"
+      },
+      {
+        "text": "Thanks!",
+        "platform": "reddit",
+        "engagement": 21,
+        "length": 7,
+        "category": "ultra_short"
+      },
+      {
+        "text": "Another quack peddling woo.",
+        "platform": "reddit",
+        "engagement": 13,
+        "length": 27,
+        "category": "short"
+      }
+    ],
+    "samples_by_category": {
+      "very_short": [
+        {
+          "text": "is it the smoking?",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 18
+        },
+        {
+          "text": "Nice choice 😊",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 13
+        },
+        {
+          "text": "Were bowl buddies",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 2,
+          "length": 17
+        },
+        {
+          "text": "How tall are you?",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 17
+        },
+        {
+          "text": "Kapiva is good",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 14
+        },
+        {
+          "text": "What about Kusha?",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 17
+        },
+        {
+          "text": "Can we connect?",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 15
+        },
+        {
+          "text": "Great news",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 8,
+          "length": 10
+        },
+        {
+          "text": "Sure DM me.",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 11
+        },
+        {
+          "text": "Any update? :)",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 2,
+          "length": 14
+        }
+      ],
+      "short": [
+        {
+          "text": "Have you ever tried dance?",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 6,
+          "length": 26
+        },
+        {
+          "text": "Thank you! Dming you!",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 21
+        },
+        {
+          "text": "which hospital or doctor?",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 25
+        },
+        {
+          "text": "zero civic sense bhai",
+          "platform": "instagram",
+          "content_type": "post",
+          "engagement": 28680,
+          "length": 21
+        },
+        {
+          "text": "U have a biotech background ?",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 29
+        },
+        {
+          "text": "I kinda do want pasta now",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 12,
+          "length": 25
+        },
+        {
+          "text": "You can check anu my baby",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 25
+        },
+        {
+          "text": "Geetha devi at aayush",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 21
+        },
+        {
+          "text": "Finally I did it 🥹🥹🥹",
+          "platform": "instagram",
+          "content_type": "post",
+          "engagement": 100052,
+          "length": 20
+        },
+        {
+          "text": "Bon Fiction is really good",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 26
+        }
+      ],
+      "ultra_short": [
+        {
+          "text": "Any tips?",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 9
+        },
+        {
+          "text": "Love it",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 7
+        },
+        {
+          "text": "Following",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 2,
+          "length": 9
+        },
+        {
+          "text": "Third!",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 3,
+          "length": 6
+        },
+        {
+          "text": "152 CM",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 6
+        },
+        {
+          "text": "Broth?",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 6
+        },
+        {
+          "text": "Exactly!",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 2,
+          "length": 8
+        },
+        {
+          "text": "Thanks!",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 7
+        },
+        {
+          "text": "Canara 🥲",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 8
+        },
+        {
+          "text": "Ozempic..",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 9
+        }
+      ],
+      "deleted/removed": [
+        {
+          "text": "[deleted]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 9
+        },
+        {
+          "text": "[removed]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 2,
+          "length": 9
+        },
+        {
+          "text": "[removed]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 2,
+          "length": 9
+        },
+        {
+          "text": "[deleted]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 9
+        },
+        {
+          "text": "[deleted]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 2,
+          "length": 9
+        },
+        {
+          "text": "[deleted]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 9
+        },
+        {
+          "text": "[removed]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 9
+        },
+        {
+          "text": "[deleted]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 9
+        },
+        {
+          "text": "[removed]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 9
+        },
+        {
+          "text": "[deleted]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": -1,
+          "length": 9
+        }
+      ],
+      "emoji_only": [
+        {
+          "text": "🔥🔥🔥🙌🔥👏",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 6
+        },
+        {
+          "text": "❤️❤️❤️",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 6
+        },
+        {
+          "text": "🙌🙌😍🙌😍",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 5
+        },
+        {
+          "text": "😂😂😂😂😂😂",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 6
+        },
+        {
+          "text": "😍😍😍😍😍😍",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 6
+        },
+        {
+          "text": "❤️❤️🙌👏🔥",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 7
+        },
+        {
+          "text": "❤️❤️❤️",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 6
+        },
+        {
+          "text": "👏👏👏👏👏👏👏👏👏👏👏❤️❤️❤️❤️❤️❤️",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 23
+        },
+        {
+          "text": "❤️❤️🔥",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 5
+        },
+        {
+          "text": "🔥🔥🔥👏👏",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 5
+        }
+      ]
+    }
+  },
+  "50": {
+    "min_chars": 50,
+    "original_count": 4475,
+    "kept_count": 2685,
+    "removed_count": 1790,
+    "pct_removed": 40.0,
+    "removed_categories": {
+      "very_short": 408,
+      "short": 878,
+      "ultra_short": 360,
+      "deleted/removed": 49,
+      "emoji_only": 95
+    },
+    "removed_by_platform": {
+      "reddit": 415,
+      "instagram": 1370,
+      "youtube": 5
+    },
+    "kept_by_platform": {
+      "instagram": 978,
+      "reddit": 1550,
+      "youtube": 157
+    },
+    "removed_by_content_type": {
+      "comment": 1775,
+      "post": 15
+    },
+    "high_engagement_removed": [
+      {
+        "text": "Obesity is 90% food 10% exercise.",
+        "platform": "reddit",
+        "engagement": 22,
+        "length": 33,
+        "category": "short"
+      },
+      {
+        "text": "zero civic sense bhai",
+        "platform": "instagram",
+        "engagement": 28680,
+        "length": 21,
+        "category": "short"
+      },
+      {
+        "text": "🌯 Juneja's📍Meharchand Market Delhi",
+        "platform": "instagram",
+        "engagement": 270182,
+        "length": 34,
+        "category": "short"
+      },
+      {
+        "text": "I kinda do want pasta now",
+        "platform": "reddit",
+        "engagement": 12,
+        "length": 25,
+        "category": "short"
+      },
+      {
+        "text": "Finally I did it 🥹🥹🥹",
+        "platform": "instagram",
+        "engagement": 100052,
+        "length": 20,
+        "category": "short"
+      },
+      {
+        "text": "Week 23 GLP-1 Update \n\n#pcos #glp #weight",
+        "platform": "instagram",
+        "engagement": 154,
+        "length": 41,
+        "category": "short"
+      },
+      {
+        "text": "Belly fat workout #fatloss #weightloss",
+        "platform": "instagram",
+        "engagement": 11754,
+        "length": 38,
+        "category": "short"
+      },
+      {
+        "text": "Ozempic\n\nOzempic",
+        "platform": "reddit",
+        "engagement": 226,
+        "length": 16,
+        "category": "very_short"
+      },
+      {
+        "text": "Ozempic Side Effects",
+        "platform": "instagram",
+        "engagement": 2210,
+        "length": 20,
+        "category": "short"
+      },
+      {
+        "text": "Ozempic / GLP 1\n\nOzempic / GLP 1\n[deleted]",
+        "platform": "reddit",
+        "engagement": 203,
+        "length": 42,
+        "category": "short"
+      },
+      {
+        "text": "Karan toh bol raha tha usnea OMAD kiya hea 🤨",
+        "platform": "reddit",
+        "engagement": 95,
+        "length": 44,
+        "category": "short"
+      },
+      {
+        "text": "Diabetes",
+        "platform": "reddit",
+        "engagement": 14,
+        "length": 8,
+        "category": "ultra_short"
+      },
+      {
+        "text": "body contouring + skin removal operations.",
+        "platform": "reddit",
+        "engagement": 45,
+        "length": 42,
+        "category": "short"
+      },
+      {
+        "text": "Always Kabab.",
+        "platform": "reddit",
+        "engagement": 11,
+        "length": 13,
+        "category": "very_short"
+      },
+      {
+        "text": "Hugs prescribed??? Awww.",
+        "platform": "reddit",
+        "engagement": 13,
+        "length": 24,
+        "category": "short"
+      },
+      {
+        "text": "Even doublemint tastes different in india",
+        "platform": "reddit",
+        "engagement": 22,
+        "length": 41,
+        "category": "short"
+      },
+      {
+        "text": "2025-03-17",
+        "platform": "instagram",
+        "engagement": 10,
+        "length": 10,
+        "category": "very_short"
+      },
+      {
+        "text": "Kefir benefits are *actually* magical 🤯",
+        "platform": "youtube",
+        "engagement": 4296,
+        "length": 39,
+        "category": "short"
+      },
+      {
+        "text": "[removed]",
+        "platform": "reddit",
+        "engagement": 30,
+        "length": 9,
+        "category": "deleted/removed"
+      },
+      {
+        "text": "The Magic Weight Loss Drug #ozempic #weightloss",
+        "platform": "youtube",
+        "engagement": 19861,
+        "length": 47,
+        "category": "short"
+      },
+      {
+        "text": "i dont need to imagine",
+        "platform": "reddit",
+        "engagement": 10,
+        "length": 22,
+        "category": "short"
+      },
+      {
+        "text": "He stopped smoking years ago.",
+        "platform": "reddit",
+        "engagement": 17,
+        "length": 29,
+        "category": "short"
+      },
+      {
+        "text": "[deleted]",
+        "platform": "reddit",
+        "engagement": 11,
+        "length": 9,
+        "category": "deleted/removed"
+      },
+      {
+        "text": "Wtf is 'dawg'? This is worse than that stupid dp",
+        "platform": "reddit",
+        "engagement": 22,
+        "length": 48,
+        "category": "short"
+      },
+      {
+        "text": "[removed]",
+        "platform": "reddit",
+        "engagement": 10,
+        "length": 9,
+        "category": "deleted/removed"
+      },
+      {
+        "text": "Best Bread You Can Buy",
+        "platform": "youtube",
+        "engagement": 36437,
+        "length": 22,
+        "category": "short"
+      },
+      {
+        "text": "[deleted]",
+        "platform": "reddit",
+        "engagement": 568,
+        "length": 9,
+        "category": "deleted/removed"
+      },
+      {
+        "text": "Weight loss surgery sucks, quite frankly.",
+        "platform": "reddit",
+        "engagement": 33,
+        "length": 41,
+        "category": "short"
+      },
+      {
+        "text": "Don’t talk about boney like that!",
+        "platform": "reddit",
+        "engagement": 333,
+        "length": 33,
+        "category": "short"
+      },
+      {
+        "text": "This is mean and hilarious",
+        "platform": "reddit",
+        "engagement": 84,
+        "length": 26,
+        "category": "short"
+      },
+      {
+        "text": "Nah bro it's an undiscovered gem of Ayurveda.",
+        "platform": "reddit",
+        "engagement": 45,
+        "length": 45,
+        "category": "short"
+      },
+      {
+        "text": "I have Morningdew- here to testify💀",
+        "platform": "reddit",
+        "engagement": 10,
+        "length": 35,
+        "category": "short"
+      },
+      {
+        "text": "\"asli mard\" as per Mumbai police",
+        "platform": "reddit",
+        "engagement": 93,
+        "length": 32,
+        "category": "short"
+      },
+      {
+        "text": "Pav bhaji\nMisal pav\nPuranpoli\nModak",
+        "platform": "reddit",
+        "engagement": 15,
+        "length": 35,
+        "category": "short"
+      },
+      {
+        "text": "AK on his way to remake this in Hindi",
+        "platform": "reddit",
+        "engagement": 24,
+        "length": 37,
+        "category": "short"
+      },
+      {
+        "text": "Is Your Olive Oil the Real Deal?!  Dr. Mandell",
+        "platform": "youtube",
+        "engagement": 79134,
+        "length": 46,
+        "category": "short"
+      },
+      {
+        "text": "[deleted]",
+        "platform": "reddit",
+        "engagement": 270,
+        "length": 9,
+        "category": "deleted/removed"
+      },
+      {
+        "text": "The Surprising Side Effects Of Ozempic",
+        "platform": "youtube",
+        "engagement": 8231,
+        "length": 38,
+        "category": "short"
+      },
+      {
+        "text": "MyFitnessPal!",
+        "platform": "reddit",
+        "engagement": 31,
+        "length": 13,
+        "category": "very_short"
+      },
+      {
+        "text": "[removed]",
+        "platform": "reddit",
+        "engagement": 31,
+        "length": 9,
+        "category": "deleted/removed"
+      },
+      {
+        "text": "Fall into depression",
+        "platform": "reddit",
+        "engagement": 10,
+        "length": 20,
+        "category": "short"
+      },
+      {
+        "text": "I agree. She edits her photos a lot.",
+        "platform": "reddit",
+        "engagement": 62,
+        "length": 36,
+        "category": "short"
+      },
+      {
+        "text": "Why is that?",
+        "platform": "reddit",
+        "engagement": 30,
+        "length": 12,
+        "category": "very_short"
+      },
+      {
+        "text": "Diet helped by ozempic. Good for her.",
+        "platform": "reddit",
+        "engagement": 16,
+        "length": 37,
+        "category": "short"
+      },
+      {
+        "text": "Thanks!",
+        "platform": "reddit",
+        "engagement": 21,
+        "length": 7,
+        "category": "ultra_short"
+      },
+      {
+        "text": "Fast food dekh k Nazar jhuka lo",
+        "platform": "reddit",
+        "engagement": 147,
+        "length": 31,
+        "category": "short"
+      },
+      {
+        "text": "TIL that these three were brothers!",
+        "platform": "reddit",
+        "engagement": 38,
+        "length": 35,
+        "category": "short"
+      },
+      {
+        "text": "Another quack peddling woo.",
+        "platform": "reddit",
+        "engagement": 13,
+        "length": 27,
+        "category": "short"
+      },
+      {
+        "text": "You WILL get these side effects on Ozempic:",
+        "platform": "instagram",
+        "engagement": 408,
+        "length": 43,
+        "category": "short"
+      }
+    ],
+    "samples_by_category": {
+      "very_short": [
+        {
+          "text": "is it the smoking?",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 18
+        },
+        {
+          "text": "Nice choice 😊",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 13
+        },
+        {
+          "text": "Were bowl buddies",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 2,
+          "length": 17
+        },
+        {
+          "text": "How tall are you?",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 17
+        },
+        {
+          "text": "Kapiva is good",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 14
+        },
+        {
+          "text": "What about Kusha?",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 17
+        },
+        {
+          "text": "Can we connect?",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 15
+        },
+        {
+          "text": "Great news",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 8,
+          "length": 10
+        },
+        {
+          "text": "Sure DM me.",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 11
+        },
+        {
+          "text": "Any update? :)",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 2,
+          "length": 14
+        }
+      ],
+      "short": [
+        {
+          "text": "Don’t seem to remember them asking. But possible",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 48
+        },
+        {
+          "text": "Obesity is 90% food 10% exercise.",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 22,
+          "length": 33
+        },
+        {
+          "text": "Eh... maybe find an MD or a DO.",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 31
+        },
+        {
+          "text": "which board? ICSE, CBSE, State board or IB/IGCSE?",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 49
+        },
+        {
+          "text": "Have you ever tried dance?",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 6,
+          "length": 26
+        },
+        {
+          "text": "Nah, no content.\nBuilding a telemedicine platform",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": -1,
+          "length": 49
+        },
+        {
+          "text": "Hi, endo warrior since 18yrs, you can DM me.",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 2,
+          "length": 44
+        },
+        {
+          "text": "Thank you! Dming you!",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 21
+        },
+        {
+          "text": "which hospital or doctor?",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 25
+        },
+        {
+          "text": "Do cravings come back when you stop the meds?",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 45
+        }
+      ],
+      "ultra_short": [
+        {
+          "text": "Any tips?",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 9
+        },
+        {
+          "text": "Love it",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 7
+        },
+        {
+          "text": "Following",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 2,
+          "length": 9
+        },
+        {
+          "text": "Third!",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 3,
+          "length": 6
+        },
+        {
+          "text": "152 CM",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 6
+        },
+        {
+          "text": "Broth?",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 6
+        },
+        {
+          "text": "Exactly!",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 2,
+          "length": 8
+        },
+        {
+          "text": "Thanks!",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 7
+        },
+        {
+          "text": "Canara 🥲",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 8
+        },
+        {
+          "text": "Ozempic..",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 9
+        }
+      ],
+      "deleted/removed": [
+        {
+          "text": "[deleted]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 9
+        },
+        {
+          "text": "[removed]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 2,
+          "length": 9
+        },
+        {
+          "text": "[removed]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 2,
+          "length": 9
+        },
+        {
+          "text": "[deleted]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 9
+        },
+        {
+          "text": "[deleted]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 2,
+          "length": 9
+        },
+        {
+          "text": "[deleted]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 9
+        },
+        {
+          "text": "[removed]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 9
+        },
+        {
+          "text": "[deleted]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 9
+        },
+        {
+          "text": "[removed]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": 1,
+          "length": 9
+        },
+        {
+          "text": "[deleted]",
+          "platform": "reddit",
+          "content_type": "comment",
+          "engagement": -1,
+          "length": 9
+        }
+      ],
+      "emoji_only": [
+        {
+          "text": "🔥🔥🔥🙌🔥👏",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 6
+        },
+        {
+          "text": "❤️❤️❤️",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 6
+        },
+        {
+          "text": "🙌🙌😍🙌😍",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 5
+        },
+        {
+          "text": "😂😂😂😂😂😂",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 6
+        },
+        {
+          "text": "😍😍😍😍😍😍",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 6
+        },
+        {
+          "text": "❤️❤️🙌👏🔥",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 7
+        },
+        {
+          "text": "❤️❤️❤️",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 6
+        },
+        {
+          "text": "👏👏👏👏👏👏👏👏👏👏👏❤️❤️❤️❤️❤️❤️",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 23
+        },
+        {
+          "text": "❤️❤️🔥",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 5
+        },
+        {
+          "text": "🔥🔥🔥👏👏",
+          "platform": "instagram",
+          "content_type": "comment",
+          "engagement": 0,
+          "length": 5
+        }
+      ]
+    }
+  }
+}
