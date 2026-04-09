@@ -109,8 +109,18 @@ for si in sorted(scored_insights, key=lambda s: s.get("confidence_score", 0), re
         if tid not in insight_by_theme:
             insight_by_theme[tid] = si
 
-# Sort themes by confidence of their best insight (descending), then by item count
-themes = analysis.get("themes", [])
+# Deduplicate themes by label — if multiple themes share the same label,
+# keep only the first (they have identical supporting_item_ids)
+seen_labels: set[str] = set()
+themes: list[dict] = []
+for t in analysis.get("themes", []):
+    label = t.get("theme_label", "")
+    if label in seen_labels:
+        continue
+    seen_labels.add(label)
+    themes.append(t)
+
+# Sort by confidence of their best insight (descending), then by item count
 themes.sort(key=lambda t: (
     insight_by_theme.get(t["theme_id"], {}).get("confidence_score", 0),
     t.get("item_count", 0),
