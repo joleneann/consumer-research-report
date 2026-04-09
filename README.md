@@ -238,7 +238,7 @@ Social listening methodology has structural limitations that cannot be fully eli
 | 13 | **LLM non-determinism in theme extraction** - Same corpus can produce slightly different themes across runs due to model inference variance. | MEDIUM | Partially | **MITIGATED** |
 | 14 | **Geographic relevance not verified** - No verified geolocation; 2-3% of corpus from non-target markets. | LOW | Partially | Not implemented |
 
-Full details with "How to Fix" column in [`CLAUDE.md`](CLAUDE.md). All limitations disclosed in the Methodology section of every generated report.
+Full details with "How to Fix" column in [`CLAUDE.md`](CLAUDE.md).
 
 ---
 
