@@ -59,7 +59,7 @@ Guidelines:
 - Emotion intensity: 0.0 = barely detectable, 1.0 = extremely strong
 - Aspects: extract specific product/brand attributes (taste, price, packaging, availability, quality, health, occasions, etc.) and score sentiment for EACH independently
 - secondary_emotion: the second strongest emotion, or "none" if only one is detectable
-- Content may be in English, Hindi, or Hinglish — treat all languages equally
+- Content may be in any language — treat all languages equally
 
 Items:
 {items_json}

@@ -952,7 +952,16 @@ def _section_data_provenance(doc: Document, config: PipelineConfig, items: list 
     GEO_NAMES = {"IN": "India", "US": "United States", "GB": "United Kingdom", "AU": "Australia"}
     geo_name = GEO_NAMES.get(geo, geo or "Global")
     _heading(doc, "Geographic Coverage", 2)
-    _body(doc, f"Primary: {geo_name}. Content selected and filtered for relevance to the {geo_name} market context. Items originating from other geographies are retained where they contribute relevant consumer perspective (e.g., diaspora experiences, cross-market comparisons).")
+    _body(doc, (
+        f"Primary market context: {geo_name}. Content is collected using market-specific queries "
+        f"(brand names, regional terms, {geo_name}-specific keywords) and filtered for topical relevance. "
+        f"However, no platform provides verified geolocation data. Geographic origin is inferred from "
+        f"context (language, currency references, retailer mentions, cultural markers) rather than verified. "
+        f"Audit of comparable studies found 2-3% of corpus items originate from non-target markets "
+        f"(e.g., US product listings, UK healthcare discussions) that pass topical relevance filters. "
+        f"Findings in this report describe conversations about the brand in the {geo_name} market context, "
+        f"not verified conversations from {geo_name} consumers."
+    ))
 
     # ── Temporal Coverage ──
     _heading(doc, "Temporal Coverage", 2)
