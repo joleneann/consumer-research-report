@@ -252,8 +252,23 @@ wb.remove(wb.active)
 # Track which items are themed (for unthemed tab)
 all_themed_ids: set[str] = set()
 
+# Deduplicate insights by theme — if multiple insights share the same theme,
+# keep only the highest-confidence one (list is already sorted by confidence)
+seen_themes: set[str] = set()
+deduped_insights: list[dict] = []
+for si in scored_insights:
+    ins = si["insight"]
+    theme_ids = tuple(sorted(ins.get("supporting_theme_ids", [])))
+    if theme_ids in seen_themes:
+        continue
+    seen_themes.add(theme_ids)
+    deduped_insights.append(si)
+
+if len(deduped_insights) < len(scored_insights):
+    print(f"  Deduplicated: {len(scored_insights)} insights -> {len(deduped_insights)} unique themes")
+
 # Insight tabs
-for idx, si in enumerate(scored_insights, 1):
+for idx, si in enumerate(deduped_insights, 1):
     ins = si["insight"]
     theme_ids = ins.get("supporting_theme_ids", [])
 
@@ -335,7 +350,7 @@ for col_idx, hdr in enumerate(ins_headers, 1):
     cell.border = THIN_BORD
 ws_sum.row_dimensions[table_start].height = 22
 
-for r_idx, si in enumerate(scored_insights, table_start + 1):
+for r_idx, si in enumerate(deduped_insights, table_start + 1):
     ins = si["insight"]
     theme_ids = ins.get("supporting_theme_ids", [])
     theme = theme_map.get(theme_ids[0], {}) if theme_ids else {}
