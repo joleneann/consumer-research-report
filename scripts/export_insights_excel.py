@@ -163,8 +163,8 @@ def write_data_rows(ws, rows: list[dict], start_row: int) -> None:
     # Header row
     for col_idx, hdr in enumerate(headers, 1):
         cell = ws.cell(row=start_row, column=col_idx, value=hdr)
-        cell.font = WHITE_FONT
-        cell.fill = NAVY_FILL
+        cell.font = HDR_FONT
+        cell.fill = HDR_FILL
         cell.alignment = HDR_ALIGN
         cell.border = THIN_BORD
     ws.row_dimensions[start_row].height = 22
