@@ -33,11 +33,11 @@ The research brief is at [`../../briefs/make_in_india_brief.json`](../../briefs/
 
 ## Top Themes
 
-- Make in India: Success vs Failure Debate (50.0%)
-- Indian Brand Ecosystem & D2C/Startup Growth (29.7%)
-- Infrastructure & Industrial Capacity Building (26.8%)
-- Manufacturing GDP & Economic Fundamentals (19.4%)
-- Vocal for Local & Swadeshi Movement (17.3%)
+- Make in India: Success vs Failure Debate (51.3%)
+- Indian Brand Ecosystem & D2C/Startup Growth (32.7%)
+- Infrastructure & Industrial Capacity Building (29.4%)
+- Manufacturing GDP & Economic Fundamentals (22.0%)
+- Vocal for Local & Swadeshi Movement (19.1%)
 
 ## Data
 
