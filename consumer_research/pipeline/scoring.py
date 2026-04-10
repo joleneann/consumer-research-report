@@ -143,8 +143,8 @@ def score_insights(
         )
         scored.append(scored_insight)
 
-    # Sort by combined score (best insights first)
-    scored.sort(key=lambda s: s.confidence_score * s.signal_strength_score, reverse=True)
+    # Sort by confidence (primary) then signal strength (tiebreaker)
+    scored.sort(key=lambda s: (s.confidence_score, s.signal_strength_score), reverse=True)
 
     # Write output
     scored_data = [s.model_dump(mode="json") for s in scored]

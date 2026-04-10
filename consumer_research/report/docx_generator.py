@@ -452,10 +452,24 @@ def _section_data_universe(doc: Document, items: list[NormalizedItem],
                    "Figure 2: Content publication date by year (full corpus denominator)", width_in=5.0)
 
     _heading(doc, "Collection Methodology", 2)
+    is_external = (run_dir / "raw" / "external_ingested.json").exists()
+    if is_external:
+        _body(doc, (
+            "Data was ingested from externally collected sources. The original collection methodology, "
+            "sampling strategy, and any platform-specific filtering applied prior to ingestion are not "
+            "documented in this pipeline and should be considered unknown."
+        ))
+    else:
+        _body(doc, (
+            "Data was collected using automated scrapers across all platforms without engagement thresholds. "
+            "Every item that passed quality controls (non-empty text, minimum length, deduplication) "
+            "entered the corpus regardless of engagement metrics."
+        ))
     _body(doc, (
-        "Data was collected using automated scrapers with engagement-weighted filtering applied per platform. "
-        "Thread-level deduplication caps comments per thread to prevent over-indexing "
-        "vocal threads. All items passed an LLM relevance classification step before analysis."
+        "Thread-level deduplication caps comments per thread (max 5, randomly selected) to prevent "
+        "over-indexing vocal threads. Engagement metrics are preserved as metadata for signal strength "
+        "scoring but do not gate corpus admission. All items passed an LLM relevance classification "
+        "step before analysis."
     ))
 
     doc.add_page_break()
@@ -789,7 +803,7 @@ def _section_verbatims(doc: Document, analysis: AnalysisResults, items: list[Nor
     doc.add_page_break()
 
 
-def _section_methodology(doc: Document, config: PipelineConfig, analysis: AnalysisResults, items: list = None):
+def _section_methodology(doc: Document, config: PipelineConfig, analysis: AnalysisResults, items: list = None, run_dir: Path = None):
     _heading(doc, "Methodology", 1)
 
     # Derive platform list from actual data
@@ -809,7 +823,11 @@ def _section_methodology(doc: Document, config: PipelineConfig, analysis: Analys
     _heading(doc, "Pipeline Overview", 2)
     stages = [
         ("Stage 0 - Brief", "Structured research brief defines brand, competitors, geography, business objectives, and keyword seed list."),
-        ("Stage 1 - Collect", f"Automated collection across {platform_str}. Engagement-minimum filters applied at collection time."),
+        ("Stage 1 - Collect", (
+            f"Data ingested from external sources across {platform_str}. Original collection methodology unknown."
+            if run_dir and (run_dir / "raw" / "external_ingested.json").exists()
+            else f"Automated collection across {platform_str}. No engagement thresholds applied - all items enter the corpus."
+        )),
         ("Stage 2 - Normalize", "Thread-level deduplication (comments capped per thread). Deterministic SHA-256 item IDs prevent re-collection of duplicates across runs."),
         ("Stage 3 - Filter", f"LLM relevance classification ({model_name}). Each item classified as relevant/irrelevant with a reason. Multilingual support enabled."),
         ("Stage 4 - Analyze", "Sentiment (positive/negative/neutral/mixed) + Plutchik 8-emotion classification in a single LLM call. ABSA: per-aspect sentiment extracted. Two-pass theme extraction: (a) discovery on stratified sample to identify candidate themes; (b) full-corpus mapping of all items to themes in batches."),
@@ -1055,7 +1073,7 @@ def generate_docx_report(
     _section_themes(doc, analysis, run_dir, scored_insights=scored_insights)
     _section_deep_dives(doc, scored_insights, analysis, run_dir)
     _section_brand_health(doc, bh)
-    _section_methodology(doc, config, analysis, items)
+    _section_methodology(doc, config, analysis, items, run_dir=run_dir)
     _section_data_provenance(doc, config, items)
 
     doc.save(str(out_path))
