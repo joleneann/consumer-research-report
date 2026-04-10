@@ -57,6 +57,9 @@ consumer_research/
   report/charts.py             — Matplotlib chart generation (Tufte-inspired, 11 chart types)
   report/templates/styles.css  — Consulting design spec
   report/templates/report.html — Jinja2 report template
+# skills/ — Claude Code analysis skills (run as sub-agents with fresh context windows)
+skills/narrative-review.md     — Stage 4c: discover narrative patterns keywords miss. Takes run_id, reads config dynamically.
+skills/synthesize.md           — Stage 5: generate decision-grade insights per theme. Takes run_id, reads config dynamically.
 # scripts/ — all runnable scripts
 scripts/stage6_7_score_report.py — Stages 6+7: data-driven scoring + chart/DOCX generation (no API). Loads config from run's config.json. Usage: `python scripts/stage6_7_score_report.py [run_id]` (defaults to latest run)
 scripts/regenerate_report.py   — Regenerate DOCX from existing scored data (no API). Usage: `python scripts/regenerate_report.py [run_id]` (defaults to latest run)
@@ -321,12 +324,11 @@ Write as `SentimentResult` objects. Process in batches if corpus is large.
 - Verify: each theme should have >=20 items and >=1.5% prevalence for a 900+ corpus.
 
 **Step 5 - Stage 4c: Narrative review pass (MANDATORY - never skip)**
-After keyword-based theme mapping, check how many items remain unthemed.
-- Read **ALL unthemed items** plus a **10% random sample of themed items**
-- If this exceeds context, read in batches until all unthemed items are covered
-- Look for narrative patterns keywords cannot detect: (a) cultural/celebrity references, (b) misinformation and miracle claims, (c) stigma, shame, moral debate, (d) sarcasm, irony, memes, (e) cross-cutting emotional narratives
-- **Completion criterion: unthemed items must be below 10% of corpus**. If above 10%, keep reading and classifying.
-- This step was skipped once and resulted in missing themes containing 21% of the corpus.
+Launch a sub-agent with the narrative review skill (`skills/narrative-review.md`) and the run_id. The sub-agent gets a fresh context window dedicated to reading unthemed items and discovering narrative patterns that keywords miss. This step was skipped once and resulted in missing themes containing 21% of the corpus.
+
+Invocation: use the Agent tool to spawn a sub-agent. Pass the full contents of `skills/narrative-review.md` as the prompt, with the run_id specified. The sub-agent reads the corpus and themes, discovers narrative patterns, and writes updated themes back to `analysis/results.json`. Wait for it to complete before proceeding.
+
+**Completion criterion: unthemed items must be below 10% of corpus.** If the sub-agent reports >10% remaining, review its output and run additional passes.
 
 **Step 6 - Write analysis results**
 Assemble all results into `AnalysisResults` and write to `runs/<run_id>/analysis/results.json`:
@@ -347,15 +349,9 @@ results = AnalysisResults(
 ```
 
 **Step 7 - Stage 5: Synthesise insights**
-Read theme data from `analysis/results.json`. For each theme, write one structured insight:
-- Observation: what the data shows (theme + evidence)
-- Insight: what it means for the consumer (the "why")
-- Implication: what it means for the business ("So What")
-- Recommendation: what the client should do ("Now What")
-- Further Validation: what additional research would strengthen this
+Launch a sub-agent with the synthesis skill (`skills/synthesize.md`) and the run_id. The sub-agent gets a fresh context window dedicated solely to synthesis, which produces measurably better insights than in-context synthesis (more precise observations, deeper interpretive leaps, more actionable recommendations, more rigorous validation designs - validated in the skills experiment).
 
-Quality gates (all must pass): Grounded, Non-obvious, Actionable, Specific, Falsifiable.
-Write to `runs/<run_id>/insights/insights.json` as a list of `Insight` dicts.
+Invocation: use the Agent tool to spawn a sub-agent. Pass the full contents of `skills/synthesize.md` as the prompt, with the run_id specified. The sub-agent reads themes and sentiment data, generates one insight per theme using the OIIRV framework, applies 5 quality gates, and writes to `runs/<run_id>/insights/insights.json`. Wait for it to complete before proceeding.
 
 **Step 8 - Score and generate report**
 ```bash
@@ -371,8 +367,9 @@ runs/<run_id>/
   raw/external_ingested.json    # from ingest
   normalized/corpus.json        # from ingest
   filtered/corpus.json          # Stage 3 (you wrote this)
-  analysis/results.json         # Stage 4 (you wrote this)
-  insights/insights.json        # Stage 5 (you wrote this)
+  analysis/results.json         # Stage 4 (you wrote this, narrative-review skill updated it)
+  analysis/narrative_review_summary.json  # Stage 4c (narrative-review skill wrote this)
+  insights/insights.json        # Stage 5 (synthesize skill wrote this)
   scored/scored_insights.json   # Stage 6 (score-report wrote this)
   report/report_v001.docx       # Stage 7 (score-report wrote this)
 ```

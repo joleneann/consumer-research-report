@@ -24,6 +24,7 @@
     "normalize",
     "filter",
     "analyze",
+    "narrative_review",
     "synthesize",
     "score",
     "report"

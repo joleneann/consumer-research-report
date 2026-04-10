@@ -129,8 +129,8 @@ Eight stages, each writing artifacts to `runs/<run_id>/`. If the pipeline fails,
 1. **Collect** - pull from 6+ sources at max limits (or ingest your own JSON)
 2. **Normalize** - deduplicate, engagement filter, common schema
 3. **Filter** - LLM relevance classification (multilingual)
-4. **Analyze** - sentiment, Plutchik emotion, ABSA, two-pass theme extraction
-5. **Synthesize** - one structured insight per theme
+4. **Analyze** - sentiment, Plutchik emotion, ABSA, two-pass theme extraction, narrative review
+5. **Synthesize** - one structured insight per theme (via dedicated skill with fresh context window)
 6. **Score** - confidence (5 factors) + signal strength (4 factors) + brand health
 7. **Report** - charts + versioned DOCX
 
@@ -173,6 +173,16 @@ consumer-research regenerate    Regenerate DOCX only (no API)
 ```
 
 This is the canonical way to use the system. Installed via `pip install -e .`.
+
+**Analysis skills** - Claude Code skills for LLM-intensive stages:
+
+```
+skills/
+  narrative-review.md             Stage 4c: discover narrative patterns keywords miss
+  synthesize.md                   Stage 5: generate decision-grade insights per theme
+```
+
+These run as sub-agents with fresh context windows during in-context analysis. Each takes a `run_id` and reads config dynamically - works for any study. The synthesis skill produces measurably better insights than in-context synthesis (validated in a controlled experiment comparing output quality across 12 themes).
 
 **Operator tools** - recovery and maintenance scripts:
 

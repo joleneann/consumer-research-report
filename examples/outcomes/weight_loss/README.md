@@ -33,18 +33,18 @@ The research brief is at [`../../briefs/weight_loss_brief.json`](../../briefs/we
 
 ## Top Themes
 
-- GLP-1 Medication Efficacy & Personal Journeys (50.5% of corpus)
-- India Market Access & Affordability (43.1%)
-- Diet & Nutrition on GLP-1 (39.5%)
-- Medical Science & GLP-1 Education (25.6%)
-- Indian Weight Loss Culture & Desi Diet (22.3%)
-- Natural Alternatives & Anti-Medication Stance (16.0%)
-- PCOS, Hormones & Women's Health (16.0%)
-- Side Effects & Health Risks (15.1%)
-- Stigma, Shame & Social Judgment (14.8%)
-- Sustainability & Weight Regain Fears (12.1%)
-- Celebrity & Bollywood Ozempic Speculation (6.4%)
-- Obesity Epidemic & Systemic Food Issues (5.7%)
+- India Market Access & Affordability (40.0% of corpus)
+- GLP-1 Medication Efficacy & Personal Journeys (39.9%)
+- Diet & Nutrition on GLP-1 (33.4%)
+- Indian Weight Loss Culture & Desi Diet (20.7%)
+- Medical Science & GLP-1 Education (20.5%)
+- Natural Alternatives & Anti-Medication Stance (13.0%)
+- PCOS, Hormones & Women's Health (12.6%)
+- Stigma, Shame & Social Judgment (12.0%)
+- Side Effects & Health Risks (11.8%)
+- Sustainability & Weight Regain Fears (9.8%)
+- Celebrity & Bollywood Ozempic Speculation (7.1%)
+- Obesity Epidemic & Systemic Food Issues (4.8%)
 
 ## Data
 
