@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import json
 import logging
+from collections import Counter
 from pathlib import Path
 
 from consumer_research.models.schemas import (
@@ -126,6 +127,59 @@ Respond with a JSON array:
 Respond ONLY with the JSON array. Every item_id must appear exactly once."""
 
 
+def _check_coverage(
+    items: list[NormalizedItem],
+    sentiment_results: list,
+    analysis_dir: Path,
+) -> None:
+    """Warn loudly when classification did not cover the whole corpus.
+
+    Sentiment runs in batches. A batch that returns 12 results for the 15 items it was given
+    is indistinguishable from one that succeeded, so a partial corpus can reach scoring and
+    the report with nothing having noticed. Every downstream percentage is then computed on a
+    denominator nobody chose.
+
+    A shortfall concentrated in a few days is worse than a thin one, because the temporal
+    chart renders it as a trough in the conversation rather than a gap in the processing, so
+    that case is called out separately. Unclassified IDs are written to disk so a resume can
+    target them.
+    """
+    classified = {r.item_id for r in sentiment_results}
+    missing = [i for i in items if i.item_id not in classified]
+    if not missing:
+        return
+
+    pct = 100 * len(classified) / len(items) if items else 0.0
+    logger.warning(
+        f"Sentiment coverage {pct:.1f}%: {len(missing)} of {len(items)} items unclassified. "
+        f"All downstream percentages use {len(classified)} as the denominator."
+    )
+
+    by_day = Counter(
+        i.source_timestamp.date().isoformat() for i in missing if i.source_timestamp
+    )
+    if by_day:
+        day, n = by_day.most_common(1)[0]
+        day_total = sum(
+            1 for i in items
+            if i.source_timestamp and i.source_timestamp.date().isoformat() == day
+        )
+        if day_total and n / day_total > 0.2:
+            logger.warning(
+                f"  {day} is missing {n} of {day_total} items ({100 * n / day_total:.0f}%). "
+                f"Per-day charts will show a trough that is not in the data."
+            )
+
+    path = analysis_dir / "coverage_shortfall.txt"
+    path.write_text(
+        f"{len(missing)} of {len(items)} items unclassified ({pct:.1f}% coverage)\n"
+        f"by day: {dict(by_day.most_common())}\n\n"
+        + "\n".join(sorted(i.item_id for i in missing)) + "\n",
+        encoding="utf-8",
+    )
+    logger.warning(f"  Unclassified IDs written to {path}")
+
+
 def analyze_corpus(
     items: list[NormalizedItem],
     brand_name: str,
@@ -157,6 +211,7 @@ def analyze_corpus(
     sentiment_results = _classify_sentiment(
         items, brand_name, category, llm_client, batch_size
     )
+    _check_coverage(items, sentiment_results, analysis_dir)
 
     # ── Step 2: Theme Extraction ──
     logger.info("Extracting themes...")
