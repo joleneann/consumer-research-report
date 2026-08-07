@@ -473,6 +473,7 @@ def compute_brand_health(
         advocacy_ratio = strongly_positive / total_with_sentiment
         advocacy_component = round(min(100, advocacy_ratio * 500), 1)  # 20% strongly positive = 100
     else:
+        advocacy_ratio = None
         advocacy_component = 50.0
 
     # 4. Resilience component: sentiment consistency across platforms
@@ -527,6 +528,10 @@ def compute_brand_health(
         "advocacy_component": advocacy_component,
         "resilience_component": resilience_component,
         "conversation_component": conversation_component,
+        # The component saturates at a 20% share, so it cannot report how far past the bar a
+        # corpus sits. Carry the underlying share so the report can print it alongside.
+        "advocacy_ratio_pct": (round(advocacy_ratio * 100, 1)
+                               if advocacy_ratio is not None else None),
     }
 
     logger.info(f"Brand Health Score: {overall}/100 "

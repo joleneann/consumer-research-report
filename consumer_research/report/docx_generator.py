@@ -696,13 +696,28 @@ def _section_brand_health(doc: Document, bh: dict):
         "No subjective weighting is applied - all inputs are derived from the collected corpus."
     ))
 
+    # Advocacy is a capped index, not a proportion, and it measures sentiment intensity rather
+    # than stated recommendation. Describe it as what it is, and print the share underneath it,
+    # because any share at or above 20% renders an identical 100.
+    adv_pct = bh.get("advocacy_ratio_pct")
+    adv_method = (
+        "Share of items classified strongly positive, meaning positive sentiment at intensity "
+        "0.8 or above. Scored as that share multiplied by 5 and capped at 100, so any share at "
+        "or above 20% returns 100. Does not measure stated recommendation or repurchase intent; "
+        "no stage of this pipeline detects those."
+    )
+    if adv_pct is not None:
+        adv_method += f" This corpus: {adv_pct:.1f}% strongly positive."
+        if adv_pct >= 20:
+            adv_method += (" The component is at its ceiling and does not discriminate "
+                           "above this point.")
+
     components = [
         ("Sentiment Component (30%)", bh.get("sentiment_component", 0),
          "Derived from NSS across all items. Reflects the ratio of positive to negative consumer language."),
         ("Engagement Component (25%)", bh.get("engagement_component", 0),
          "Average engagement (upvotes, likes, comments) normalised to platform benchmarks."),
-        ("Advocacy Component (20%)", bh.get("advocacy_component", 0),
-         "Proportion of items containing explicit recommendation or repurchase intent language."),
+        ("Advocacy Component (20%)", bh.get("advocacy_component", 0), adv_method),
         ("Resilience Component (15%)", bh.get("resilience_component", 0),
          "Sentiment consistency across platforms and time periods."),
         ("Conversation Component (10%)", bh.get("conversation_component", 0),
