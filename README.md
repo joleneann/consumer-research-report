@@ -12,13 +12,14 @@ There are two ways to evaluate it:
 
 ### Path A: Inspect the outcomes (no setup needed)
 
-Go to [`examples/outcomes/`](examples/outcomes/). Three complete studies are there:
+Go to [`examples/outcomes/`](examples/outcomes/). Four complete studies are there:
 
 | Study | Type | Items | Insights | NSS |
 |-------|------|-------|----------|-----|
 | [Weight Loss Medication in India](examples/outcomes/weight_loss/) | Topic | 2,484 | 12 | +16.8% |
 | [Make in India](examples/outcomes/make_in_india/) | Brand | 3,516 | 12 | +24.0% |
 | [India Hair Colour](examples/outcomes/hair_colour/) | Topic | 8,969 | 16 | +22.3% |
+| [UK Weight Loss Medication](examples/outcomes/uk_weight_loss/) | Topic | 10,890 | 15 | +14.3% |
 
 Each folder has the research brief, a study README, the final DOCX report, and a manifest of what the pipeline produced.
 

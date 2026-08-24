@@ -1,0 +1,49 @@
+{
+  "brand_name": "Weight Loss Medication",
+  "category": "health & wellness / pharmaceutical",
+  "geographic_focus": "GB",
+  "time_period_months": 1,
+  "target_audience": "UK adults discussing, taking, or considering weight loss medication",
+  "competitors": [
+    "Mounjaro",
+    "Wegovy",
+    "Ozempic",
+    "retatrutide",
+    "MedExpress",
+    "Voy",
+    "Juniper",
+    "Boots",
+    "Asda",
+    "Pharmacy2U",
+    "Zava",
+    "NHS weight management",
+    "slimming clubs"
+  ],
+  "aspects": [
+    "safety_and_deaths",
+    "side_effects",
+    "hair_loss",
+    "oral_vs_injection",
+    "cost",
+    "access_route",
+    "nhs_vs_private",
+    "efficacy",
+    "stigma",
+    "dose_and_titration",
+    "supply_and_authenticity",
+    "stopping_and_regain"
+  ],
+  "business_questions": [
+    "What does UK weight loss medication conversation contain in the last 30 days, in what proportions, with what sentiment, and how much of it is about safety rather than results",
+    "Has the conversation moved from injection to oral pill, and what do people believe about whether the pill works as well as the shot",
+    "What almost stops people starting: the full objection and anxiety list, in their own words",
+    "How is the rising death and severe-reaction coverage being discussed, and does it change intent or only sentiment",
+    "How is hair loss discussed following the July study, and which side effects are talked about most",
+    "How is cost discussed once decomposed past the word: price level, price uncertainty, affordability, and grey-market sourcing",
+    "What is said about route to treatment: NHS eligibility, private pharmacy, supermarket pharmacy, and why people switch between them",
+    "What vocabulary do people actually use for the treatment, the experience, and the dose, including community jargon",
+    "How does stigma appear, and where does the conversation move to stay private",
+    "Which themes are condition-led and therefore usable in UK marketing, and which are drug-led and therefore not"
+  ],
+  "additional_context": "Study window 2026-07-07 to 2026-08-06, UK only. Corpus: Reddit and Mumsnet conversation, 400 UK news articles (Google News RSS, cleaned of a 139-article content farm and 28 investor-news items), and separately labelled customer reviews. Search terms were derived from 284 on-topic Google Trends related queries rather than chosen by intuition; three of five original intuition-led seed terms scored 1-2 out of 100 and were discarded. Dated events inside the window that shape the conversation: 18 July, national coverage of state-funded weight-loss jabs for children as young as six to twelve; 22 July, a study linking GLP-1 drugs to hair loss covered across UK press; 29 July, Plymouth inquest attributing a death to a weight loss drug; 3 August, oral Wegovy becomes available in the UK; 4 to 6 August, an escalating death-toll narrative running from a single inquest to reported totals of more than 100 and then 216 UK deaths with 18,000 severe reactions. Search interest for UK providers over the window: MedExpress 82, Bolt Pharmacy 65, Voy 31, Boots 24, Juniper 9. Reviews are held as a separate lane because every reviewer already converted and therefore cannot answer what stops people starting."
+}

@@ -1,0 +1,45 @@
+{
+  "run_id": "20260807_004524_13b272",
+  "brand_name": "Weight Loss Medication",
+  "category": "health & wellness / pharmaceutical",
+  "geographic_focus": "GB",
+  "time_period_days": 30,
+  "keywords": [],
+  "business_objectives": [
+    "What does UK weight loss medication conversation contain in the last 30 days, in what proportions, with what sentiment, and how much of it is about safety rather than results",
+    "Has the conversation moved from injection to oral pill, and what do people believe about whether the pill works as well as the shot",
+    "What almost stops people starting: the full objection and anxiety list, in their own words",
+    "How is the rising death and severe-reaction coverage being discussed, and does it change intent or only sentiment",
+    "How is hair loss discussed following the July study, and which side effects are talked about most",
+    "How is cost discussed once decomposed past the word: price level, price uncertainty, affordability, and grey-market sourcing",
+    "What is said about route to treatment: NHS eligibility, private pharmacy, supermarket pharmacy, and why people switch between them",
+    "What vocabulary do people actually use for the treatment, the experience, and the dose, including community jargon",
+    "How does stigma appear, and where does the conversation move to stay private",
+    "Which themes are condition-led and therefore usable in UK marketing, and which are drug-led and therefore not"
+  ],
+  "subreddits": [
+    "MounjaroUK",
+    "WegovyUK"
+  ],
+  "competitors": [
+    "Mounjaro",
+    "Wegovy",
+    "Ozempic",
+    "retatrutide",
+    "MedExpress",
+    "Voy",
+    "Juniper",
+    "Boots",
+    "Asda",
+    "Pharmacy2U",
+    "Zava",
+    "NHS weight management",
+    "slimming clubs"
+  ],
+  "trends_geo": "GB",
+  "news_country": "gb",
+  "claude_model": "in-context",
+  "collection": {
+    "trends_geo": "GB"
+  }
+}
