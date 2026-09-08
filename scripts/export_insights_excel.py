@@ -120,10 +120,10 @@ for t in analysis.get("themes", []):
     seen_labels.add(label)
     themes.append(t)
 
-# Sort by confidence of their best insight (descending), then by item count
+# Sort by item count (descending), then by confidence of their best insight
 themes.sort(key=lambda t: (
-    insight_by_theme.get(t["theme_id"], {}).get("confidence_score", 0),
     t.get("item_count", 0),
+    insight_by_theme.get(t["theme_id"], {}).get("confidence_score", 0),
 ), reverse=True)
 
 

@@ -11,6 +11,7 @@ Produces a flowing, section-based research report (no fixed-layout constraints):
 from __future__ import annotations
 
 import logging
+import re
 from datetime import datetime
 from io import BytesIO
 from pathlib import Path
@@ -324,8 +325,8 @@ def _section_executive_summary(doc: Document, scored_insights: list[ScoredInsigh
     nss = analysis.net_sentiment_score
     total = analysis.total_items_analyzed
 
-    # Identify top insights by confidence for the summary narrative
-    top_sorted = sorted(scored_insights, key=lambda x: (-x.confidence_score, -x.signal_strength_score))
+    # Identify the largest insights by conversation volume for the summary narrative
+    top_sorted = sorted(scored_insights, key=lambda x: (-x.sample_size, -x.confidence_score))
     top_n = min(3, len(top_sorted))
     theme_map = {t.theme_id: t.theme_label for t in analysis.themes}
     top_names = []
@@ -359,7 +360,7 @@ def _section_executive_summary(doc: Document, scored_insights: list[ScoredInsigh
         for i, s in enumerate(top_sorted[:show_n], 1):
             row = table.add_row()
             _set_cell_text(row.cells[0], str(i))
-            _set_cell_text(row.cells[1], s.insight.observation)
+            _set_cell_text(row.cells[1], _clean(s.insight.observation))
             _set_cell_text(row.cells[2], f"{s.confidence_score:.0%}")
             _set_cell_text(row.cells[3], f"{s.signal_strength_score:.0%}")
         _body(doc, "", space_after_pt=12)
@@ -588,19 +589,45 @@ def _section_themes(doc: Document, analysis: AnalysisResults, run_dir: Path,
     doc.add_page_break()
 
 
+# Theme IDs are internal pipeline handles. They are assigned in discovery order, while the
+# report orders themes by size and insights by confidence, so a reader meets "T04" as the
+# first, second or ninth thing on the page and reasonably reads it as a rank. Populated per
+# run by generate_docx_report, consumed by _clean so every render path is covered.
+_THEME_LABELS: dict[str, str] = {}
+_THEME_ID_RE = re.compile(r"\bT\d{2}\b")
+
+
+def _strip_theme_ids(text: str) -> str:
+    """Drop internal theme IDs, keeping the label the reader can actually use.
+
+    Three shapes occur in authored insight prose: the ID leading its own label
+    ("T04 The weekly ritual: ..."), the ID cited parenthetically ("(T06, 1,398 items)"),
+    and a bare ID. The first is a duplicate and the ID simply goes; the other two carry
+    meaning only via the label, so the label is substituted in.
+    """
+    for tid, label in _THEME_LABELS.items():
+        text = text.replace(f"{tid} {label}", label)
+
+    def sub(m):
+        label = _THEME_LABELS.get(m.group(0))
+        return label[0].lower() + label[1:] if label else ""
+
+    return re.sub(r"\s{2,}", " ", _THEME_ID_RE.sub(sub, text)).strip()
+
+
 def _clean(text: str) -> str:
-    """Replace em dashes with hyphens throughout any text block."""
-    return text.replace("\u2014", "-").replace("\u2013", "-")
+    """Replace em dashes with hyphens and drop internal theme IDs."""
+    return _strip_theme_ids(text.replace("\u2014", "-").replace("\u2013", "-"))
 
 
 def _section_deep_dives(doc: Document, scored_insights: list[ScoredInsight],
                         analysis: AnalysisResults, run_dir: Path):
     _heading(doc, "Insight Deep Dives", 1)
-    _body(doc, "One insight per theme, ordered by confidence score. Each insight follows the framework: What the Data Shows, What it Means, Business Implication and Rationale, Recommendation, Further Validation.")
+    _body(doc, "One insight per theme, ordered by conversation volume. Each insight follows the framework: What the Data Shows, What it Means, Business Implication and Rationale, Recommendation.")
 
     theme_map = {t.theme_id: t for t in analysis.themes}
 
-    for i, scored in enumerate(sorted(scored_insights, key=lambda x: -x.confidence_score), 1):
+    for i, scored in enumerate(sorted(scored_insights, key=lambda x: (-x.sample_size, -x.confidence_score)), 1):
         ins = scored.insight
         conf_color = GREEN if scored.confidence_tier.value == "high" else (AMBER if scored.confidence_tier.value == "medium" else GREY_MED)
 
@@ -652,14 +679,10 @@ def _section_deep_dives(doc: Document, scored_insights: list[ScoredInsight],
         _heading(doc, "Recommendation", 3)
         _body(doc, _clean(ins.recommendation))
 
-        # 8. Further Validation (no data stats here)
-        _heading(doc, "Further Validation", 3)
-        _body(doc, _clean(ins.further_validation))
-
-        # 9. Representative Voices (2-3 quotes)
+        # 8. Representative Voices (2-3 quotes)
         if theme_obj and theme_obj.representative_quotes:
             _heading(doc, "Representative Voices", 3)
-            for q in theme_obj.representative_quotes[:3]:
+            for q in theme_obj.representative_quotes[:4]:
                 if isinstance(q, dict):
                     text = q.get("text", "")
                     url = q.get("source_url", "") or ""
@@ -755,17 +778,16 @@ def _section_recommendations(doc: Document, scored_insights: list[ScoredInsight]
     _heading(doc, "Recommendations", 1)
     _body(doc, (
         "Recommendations are derived directly from insight implications. Priority order follows "
-        "confidence score (primary) and signal strength (secondary)."
+        "conversation volume (primary) and confidence score (secondary)."
     ))
 
-    all_sorted = sorted(scored_insights, key=lambda x: (-x.confidence_score, -x.signal_strength_score))
+    all_sorted = sorted(scored_insights, key=lambda x: (-x.sample_size, -x.confidence_score))
 
     for i, s in enumerate(all_sorted, 1):
         ins = s.insight
         _heading(doc, f"Recommendation {i:02d}", 2)
-        _label_value(doc, "Recommendation", ins.recommendation)
-        _label_value(doc, "Rationale", ins.implication)
-        _label_value(doc, "Validation Required", ins.further_validation)
+        _label_value(doc, "Recommendation", _clean(ins.recommendation))
+        _label_value(doc, "Rationale", _clean(ins.implication))
         _body(doc, "", space_after_pt=4)
 
     doc.add_page_break()
@@ -846,7 +868,7 @@ def _section_methodology(doc: Document, config: PipelineConfig, analysis: Analys
         ("Stage 2 - Normalize", "Thread-level deduplication (comments capped per thread). Deterministic SHA-256 item IDs prevent re-collection of duplicates across runs."),
         ("Stage 3 - Filter", f"LLM relevance classification ({model_name}). Each item classified as relevant/irrelevant with a reason. Multilingual support enabled."),
         ("Stage 4 - Analyze", "Sentiment (positive/negative/neutral/mixed) + Plutchik 8-emotion classification in a single LLM call. ABSA: per-aspect sentiment extracted. Two-pass theme extraction: (a) discovery on stratified sample to identify candidate themes; (b) full-corpus mapping of all items to themes in batches."),
-        ("Stage 5 - Synthesize", "One insight per theme, mandated by prompt. Insight structure: Observation - Insight - Implication - Recommendation - Further Validation."),
+        ("Stage 5 - Synthesize", "One insight per theme, mandated by prompt. Insight structure: Observation - Insight - Implication - Recommendation."),
         ("Stage 6 - Score", "Fully data-driven scoring. Confidence: 5 factors (sample size, source diversity, temporal consistency, internal agreement, data recency). Signal Strength: 4 factors (prevalence, engagement, sentiment intensity, conversation depth). Brand Health Score: 5 components."),
         ("Stage 7 - Report", "Google Doc-compatible DOCX with inline charts, block-quoted verbatims, and full data tables."),
     ]
@@ -1080,6 +1102,9 @@ def generate_docx_report(
 
     brand_name = config.collection.brand_name
     bh = brand_health or {}
+
+    _THEME_LABELS.clear()
+    _THEME_LABELS.update({t.theme_id: t.theme_label for t in analysis.themes if t.theme_id})
 
     # Build report sections
     _section_cover(doc, brand_name, config, analysis, scored_insights, bh, items=items)
