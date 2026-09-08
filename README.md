@@ -4,6 +4,10 @@ Turn a research brief concerning a brand or a broad topic into a scored, client-
 
 Given a brand or topic, category, geography, and business questions, the pipeline collects evidence from online sources, normalizes it into a shared schema, filters for relevance, analyzes sentiment and themes, scores confidence from data, and generates a versioned DOCX deliverable.
 
+<p align="center">
+  <img src="docs/pipeline.svg" alt="The pipeline, end to end" width="610">
+</p>
+
 ## Evaluation
 
 **This repo does not bundle commercial data, funded API credentials, or a free turnkey demo run.** Running it requires your own API keys and your own data.
