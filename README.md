@@ -12,16 +12,32 @@ There are two ways to evaluate it:
 
 ### Path A: Inspect the outcomes (no setup needed)
 
-Go to [`examples/outcomes/`](examples/outcomes/). Four complete studies are there:
+Go to [`examples/outcomes/`](examples/outcomes/). Four complete studies are there.
+
+**[UK Weight Loss Medication, 30-Day Conversation Study](examples/outcomes/uk_weight_loss/)**
+
+30 days of UK conversation about weight loss medication: Reddit r/MounjaroUK and r/WegovyUK, Mumsnet, and UK news, collected 7 July to 6 August 2026. 12,450 items collected, 10,890 classified, 15 themes discovered inductively from the corpus, $9.70 in collection cost.
+
+The 400 news articles sit in the corpus to be compared against, not counted with, so every theme carries two shares: how much of press output it takes, and how much of patient conversation.
+
+| Theme | Patient conversation | Press output |
+|---|---|---|
+| The weekly weigh-in ritual | 21.7% | 0.2% |
+| Dose titration and click-counting | 21.6% | 0.8% |
+| Hair loss | 0.8% | 7.0% |
+| Business and policy | 1.1% | 85.2% |
+
+85.2% of press output is about companies, share prices, approvals and policy. That subject is 1.1% of patient conversation, and the two largest things in patients' lives get almost no coverage.
+
+**The other three**
 
 | Study | Type | Items | Insights | NSS |
 |-------|------|-------|----------|-----|
-| [Weight Loss Medication in India](examples/outcomes/weight_loss/) | Topic | 2,484 | 12 | +16.8% |
-| [Make in India](examples/outcomes/make_in_india/) | Brand | 3,516 | 12 | +24.0% |
 | [India Hair Colour](examples/outcomes/hair_colour/) | Topic | 8,969 | 16 | +22.3% |
-| [UK Weight Loss Medication](examples/outcomes/uk_weight_loss/) | Topic | 10,890 | 15 | +14.3% |
+| [Make in India](examples/outcomes/make_in_india/) | Brand | 3,516 | 12 | +24.0% |
+| [Weight Loss Medication in India](examples/outcomes/weight_loss/) | Topic | 2,484 | 12 | +16.8% |
 
-Each folder has the research brief, a study README, the final DOCX report, and a manifest of what the pipeline produced.
+Each folder has a study README, the final DOCX report, a manifest of what the pipeline produced, and the item-level workbook the report is built from, one tab per theme, so any figure can be traced back to the items behind it. The research brief sits either in the study folder or in [`examples/briefs/`](examples/briefs/), and each study README links its own.
 
 Open any DOCX to see the full deliverable: executive summary, theme landscape, per-insight deep dives with radar charts, brand health score, and methodology disclosure.
 
@@ -61,7 +77,7 @@ The codebase supports two workflows for Stages 3-5 (filter, analyze, synthesize)
 
 | Workflow | What does the LLM work | Cost | When to use |
 |----------|----------------------|------|-------------|
-| **In-context** (Claude Code session) | The Claude Code session itself reads items and writes classifications directly to disk | Included in your Claude Code / Claude Max subscription | Primary workflow. All three sample studies were produced this way. |
+| **In-context** (Claude Code session) | The Claude Code session itself reads items and writes classifications directly to disk | Included in your Claude Code / Claude Max subscription | Primary workflow. All four published studies were produced this way. |
 | **Automated pipeline** (`consumer-research run`) | External API calls via `ANTHROPIC_API_KEY` through `utils/llm_client.py` | ~$1-2 per run | Unattended batch runs without a Claude Code session open. |
 
 Stages 0-2 (brief, collect, normalize) and 6-7 (score, report) are code-based and free in both workflows.

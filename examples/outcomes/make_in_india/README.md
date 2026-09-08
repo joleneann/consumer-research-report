@@ -1,8 +1,8 @@
-# Make in India — Consumer Sentiment & Public Opinion Study
+# Make in India : Consumer Sentiment & Public Opinion Study
 
 ## Report
 
-[`make_in_india_report.docx`](make_in_india_report.docx) — 3,516 items analysed, 12 insights, NSS +24.0%
+[`make_in_india_report.docx`](make_in_india_report.docx): 3,516 items analysed, 12 insights, NSS +24.0%
 
 Open the DOCX file to see the full deliverable. It contains all charts, verbatims, methodology disclosure, and data provenance.
 

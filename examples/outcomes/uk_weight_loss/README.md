@@ -2,9 +2,11 @@
 
 ## Report
 
-[`uk_weight_loss_report.docx`](uk_weight_loss_report.docx) — 10,890 items analysed, 15 themes, NSS +14.3%
+[`uk_weight_loss_report.docx`](uk_weight_loss_report.docx): 10,890 items analysed, 15 themes, NSS +14.3%
 
 Open the DOCX for the full deliverable: charts, verbatims, per-theme insights, methodology disclosure and data provenance.
+
+[`uk_weight_loss_insights_data.xlsx`](uk_weight_loss_insights_data.xlsx) is the layer underneath: one tab per theme, every item that theme was built from, with its sentiment, emotion, engagement and source link. [`artifacts_manifest.json`](artifacts_manifest.json) records the run and the collection funnel.
 
 ## Study Summary
 
@@ -66,5 +68,5 @@ Every number in the report traces back to the items behind it.
 
 ## Brief and configuration
 
-- [`brief.json`](brief.json) — 12 aspects, 10 business questions, 13 competitors, geography GB, 30-day window
-- [`config.json`](config.json) — pipeline configuration for the run
+- [`brief.json`](brief.json): 12 aspects, 10 business questions, 13 competitors, geography GB, 30-day window
+- [`config.json`](config.json): pipeline configuration for the run

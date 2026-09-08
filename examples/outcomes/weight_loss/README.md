@@ -1,8 +1,8 @@
-# Weight Loss Medication in India — Consumer Sentiment Study
+# Weight Loss Medication in India : Consumer Sentiment Study
 
 ## Report
 
-[`weight_loss_report.docx`](weight_loss_report.docx) — 2,484 items analysed, 12 insights, NSS +16.8%
+[`weight_loss_report.docx`](weight_loss_report.docx): 2,484 items analysed, 12 insights, NSS +16.8%
 
 Open the DOCX file to see the full deliverable. It contains all charts, verbatims, methodology disclosure, and data provenance.
 

@@ -1,0 +1,25 @@
+{
+  "study": "UK Weight Loss Medication - 30-Day Conversation Study",
+  "run_id": "20260807_004524_13b272",
+  "pipeline_version": "consumer_research v0.2.0",
+  "artifacts": {
+    "report": "uk_weight_loss_report.docx",
+    "insights_data": "uk_weight_loss_insights_data.xlsx",
+    "brief": "brief.json",
+    "config": "config.json"
+  },
+  "corpus_stats": {
+    "window": "2026-07-07..2026-08-06",
+    "raw_collected": 12450,
+    "entered_normalization": 12445,
+    "items_analysed": 10890,
+    "items_classified": 10890,
+    "rejected_by_filter": 1555,
+    "themes": 15,
+    "insights_scored": 15,
+    "net_sentiment_score": 0.143,
+    "brand_health_score": 64.5,
+    "platforms": ["reddit", "mumsnet", "news"],
+    "collection_cost_usd": 9.70
+  }
+}
